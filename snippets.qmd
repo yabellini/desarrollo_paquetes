@@ -1,0 +1,240 @@
+---
+title: "Snippets"
+subtitle: "Código para copiar y pegar"
+---
+
+Para que nadie se quede atrás, acá está el código de cada paso.
+Hacé clic en el ícono de copiar, arriba a la derecha de cada bloque.
+
+## Episodio 3: la primera función
+
+`R/dicho_al_azar.R`
+
+```r
+dicho_al_azar <- function() {
+  dichos <- c(
+    "Estoy al horno",
+    "Mas perdido que perro en cancha de bochas",
+    "Pasarlo chancho"
+  )
+  sample(dichos, size = 1)
+}
+```
+
+## Episodio 4: la documentación
+
+```r
+#' Elegir un dicho al azar
+#'
+#' Devuelve un dicho popular de América Latina elegido al azar.
+#'
+#' @return Un texto (vector de caracteres de largo 1) con el dicho.
+#' @export
+#'
+#' @examples
+#' dicho_al_azar()
+```
+
+## Episodio 5: los datos
+
+Descargar el CSV:
+
+```r
+download.file(
+  "https://URL-DEL-TALLER/datos/dichos.csv",
+  "data-raw/dichos.csv"
+)
+```
+
+`data-raw/dichos.R`
+
+```r
+## Código para preparar el conjunto de datos `dichos`
+
+dichos <- read.csv("data-raw/dichos.csv", encoding = "UTF-8")
+
+# Ordenamos por país para que sea más fácil de leer
+dichos <- dichos[order(dichos$pais, dichos$dicho), ]
+rownames(dichos) <- NULL
+
+usethis::use_data(dichos, overwrite = TRUE)
+```
+
+`R/data.R`
+
+```r
+#' Dichos y expresiones populares de América Latina
+#'
+#' Una colección de dichos, refranes y expresiones que se usan en distintos
+#' países de América Latina, con su significado.
+#'
+#' @format Un data frame con 48 filas y 4 columnas:
+#' \describe{
+#'   \item{dicho}{El dicho o la expresión, como texto.}
+#'   \item{significado}{Qué quiere decir, explicado en pocas palabras.}
+#'   \item{pais}{País donde se usa. "Varios países" si se usa en muchos lugares.}
+#'   \item{tema}{Tema del dicho: "dinero", "comida", "animales", etc.}
+#' }
+#' @source Recopilado para el taller de desarrollo de paquetes de LatinR 2026.
+"dichos"
+```
+
+`R/dicho_al_azar.R`, versión con datos:
+
+```r
+#' Elegir un dicho al azar
+#'
+#' Devuelve un dicho elegido al azar del conjunto de datos [dichos].
+#' Podés elegir de qué país querés el dicho.
+#'
+#' @param pais Texto con el nombre de un país, por ejemplo `"Argentina"`.
+#'   Si es `NULL` (el valor por defecto) se elige entre todos los países.
+#'
+#' @return Un texto (vector de caracteres de largo 1) con el dicho.
+#' @export
+#'
+#' @examples
+#' dicho_al_azar()
+#' dicho_al_azar(pais = "Argentina")
+dicho_al_azar <- function(pais = NULL) {
+  opciones <- dichos
+
+  if (!is.null(pais)) {
+    opciones <- dichos[dichos$pais == pais, ]
+  }
+
+  fila <- sample(nrow(opciones), size = 1)
+  opciones$dicho[fila]
+}
+```
+
+## Episodio 6: el error con cli
+
+```r
+dicho_al_azar <- function(pais = NULL) {
+  opciones <- dichos
+
+  if (!is.null(pais)) {
+    if (!pais %in% dichos$pais) {
+      cli::cli_abort(c(
+        "No tengo dichos de {.val {pais}}.",
+        "i" = "Los pa\u00edses disponibles son: {.val {unique(dichos$pais)}}."
+      ))
+    }
+    opciones <- dichos[dichos$pais == pais, ]
+  }
+
+  fila <- sample(nrow(opciones), size = 1)
+  opciones$dicho[fila]
+}
+```
+
+## Episodio 7: los tests
+
+`tests/testthat/test-dicho_al_azar.R`
+
+```r
+test_that("dicho_al_azar() devuelve un solo texto", {
+  resultado <- dicho_al_azar()
+  expect_type(resultado, "character")
+  expect_length(resultado, 1)
+})
+
+test_that("dicho_al_azar() respeta el país", {
+  resultado <- dicho_al_azar(pais = "Chile")
+  expect_true(resultado %in% dichos$dicho[dichos$pais == "Chile"])
+})
+
+test_that("dicho_al_azar() avisa si no conoce el país", {
+  expect_error(dicho_al_azar(pais = "Narnia"), "Narnia")
+  expect_snapshot(dicho_al_azar(pais = "Narnia"), error = TRUE)
+})
+```
+
+## Extra: `dicho_del_dia()`
+
+Una función que siempre da el mismo dicho para la misma fecha. Más sencillo de testear, porque no es al azar.
+
+`R/dicho_del_dia.R`
+
+```r
+#' El dicho del día
+#'
+#' Devuelve siempre el mismo dicho para una misma fecha. Ideal para
+#' empezar la mañana (o una clase).
+#'
+#' @param fecha Una fecha (objeto de clase `Date`). Por defecto, hoy.
+#'
+#' @return Un texto con el dicho y su significado.
+#' @export
+#'
+#' @examples
+#' dicho_del_dia()
+#' dicho_del_dia(as.Date("2026-12-03"))
+dicho_del_dia <- function(fecha = Sys.Date()) {
+  if (!inherits(fecha, "Date")) {
+    cli::cli_abort(c(
+      "{.arg fecha} tiene que ser una fecha.",
+      "x" = "Recib\u00ed un objeto de clase {.cls {class(fecha)}}.",
+      "i" = "Prob\u00e1 con {.code as.Date(\"2026-12-03\")}."
+    ))
+  }
+
+  fila <- as.integer(fecha) %% nrow(dichos) + 1
+  paste0(dichos$dicho[fila], ": ", dichos$significado[fila])
+}
+```
+
+`tests/testthat/test-dicho_del_dia.R`
+
+```r
+test_that("dicho_del_dia() da el mismo dicho para la misma fecha", {
+  fecha <- as.Date("2026-12-03")
+  expect_equal(dicho_del_dia(fecha), dicho_del_dia(fecha))
+})
+
+test_that("dicho_del_dia() cambia de un día al otro", {
+  expect_false(
+    dicho_del_dia(as.Date("2026-12-03")) == dicho_del_dia(as.Date("2026-12-04"))
+  )
+})
+
+test_that("dicho_del_dia() pide una fecha", {
+  expect_error(dicho_del_dia("hoy"), class = "rlang_error")
+})
+```
+
+## Extra: `buscar_dicho()`
+
+`R/buscar_dicho.R`
+
+```r
+#' Buscar dichos por palabra
+#'
+#' Busca una palabra en los dichos y en sus significados.
+#'
+#' @param palabra Texto a buscar. No distingue mayúsculas de minúsculas.
+#'
+#' @return Un data frame con las filas de [dichos] que contienen la palabra.
+#'   Si no encuentra nada, devuelve un data frame sin filas y avisa con un
+#'   mensaje.
+#' @export
+#'
+#' @examples
+#' buscar_dicho("dinero")
+#' buscar_dicho("perro")
+buscar_dicho <- function(palabra) {
+  if (!is.character(palabra) || length(palabra) != 1) {
+    cli::cli_abort("{.arg palabra} tiene que ser un solo texto.")
+  }
+
+  encontrados <- grepl(palabra, dichos$dicho, ignore.case = TRUE) |
+    grepl(palabra, dichos$significado, ignore.case = TRUE)
+
+  if (!any(encontrados)) {
+    cli::cli_inform(c("!" = "No encontr\u00e9 dichos con {.val {palabra}}."))
+  }
+
+  dichos[encontrados, ]
+}
+```
