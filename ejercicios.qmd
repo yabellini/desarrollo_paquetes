@@ -1,0 +1,39 @@
+---
+title: "Cuaderno de ejercicios"
+subtitle: "Todos los ejercicios y desafíos del taller en una sola página"
+---
+
+Para ver las soluciones hacé clic en **Solución**. Te recomendamos mirarla solo después de intentarlo.
+Si te trabás, poné tu nota adhesiva visible, asi te podemos ayudar.
+
+## 1. ¿Qué es un paquete?
+
+{{< include _ejercicios/ep01.qmd >}}
+
+## 2. Crear el paquete
+
+{{< include _ejercicios/ep02.qmd >}}
+
+## 3. Nuestra primera función
+
+{{< include _ejercicios/ep03.qmd >}}
+
+## 4. Documentar funciones
+
+{{< include _ejercicios/ep04.qmd >}}
+
+## 5. Datos en el paquete
+
+{{< include _ejercicios/ep05.qmd >}}
+
+## 6. Dependencias y mensajes claros
+
+{{< include _ejercicios/ep06.qmd >}}
+
+## 7. Tests
+
+{{< include _ejercicios/ep07.qmd >}}
+
+## 8. Compartir el paquete
+
+{{< include _ejercicios/ep08.qmd >}}
