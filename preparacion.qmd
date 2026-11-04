@@ -1,0 +1,70 @@
+---
+title: "Preparación"
+subtitle: "Hacelo antes del taller: son unos 20 minutos"
+---
+
+> La preparación se hace **una sola vez en cada computadora**.
+
+## 1. R y una IDE
+
+- **R** versión 4.3 o más nueva. Descargalo desde [CRAN](https://cran.r-project.org/).
+- **RStudio** ([descarga](https://posit.co/download/rstudio-desktop/)) o **Positron** ([descarga](https://positron.posit.co/download.html)).
+  En el taller vamos a usar RStudio, pero todo el código funciona igual en Positron.
+
+## 2. Herramientas para compilar
+
+::: {.panel-tabset}
+
+## Windows
+
+Instalá **Rtools** desde <https://cran.r-project.org/bin/windows/Rtools/>.
+Elegí la versión que corresponde a tu versión de R (por ejemplo, Rtools 4.5 para R 4.5).
+Esta es la causa número uno de problemas en los talleres de paquetes. ¡No te la saltees!
+
+## macOS
+
+Abrí la Terminal y escribí:
+
+```bash
+xcode-select --install
+```
+Si te pide registrarte, como desarrollador/a de Apple, hacelo, es gratuito para personas que solo necesitan instalar aplicaciones.
+
+## Linux
+
+Instalá las herramientas de desarrollo de R. En Ubuntu o Debian:
+
+```bash
+sudo apt install r-base-dev
+```
+
+:::
+
+## 3. Los paquetes que vamos a usar
+
+Si no los tenes instalados, necesitamos que instales estos paquetes: `devtools`, `usethis`, `roxygen2`, `testthat`, `cli`, `pak`, `rmarkdown`.
+Podes hacerlo copiando y pegando el siguiente comando en la consola de R:
+
+```r
+install.packages(c("devtools", "usethis", "roxygen2", "testthat", "cli", "pak", "rmarkdown"))
+```
+
+devtools instala varios paquetes más; puede tardar unos minutos.
+
+## 4. Comprobá que todo funciona
+
+```r
+devtools::has_devel()
+```
+
+Si ves el mensaje `Your system is ready to build packages!`, ¡listo! 🎉 R nos dice que nuestro sistema está listo para desarrollar paquetes.
+
+## 5. GitHub y (opcional) Git 
+
+En el último episodio mostramos cómo subir el paquete a GitHub. Tambien discutiremos como un asistente de IA se puede incorporar en el ciclo de desarrollo de un paquete y usaremos la version gratuita de GitHub Copilot para eso. 
+
+No es obligatorio para el taller, pero si querés particar esa parte entonces:
+
+- Creá una [cuenta de GitHub](https://github.com/).
+- [Instalá Git](https://intro-programacion.netlify.app/a_instalacion#instalando-git).
+- Conectá R con GitHub siguiendo [Configuración de Git y GitHub](https://intro-programacion.netlify.app/a_instalacion#configuración-de-git-y-github) del libro de Introducción a la Programación II. 
