@@ -1,0 +1,169 @@
+---
+title: "6. Dependencias y mensajes claros"
+---
+
+::: resumen
+::: tiempo
+⏱ Enseñanza: 5 minutos · Ejercicios: 10 minutos
+:::
+::: {}
+Preguntas
+
+- ¿Cómo uso funciones de otros paquetes adentro de mi paquete?
+- ¿Cómo escribo mensajes de error que ayuden?
+:::
+::: {}
+Objetivos
+
+- Declarar una dependencia con `usethis::use_package()`.
+- Distinguir entre `Imports` y `Suggests`.
+- Escribir errores claros con `cli::cli_abort()`.
+- Resolver el WARNING de caracteres no ASCII.
+:::
+:::
+
+## Una función que falla en silencio
+
+En el episodio anterior vimos esto:
+
+```r
+dicho_al_azar(pais = "Narnia")
+#> character(0)
+```
+
+No hay error, no hay aviso. Quien usa la función no sabe qué paso, si hizo algo mal o esto es el comportamiento esperado.
+Un buen paquete **avisa** cuándo algo no salió como esperabamos, **por qué** y **cómo arreglarlo**.
+
+## cli: mensajes lindos y claros
+
+El paquete [cli](https://cli.r-lib.org/) tiene funciones para escribir mensajes, advertencias y errores con formato:
+
+| Función | Para qué |
+|:--|:--|
+| `cli::cli_abort()` | Errores: la función se detiene. |
+| `cli::cli_warn()` | Advertencias: la función sigue, pero avisa. |
+| `cli::cli_inform()` | Mensajes informativos. |
+
+Los mensajes son vectores con viñetas: `"i"` para información, `"x"` para lo que salió mal, `"v"` para lo que salió bien, `"!"` para advertencias.
+Y con `{}` podemos incluir valores: `{.val {pais}}` muestra un valor entre comillas y con color, `{.arg pais}` un argumento.
+
+## Declarar la dependencia
+
+cli es otro paquete. Si nuestro paquete lo usa, hay que decirlo en `DESCRIPTION`:
+
+::: en-vivo
+💻 En vivo
+
+```r
+usethis::use_package("cli")
+#> ✔ Adding cli to Imports field in DESCRIPTION.
+#> ☐ Refer to functions with `cli::fun()`.
+```
+:::
+
+Hay dos tipos principales de dependencias:
+
+- **`Imports`**: paquetes que el nuestro **necesita** para funcionar. Se instalan automáticamente junto con nuestro paquete.
+- **`Suggests`**: paquetes que se usan solo a veces (en los tests, en las viñetas, en una función opcional). Para agregarlos: `usethis::use_package("testthat", type = "Suggests")`.
+
+Adentro de las funciones, llamamos a las funciones de otros paquetes con `paquete::funcion()`.
+Así queda claro de dónde viene cada función.
+
+::: callout-warning
+## No se usa `library()` adentro de un paquete
+
+En los scripts usamos `library(cli)`. En un paquete, **nunca**.
+Las dependencias se declaran en `DESCRIPTION` con `use_package()`, y se usan con `::`.
+:::
+
+## Un error que ayuda
+
+::: en-vivo
+💻 En vivo, en `R/dicho_al_azar.R`
+
+```r
+dicho_al_azar <- function(pais = NULL) {
+  opciones <- dichos
+
+  if (!is.null(pais)) {
+    if (!pais %in% dichos$pais) {
+      cli::cli_abort(c(
+        "No tengo dichos de {.val {pais}}.",
+        "i" = "Los países disponibles son: {.val {unique(dichos$pais)}}."
+      ))
+    }
+    opciones <- dichos[dichos$pais == pais, ]
+  }
+
+  fila <- sample(nrow(opciones), size = 1)
+  opciones$dicho[fila]
+}
+```
+
+```r
+devtools::load_all()
+dicho_al_azar(pais = "Narnia")
+#> Error in `dicho_al_azar()`:
+#> ! No tengo dichos de "Narnia".
+#> ℹ Los países disponibles son: "Argentina", "Brasil", "Chile", "Colombia",
+#>   "Costa Rica", "Cuba", "Ecuador", "Guatemala", "México", "Perú", "República
+#>   Dominicana", "Uruguay", "Varios países", and "Venezuela".
+```
+:::
+
+¡Mucho mejor! Dice qué pasó y qué opciones hay.
+(Sí, cli escribe "and" en inglés al final de la lista. Nadie es perfecto.)
+
+## "Dichosos" acentos 
+
+::: en-vivo
+💻 En vivo
+
+```r
+devtools::check()
+```
+
+```
+❯ checking R files for non-ASCII characters ... WARNING
+  Found the following file with non-ASCII characters:
+    dicho_al_azar.R
+  Portable packages must use only ASCII characters in their R code,
+  except perhaps in comments.
+  Use \uxxxx escapes for other characters.
+```
+:::
+
+¡Los "dichosos" acentos! 
+Para que el paquete funcione igual en todos los sistemas operativos, el **código** de R solo puede tener caracteres ASCII.
+En los comentarios (incluidos los de `roxygen2`) sí podemos escribir con acentos y eñes.
+En el código, cada carácter especial se escribe con su código Unicode:
+
+| Carácter | Se escribe |
+|:--:|:--|
+| á é í ó ú | `\u00e1` `\u00e9` `\u00ed` `\u00f3` `\u00fa` |
+| ñ | `\u00f1` |
+| ¿ ¡ | `\u00bf` `\u00a1` |
+
+```r
+"i" = "Los pa\u00edses disponibles son: {.val {unique(dichos$pais)}}."
+```
+
+Podemos usar la función `stringi::stri_escape_unicode("países")` para obtener los códigos que necesitamos.
+
+::: callout-note
+## ¿Y los datos?
+
+Los datos (`data/dichos.rda`) sí pueden tener tildes. El límite es solo para el código de `R/`.
+:::
+
+{{< include ../_ejercicios/ep06.qmd >}}
+
+::: puntos-clave
+Puntos clave
+
+- Las dependencias se declaran con `usethis::use_package()` y se usan con `paquete::funcion()`.
+- `Imports` para lo imprescindible, `Suggests` para lo opcional.
+- Nunca uses `library()` en el código de un paquete.
+- Un buen error dice qué pasó y cómo arreglarlo: `cli::cli_abort()` ayuda mucho.
+- En el código de `R/`, los acentos, eñes y otros caracteres "especiales" se escriben con `\uxxxx`.
+:::

@@ -1,0 +1,142 @@
+---
+title: "3. Nuestra primera función"
+---
+
+::: resumen
+::: tiempo
+⏱ Enseñanza: 10 minutos · Ejercicios: 15 minutos
+:::
+::: {}
+Preguntas
+
+- ¿Dónde van las funciones de un paquete?
+- ¿Cómo pruebo una función mientras la escribo?
+:::
+::: {}
+Objetivos
+
+- Crear un archivo para una función con `usethis::use_r()`.
+- Cargar el paquete en desarrollo con `devtools::load_all()`.
+- Usar el ciclo *editar, cargar, probar*.
+:::
+:::
+
+## Un archivo para la función
+
+Las funciones de un paquete deben estar en la carpeta `R/`.
+Podríamos crear el archivo a mano, pero `usethis` tiene una función para hacerlo:
+
+::: en-vivo
+💻 En vivo
+
+```r
+usethis::use_r("dicho_al_azar")
+```
+:::
+
+Si el archivo no existe, lo crea y lo abre. Si ya existe, solo lo abre.
+Es una forma rápida de ir a la función que queremos editar.
+
+::: callout-tip
+## ¿Una función por archivo?
+
+No es obligatorio. 
+Hay paquetes que agrupan en un archivo las funciones relacionadas y el nombre del archivo indica qué contiene.
+Cuando una función es importante (o es larga), conviene que tenga su propio archivo con su mismo nombre.
+:::
+
+## La primera versión
+
+Empezamos simple, como en cualquier función: unos dichos guardados en un vector, y elegimos uno al azar.
+
+::: en-vivo
+💻 En vivo, en `R/dicho_al_azar.R`
+
+```r
+dicho_al_azar <- function() {
+  dichos <- c(
+    "Estar al horno",
+    "Como perro en cancha de bochas",
+    "Pasarlo chancho"
+  )
+  sample(dichos, size = 1)
+}
+```
+:::
+
+Analicemos las partes de una función:
+
+-  `dicho_al_azar` es el nombre de la función
+- `function()` es la funcion de R que crea funciones.
+- lo que esta entre {} es el cuerpo de la función.
+
+Este es el formato mínimo de una función, ya veremos como ir agregandole mas partes.
+
+Guardamos el archivo y probamos en la consola:
+
+```r
+dicho_al_azar()
+#> Error in dicho_al_azar() : could not find function "dicho_al_azar"
+```
+
+¡R no la conoce! La función está en un archivo, pero R todavía no la leyó.
+
+## `load_all()`: cargar el paquete en desarrollo
+
+`devtools::load_all()` carga **todo** el paquete, como si lo hubiéramos instalado y hecho `library()`:
+
+::: en-vivo
+💻 En vivo
+
+```r
+devtools::load_all()
+#> ℹ Loading dichosos
+
+dicho_al_azar()
+#> [1] "Pasarlo chancho"
+```
+
+Atajo de teclado: `Ctrl + Shift + L` (en Mac, `Cmd + Shift + L`).
+:::
+
+## El ciclo: editar, cargar, probar
+
+Desarrollar un paquete es dar vueltas a este ciclo, muchas veces:
+
+```{=html}
+<svg viewBox="0 0 560 210" role="img" aria-labelledby="ciclo-titulo" style="max-width:560px;width:100%;height:auto;display:block;margin:1rem 0">
+  <title id="ciclo-titulo">Ciclo de desarrollo: editar el código, cargar con load_all, probar en la consola, y volver a editar</title>
+  <defs><marker id="flecha" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#343a40"/></marker></defs>
+  <g font-family="Montserrat, sans-serif" font-size="17" text-anchor="middle" fill="#343a40">
+    <rect x="10" y="40" width="150" height="70" rx="10" fill="#FFF3E8" stroke="#fd7e14" stroke-width="3"/>
+    <text x="85" y="72" font-weight="700">Editar</text><text x="85" y="94" font-size="14">el archivo en R/</text>
+    <rect x="205" y="40" width="150" height="70" rx="10" fill="#ECF1FA" stroke="#4177ca" stroke-width="3"/>
+    <text x="280" y="72" font-weight="700">Cargar</text><text x="280" y="94" font-size="14" font-family="SFMono-Regular, Menlo, Consolas, monospace">load_all()</text>
+    <rect x="400" y="40" width="150" height="70" rx="10" fill="#E8FAFD" stroke="#17a2b8" stroke-width="3"/>
+    <text x="475" y="72" font-weight="700">Probar</text><text x="475" y="94" font-size="14">en la consola</text>
+    <path d="M160 75 H200" stroke="#343a40" stroke-width="2.5" marker-end="url(#flecha)"/>
+    <path d="M355 75 H395" stroke="#343a40" stroke-width="2.5" marker-end="url(#flecha)"/>
+    <path d="M475 110 V165 H85 V115" fill="none" stroke="#343a40" stroke-width="2.5" marker-end="url(#flecha)"/>
+    <text x="280" y="190" font-size="15">¿No anda como esperabas? Otra vuelta.</text>
+  </g>
+</svg>
+```
+
+Una vez que encontramos una versión que nos gusta, corremos `devtools::check()` cada tanto para ver si rompimos algo.
+
+::: callout-note
+## ¿Y si uso Positron?
+
+Todo el código es igual. En Positron, `load_all()` también tiene el atajo `Ctrl/Cmd + Shift + L`.
+:::
+
+{{< include ../_ejercicios/ep03.qmd >}}
+
+::: puntos-clave
+Puntos clave
+
+- Las funciones del paquete van en la carpeta `R/`; `usethis::use_r()` crea y abre el archivo.
+- `devtools::load_all()` carga todo el paquete en desarrollo.
+- Guardar no alcanza: después de cada cambio, hay que volver a cargar.
+- Desarrollar es un trabajar en el ciclo: editar, cargar, probar.
+:::

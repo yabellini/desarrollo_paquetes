@@ -1,0 +1,112 @@
+---
+title: "1. ¿Qué es un paquete?"
+---
+
+::: resumen
+::: tiempo
+⏱ Enseñanza: 10 minutos · Ejercicios: 5 minutos
+:::
+::: {}
+Preguntas
+
+- ¿Qué es un paquete de R?
+- ¿Por qué crear un paquete?
+:::
+::: {}
+Objetivos
+
+- Describir un paquete como una carpeta organizada que tiene código, documentación y datos.
+- Dar al menos dos razones para crear un paquete.
+- Reconocer los paquetes que vamos a usar para crear paquetes.
+:::
+:::
+
+## ¿Quién puede escribir un paquete? ¡Vos!
+
+Susan Johnston hizo [estas preguntas](https://github.com/susjoh/fibonacci) en una charla para RLadies+:
+
+- ¿Podés abrir R o RStudio?
+- ¿Podés instalar un paquete?
+- ¿Escribiste alguna vez una función en R?
+- ¿Podrías *aprender* a escribir una función en R?
+
+Si contestaste que sí a todas: **¡podés escribir un paquete de R!**
+
+## ¿Qué es un paquete?
+
+Sébastien Rochette tiene una frase que nos encanta:
+
+> Para calmar tus temores, recordá que no es más que una carpeta organizada de una manera específica.
+
+Un paquete de R es una **carpeta bien organizada** que puede contener:
+
+- **código**: nuestras funciones;
+- **documentación**: la ayuda que aparece cuando escribimos `? funcion`, un README, viñetas;
+- **datos**: conjuntos de datos listos para usar.
+
+El truco está en cumplir con el requisito de _"una manera específica"_: dónde va cada archivo, qué nombre tiene y qué contenido debe tener cada uno.
+La buena noticia es que **no hace falta recordarlo**: hay paquetes que lo hacen por nosotros.
+
+## Del script al paquete
+
+Seguro que ya hiciste parte de este camino trabajando con R:
+
+1. **La consola.** Escribimos código, funciona, cerramos R... y se perdió.
+2. **El script.** Guardamos el código en un archivo `.R`. Lo podemos volver a correr, pero para usarlo en otro proyecto lo copiamos y pegamos (o usamos `source()`, y hay que acordarse dónde estaba el archivo).
+3. **Las funciones.** Encapsulamos el código que repetimos en funciones. Mucho mejor, pero las funciones siguen estando en un script.
+4. **El paquete.** Las funciones, sus datos y su documentación están juntos y organizados en un formato que R entiende. Se instalan una vez y se pueden usar en cualquier proyecto.
+
+## ¿Por qué crear un paquete?
+
+Para compartir código y datos con:
+
+- **vos** (y tu yo del futuro, que no se va a acordar de cómo funcionaba ese script);
+- **las personas con las que trabajás**;
+- **las personas que hacen un trabajo parecido al tuyo**, aunque no las conozcas.
+
+Y hay otra razón: **aprender a desarrollar paquetes te hace mejor programando**, aunque nunca publiques uno.
+
+Aprendés buenas prácticas (documentar, testear, organizar), herramientas que sirven para cualquier proyecto y las habilidades poder **contribuir a los paquetes de otras personas**, porque vas a entender cómo están construidos.
+
+::: callout-note
+## Cuándo vale la pena crear un paquete
+
+Una regla práctica: si una función la usás en **más de un proyecto**, ya merece un paquete. Aunque sea una sola función (asi se empieza) y aunque el paquete sea solo para vos.
+:::
+
+## Las herramientas
+
+Contamos con una serie de paquetes que automatizan el trabajo de crear un paquete:
+
+| Paquete | Para qué lo usamos |
+|:--------|:-------------------|
+| **`usethis`** | Crear archivos y carpetas: el paquete, las funciones, la licencia, los tests. |
+| **`devtools`** | Cargar, documentar, testear, comprobar e instalar el paquete. |
+| **`roxygen2`** | Escribir la documentación al lado del código. |
+| **`testthat`** | Escribir tests. |
+| **`cli`** | Mensajes y errores lindos y claros. |
+| **`pak`** | Instalar paquetes y comprobar nombres. |
+
+La mayoría de las funciones que vamos a usar empiezan con `use_` (de `usethis`): `use_r()`, `use_data()`, `use_test()`...
+Cuando no sepas cómo hacer algo, escribí `usethis::use_` y apretá la tecla Tab para ver todas las opciones.
+
+## El paquete del taller: `dichosos`
+
+Vamos a construir **dichosos**, un paquete con dichos y expresiones populares de América Latina.
+Al final va a tener:
+
+- un conjunto de datos, `dichos`, con el dicho, su significado, el país y un tema;
+- una función `dicho_al_azar()`, que elige un dicho (de un país, si queremos);
+- una función `dicho_del_dia()`, que da siempre el mismo dicho para la misma fecha;
+- una función `buscar_dicho()`, que busca dichos por palabra;
+- documentación, tests y un README.
+
+{{< include ../_ejercicios/ep01.qmd >}}
+
+::: puntos-clave
+Puntos clave
+
+- Un paquete es una carpeta organizada de una manera específica, que puede tener código, documentación y datos.
+- Vale la pena crear un paquete aunque sea solo para vos y aunque tenga una sola función.
+- `usethis` y `devtools` automatizan el trabajo, evitando errores.
+:::

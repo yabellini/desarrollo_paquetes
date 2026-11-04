@@ -1,0 +1,199 @@
+---
+title: "2. Crear el paquete"
+---
+
+::: resumen
+::: tiempo
+⏱ Enseñanza: 10 minutos · Ejercicios: 15 minutos
+:::
+::: {}
+Preguntas
+
+- ¿Cómo elijo un nombre para mi paquete?
+- ¿Cómo creo la estructura de un paquete?
+- ¿Cómo sé si mi paquete está bien?
+:::
+::: {}
+Objetivos
+
+- Comprobar si un nombre es válido y está disponible con `pak::pkg_name_check()`.
+- Crear un paquete con `usethis::create_package()`.
+- Describir para qué sirve cada archivo de un paquete recién creado.
+- Correr `devtools::check()` e interpretar el resultado.
+- Agregar una licencia.
+:::
+:::
+
+## Elegir un nombre
+
+Un nombre de paquete de R:
+
+- solo puede tener **letras, números y puntos**;
+- tiene que **empezar con una letra**;
+- **no puede terminar con un punto**.
+
+No se permiten guiones (`mis-dichos`) ni guiones bajos (`mis_dichos`).
+Y aunque los puntos están permitidos, mejor evitarlos.
+
+Antes de enamorarte de un nombre, comprobá si ya existe:
+
+::: en-vivo
+💻 En vivo
+
+```r
+pak::pkg_name_check("dichosos")
+```
+:::
+
+La función revisa si el nombre es válido, si ya hay un paquete con ese nombre en CRAN o Bioconductor, y busca qué significa la palabra (en inglés) para avisarte si tiene connotaciones negativas.
+
+::: callout-warning
+## Las malas palabras, solo en inglés
+
+`pkg_name_check()` solo conoce malas palabras en inglés.
+Un nombre que en castellano (o en el castellano de algún país) es una mala palabra puede pasar sin problemas.
+Si tenés dudas, preguntá a alguien de otro país. 😅
+:::
+
+## Crear el paquete
+
+::: en-vivo
+💻 En vivo
+
+```r
+usethis::create_package("ruta_al_paquete/dichosos")
+```
+:::
+
+El argumento es la **ruta** donde se crea el paquete.
+El último pedazo de la ruta (`dichosos`) es el nombre del paquete.
+
+RStudio abre una **sesión nueva**, con el proyecto del paquete.
+A partir de ahora trabajamos en esa sesión.
+
+::: callout-warning
+## No crees un paquete adentro de otro proyecto
+
+Si creás el paquete adentro de otro proyecto de RStudio (o adentro de otro paquete), `usethis` te avisa con un mensaje. Elegí otra carpeta.
+:::
+
+## Lo que creó usethis
+
+```
+dichosos/
+├── .gitignore
+├── .Rbuildignore
+├── DESCRIPTION
+├── NAMESPACE
+├── R/
+└── dichosos.Rproj
+```
+
+- **`DESCRIPTION`**: los metadatos del paquete: nombre, título, descripción, quién lo escribió, la licencia y, más adelante, las dependencias.
+- **`R/`**: acá van los scripts con las funciones. Por ahora está vacía.
+- **`NAMESPACE`**: la lista de funciones que el paquete ofrece al mundo. **No se edita a mano**: lo va a escribir `roxygen2` por nosotros.
+- **`.Rbuildignore`**: se listan los archivos que son parte de nuestro proyecto, pero no del paquete (como el `.Rproj`). De esta manera son ignorados cuando se construye el paquete.
+- **`.gitignore`**: archivos que Git no debería versionar (se suele usar para datos muy grandes).
+- **`dichosos.Rproj`**: el proyecto de RStudio.
+
+## El primer `check()`
+
+`devtools::check()` corre **R CMD check**, la revisión oficial de R para paquetes: más de 50 comprobaciones sobre la estructura, la documentación, el código, los datos y los tests.
+
+::: en-vivo
+💻 En vivo
+
+```r
+devtools::check()
+```
+
+Atajo de teclado: `Ctrl + Shift + E` (en Mac, `Cmd + Shift + E`).
+:::
+
+Un paquete vacío ya tiene un problema:
+
+```
+❯ checking DESCRIPTION meta-information ... WARNING
+  Non-standard license specification:
+    `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+
+0 errors ✔ | 1 warning ✖ | 0 notes ✔
+```
+
+`check()` nos dice tres tipos de cosas:
+
+- **ERROR**: algo grave. Hay que arreglarlo.
+- **WARNING**: algo que probablemente esté mal. Hay que arreglarlo.
+- **NOTE**: algo para mirar. A veces se puede ignorar.
+
+El mensaje nos dice qué hacer: _elegir una licencia_.
+
+## La licencia
+
+La licencia dice qué pueden hacer otras personas con tu código.
+La licencia MIT es **permisiva**: se puede usar, copiar y modificar tu código, citando la fuente.
+
+::: en-vivo
+💻 En vivo
+
+```r
+usethis::use_mit_license("Yanina Bellini Saibene")
+devtools::check()
+```
+:::
+
+```
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+```
+
+¡Nuestro primer paquete sin problemas! Está vacío, pero es un paquete. 🎉
+
+::: callout-tip
+## Otras licencias
+
+Hay una función para cada licencia: `use_gpl3_license()`, `use_apache_license()`, `use_cc0_license()`, `use_ccby_license()`... Las licencias Creative Commons son para datos y documentos, no para código.
+:::
+
+## Presentar el paquete: `DESCRIPTION`
+
+Abrí `DESCRIPTION`. Hay que completar tres campos:
+
+- **`Title`**: una línea, con mayúscula en las palabras importantes, sin punto final.
+- **`Description`**: un párrafo sobre qué hace el paquete. Las líneas que siguen a la primera empiezan con cuatro espacios.
+- **`Authors@R`**: quiénes hicieron el paquete, con la función `person()`. El rol `"cre"` es la persona que lo mantiene y `"aut"` quien lo escribió.
+
+::: callout-tip
+## Para no escribir tu nombre en cada paquete
+
+Podés guardar tus datos en el archivo `.Rprofile`, que R lee cada vez que arranca.
+Así `usethis` completa `Authors@R` y la licencia por vos.
+Abrilo con `usethis::edit_r_profile()` y agregá:
+
+```r
+options(
+  usethis.description = list(
+    "Authors@R" = utils::person(
+      "Tu nombre", "Tu apellido",
+      email = "tu.correo@ejemplo.com",
+      role = c("aut", "cre")
+    ),
+    License = "MIT + file LICENSE",
+    Language = "es"
+  )
+)
+```
+
+Se configura una sola vez por computadora. Es como ajustar la altura del asiento de la bicicleta: no lo tenés que hacer cada vez que salís a andar.
+:::
+
+{{< include ../_ejercicios/ep02.qmd >}}
+
+::: puntos-clave
+Puntos clave
+
+- `pak::pkg_name_check()` comprueba si el nombre es válido y está disponible.
+- `usethis::create_package()` crea toda la estructura del paquete.
+- `devtools::check()` revisa el paquete: el objetivo es 0 errores y 0 warnings.
+- `DESCRIPTION` tiene los metadatos; `NAMESPACE` no se toca a mano.
+:::

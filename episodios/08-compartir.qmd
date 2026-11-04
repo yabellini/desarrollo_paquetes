@@ -1,0 +1,139 @@
+---
+title: "8. Compartir el paquete"
+---
+
+::: resumen
+::: tiempo
+⏱ Enseñanza: 7 minutos · Ejercicios: 13 minutos
+:::
+::: {}
+Preguntas
+
+- ¿Cómo presento mi paquete?
+- ¿Cómo lo instalo y lo uso desde otro proyecto?
+- ¿Cómo lo comparto con otras personas?
+- ¿Qué sigue después de este taller?
+:::
+::: {}
+Objetivos
+
+- Crear un README con `usethis::use_readme_rmd()`.
+- Instalar el paquete con `devtools::install()` y usarlo desde otra sesión.
+- Conocer cómo publicar el paquete en GitHub.
+- Conocer recursos para seguir aprendiendo.
+:::
+:::
+
+## El README: la puerta de entrada
+
+El README es lo primero que ve alguien que encuentra tu paquete. Tiene que contar:
+
+- **qué hace** el paquete, sin jerga;
+- **cómo se instala**;
+- **un ejemplo** de uso;
+- cómo **contribuir** o pedir ayuda.
+
+::: en-vivo
+💻 En vivo
+
+```r
+usethis::use_readme_rmd()
+```
+:::
+
+Es un archivo R Markdown, así que el ejemplo se ejecuta y muestra el resultado real.
+Escribimos y después lo construimos:
+
+```r
+devtools::build_readme()
+```
+
+Esto genera `README.md`, que es el que muestra GitHub.
+Editá siempre el `.Rmd`; el `.md` se genera solo.
+
+## Instalar el paquete
+
+Hasta ahora usamos `load_all()`, que solo funciona adentro del proyecto del paquete.
+Para usarlo desde **cualquier** proyecto, hay que **instalarlo**:
+
+::: en-vivo
+💻 En vivo
+
+```r
+devtools::install()
+```
+
+En RStudio, también con el botón *Install* de la pestaña *Build* (`Ctrl + Shift + B`).
+:::
+
+Y ahora, en otra sesión de R, como cualquier otro paquete:
+
+```r
+library(dichosos)
+dicho_al_azar(pais = "Perú")
+?buscar_dicho
+```
+
+## Compartir en GitHub
+
+Si el paquete está en GitHub, cualquier persona lo puede instalar con una línea.
+usethis también ayuda con esto:
+
+```r
+usethis::use_git()      # crea el repositorio local y hace el primer commit
+usethis::use_github()   # crea el repositorio en GitHub y sube todo
+```
+
+Y para instalarlo:
+
+```r
+pak::pak("tu-usuario/dichosos")
+```
+
+Además, [R-universe](https://r-universe.dev/search) puede construir tu paquete y ofrecerlo ya compilado, para que nadie tenga que instalarlo desde el código fuente.
+
+## El recorrido completo
+
+```{=html}
+<ol class="recorrido">
+  <li><code>pak::pkg_name_check()</code></li>
+  <li><code>usethis::create_package()</code></li>
+  <li><code>usethis::use_mit_license()</code></li>
+  <li><code>usethis::use_r()</code> y <code>devtools::load_all()</code></li>
+  <li>Esqueleto de roxygen2 y <code>devtools::document()</code></li>
+  <li><code>usethis::use_data_raw()</code> y <code>usethis::use_data()</code></li>
+  <li><code>usethis::use_package()</code></li>
+  <li><code>usethis::use_testthat()</code>, <code>usethis::use_test()</code> y <code>devtools::test()</code></li>
+  <li><code>usethis::use_readme_rmd()</code> y <code>devtools::install()</code></li>
+  <li>Y siempre: <code>devtools::check()</code></li>
+</ol>
+```
+
+## ¿Qué sigue?
+
+Lo que vimos hoy es la base. Algunos próximos pasos:
+
+- **Un sitio web para tu paquete** con [pkgdown](https://pkgdown.r-lib.org/): `usethis::use_pkgdown()` y `pkgdown::build_site()`.
+- **Viñetas**, documentos largos que cuentan cómo usar el paquete: `usethis::use_vignette()`.
+- **Integración continua**: que GitHub corra `check()` en Windows, macOS y Linux cada vez que subís cambios, con `usethis::use_github_action("check-standard")`.
+- **Abrir tu paquete a contribuciones**: `usethis::use_code_of_conduct()` y `usethis::use_tidy_contributing()`.
+
+Y para seguir aprendiendo, en castellano:
+
+- Los capítulos 11 a 14 del libro [Introducción a la Programación II](https://intro-programacion.netlify.app/09_paquetes-1), de Paola Corrales y Yanina Bellini Saibene.
+- La [guía de desarrollo de paquetes de rOpenSci](https://devguide.ropensci.org/es/index.es.html), traducida al castellano.
+- El [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/), con formación, mentoría y una comunidad para desarrollar tu paquete.
+- [La revisión de software por pares de rOpenSci](https://ropensci.org/es/software-review/), que también acepta paquetes en castellano.
+
+En inglés, el libro de referencia es [R Packages](https://r-pkgs.org/), de Hadley Wickham y Jennifer Bryan.
+
+{{< include ../_ejercicios/ep08.qmd >}}
+
+::: puntos-clave
+Puntos clave
+
+- El README presenta el paquete: qué hace, cómo se instala y un ejemplo.
+- `devtools::install()` instala el paquete para usarlo desde cualquier proyecto.
+- Con el paquete en GitHub, cualquier persona lo instala con `pak::pak("usuario/paquete")`.
+- **Ya sabés crear un paquete.** Ahora, ¿qué código tuyo vas a empaquetar?
+:::

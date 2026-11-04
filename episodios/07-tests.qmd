@@ -1,0 +1,167 @@
+---
+title: "7. Tests"
+---
+
+::: resumen
+::: tiempo
+⏱ Enseñanza: 10 minutos · Ejercicios: 15 minutos
+:::
+::: {}
+Preguntas
+
+- ¿Cómo sé que mi función sigue funcionando después de cambiarla?
+- ¿Cómo se prueba una función que da resultados al azar?
+:::
+::: {}
+Objetivos
+
+- Preparar el paquete para usar `testthat`.
+- Escribir tests con `test_that()` y la familia `expect_*()`.
+- Correr los tests con `devtools::test()`.
+- Probar que una función da el error correcto.
+:::
+:::
+
+## De probar en la consola a tests automáticos
+
+Hasta ahora probamos las funciones escribiendo en la consola y mirando el resultado.
+Funciona, pero cada vez que cambiamos algo hay que volver a probar todo y es muy posible que nos olvidemos de algo.
+
+Un **test** es esa misma prueba de la consola, guardada en un archivo, que se corre automáticamente y nos avisa si el resultado es o no es el esperado.
+
+## Preparar `testthat`
+
+::: en-vivo
+💻 En vivo
+
+```r
+usethis::use_testthat(3)
+#> ✔ Adding testthat to Suggests field in DESCRIPTION.
+#> ✔ Adding "3" to Config/testthat/edition.
+#> ✔ Creating tests/testthat/.
+#> ✔ Writing tests/testthat.R.
+```
+:::
+
+Se hace una sola vez por paquete.
+El `3` es la edición de `testthat`, la más moderna.
+
+## Un archivo de tests por archivo de código
+
+La convención: las funciones de `R/dicho_al_azar.R` se testean en `tests/testthat/test-dicho_al_azar.R`.
+`usethis` lo crea por nosotros:
+
+::: en-vivo
+💻 En vivo
+
+```r
+usethis::use_test("dicho_al_azar")
+```
+
+:::
+
+## Un test
+
+Un test tiene una **descripción** de lo que esperamos y una o más **expectativas**:
+
+::: en-vivo
+💻 En vivo, en `tests/testthat/test-dicho_al_azar.R`
+
+```r
+test_that("dicho_al_azar() devuelve un solo texto", {
+  resultado <- dicho_al_azar()
+  expect_type(resultado, "character")
+  expect_length(resultado, 1)
+})
+```
+:::
+
+¿Cómo se testea algo que es al azar? No sabemos **qué** dicho va a salir, pero sí sabemos **cómo** tiene que ser: un texto, de largo 1, que esté en los datos.
+
+```r
+test_that("dicho_al_azar() respeta el país", {
+  resultado <- dicho_al_azar(pais = "Chile")
+  expect_true(resultado %in% dichos$dicho[dichos$pais == "Chile"])
+})
+```
+
+## Algunas expectativas útiles
+
+| Expectativa | Comprueba que... |
+|:--|:--|
+| `expect_equal(x, y)` | `x` es igual a `y` |
+| `expect_type(x, "character")` | `x` es de ese tipo |
+| `expect_length(x, 1)` | `x` tiene ese largo |
+| `expect_true(x)`, `expect_false(x)` | `x` es `TRUE` (verdadero) o `FALSE` (falso) |
+| `expect_gt(x, y)` | `x` es mayor que `y` |
+| `expect_s3_class(x, "data.frame")` | `x` es de esa clase |
+| `expect_error(codigo)` | el código da un error |
+| `expect_message(codigo)` | el código da un mensaje |
+| `expect_snapshot(codigo)` | la salida es igual a la última vez |
+
+## Testear errores
+
+Que una función dé un error **cuando tiene que darlo** también es parte de que funcione bien.
+Nos interesa que falle **por la razón correcta** y que el mensaje **sirva**:
+
+```r
+test_that("dicho_al_azar() avisa si no conoce el país", {
+  expect_error(dicho_al_azar(pais = "Narnia"), "Narnia")
+})
+```
+
+El segundo argumento es un texto que tiene que aparecer en el mensaje de error.
+
+::: callout-tip
+## *Snapshots*: una foto del mensaje
+
+Para ver el mensaje completo, usá un *snapshot test*:
+
+```r
+test_that("el error es claro", {
+  expect_snapshot(dicho_al_azar(pais = "Narnia"), error = TRUE)
+})
+```
+
+La primera vez, `testthat` guarda la salida en `tests/testthat/_snaps/`.
+Las veces siguientes, compara con esa "foto" y te avisa si cambió.
+Es ideal para revisar que los mensajes de error se lean bien.
+:::
+
+## Correr los tests
+
+::: en-vivo
+💻 En vivo
+
+```r
+devtools::test()
+#> ✔ | F W  S  OK | Context
+#> ✔ |          4 | dicho_al_azar
+#>
+#> ══ Results ═══════════════════════════════
+#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 4 ]
+```
+
+Atajo de teclado: `Ctrl + Shift + T` (en Mac, `Cmd + Shift + T`).
+:::
+
+`devtools::check()` también corre todos los tests.
+
+::: callout-note
+## Las dos ruedas siempre girando 🚲
+
+Ahora el ciclo tiene una rueda más: editar, cargar, probar en la consola... y **correr los tests**.
+Cada vez que encontrás un error (un *bug*), escribí un test que lo detecte antes de arreglarlo. Así no vuelve.
+:::
+
+{{< include ../_ejercicios/ep07.qmd >}}
+
+::: puntos-clave
+Puntos clave
+
+- `usethis::use_testthat(3)` prepara el paquete; `usethis::use_test()` crea un archivo de tests.
+- Un test es una prueba que haciamos en la consola y ahora guardamos en un archivo: `test_that()` con una o más `expect_*()`.
+- Para funciones al azar, testeá las propiedades del resultado, no el valor exacto.
+- Testear los errores también es testear.
+- `devtools::test()` corre todos los tests.
+:::

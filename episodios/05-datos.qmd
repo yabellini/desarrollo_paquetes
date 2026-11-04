@@ -1,0 +1,195 @@
+---
+title: "5. Datos en el paquete"
+---
+
+::: resumen
+::: tiempo
+⏱ Enseñanza: 10 minutos · Ejercicios: 15 minutos
+:::
+::: {}
+Preguntas
+
+- ¿Cómo agrego datos a un paquete?
+- ¿Cómo dejo registro de cómo preparé esos datos?
+- ¿Cómo se documentan los datos?
+:::
+::: {}
+Objetivos
+
+- Guardar los datos crudos y el código que los prepara en `data-raw/`.
+- Agregar datos al paquete con `usethis::use_data()`.
+- Documentar un conjunto de datos con `roxygen2`.
+- Usar los datos del paquete adentro de una función.
+:::
+:::
+
+## ¿Por qué datos en un paquete?
+
+Un paquete es una excelente forma de compartir datos chicos o medianos:
+
+- datos que usás en muchos proyectos (una tabla de códigos de provincias, de estaciones meteorológicas, de especies);
+- datos para enseñar (¿te acordás de `palmerpenguins` o de `datos`?);
+- datos que necesitan las funciones del paquete, como nuestros dichos;
+- datos para los test y ejemplos del paquete.
+
+Nuestro vector de tres dichos no es suficiente. Vamos a usar una tabla de verdad, con el dicho, su significado, el país y un tema.
+
+## Datos crudos y código: `data-raw/`
+
+Una buena práctica es guardar **los datos crudos** y **el código que los prepara**. De esta manera, cualquier persona (incluida vos en el futuro) puede ver de dónde salieron los datos y volver a generarlos. También muy util cuando debemos actualizar los datos con nuevos registros.
+
+::: en-vivo
+💻 En vivo
+
+```r
+usethis::use_data_raw("dichos")
+#> ✔ Creating data-raw/
+#> ✔ Adding "^data-raw$" to .Rbuildignore
+#> ✔ Writing data-raw/dichos.R
+```
+:::
+
+usethis creó la carpeta `data-raw/`, el script `dichos.R` y agregó la carpeta a `.Rbuildignore`: es parte de nuestro proyecto, pero no del paquete que se instala.
+
+Bajamos el CSV a esa carpeta:
+
+```r
+download.file(
+  "https://URL-DEL-TALLER/datos/dichos.csv",
+  "data-raw/dichos.csv"
+)
+```
+
+(También podés descargarlo desde [este enlace](../datos/dichos.csv) y moverlo a mano.)
+
+## Guardar los datos con `use_data()`
+
+::: en-vivo
+💻 En vivo, en `data-raw/dichos.R`
+
+```r
+## Código para preparar el conjunto de datos `dichos`
+
+library(tidyverse)
+
+dichos <- read_csv("data-raw/dichos.csv", encoding = "UTF-8")
+
+# Ordenamos por país para que sea más fácil de leer
+dichos <- dichos |>
+  arrange(pais, dicho)
+
+usethis::use_data(dichos, overwrite = TRUE)
+```
+:::
+
+Corremos el script completo:
+
+```r
+source("data-raw/dichos.R")
+#> ✔ Setting LazyData to "true" in DESCRIPTION
+#> ✔ Saving "dichos" to "data/dichos.rda"
+#> ☐ Document your data (see <https://r-pkgs.org/data.html>).
+```
+
+`use_data()` guardó el objeto en `data/dichos.rda` y agregó `LazyData: true` en `DESCRIPTION`.
+*Lazy* quiere decir "perezoso": los datos se cargan recién cuando alguien los usa.
+
+```r
+devtools::load_all()
+head(dichos)
+```
+
+## Documentar los datos
+
+Los datos también necesitan documentación. Pero no tienen código, así que ¿dónde va el bloque de roxygen2?
+En un archivo de `R/`, arriba del **nombre del conjunto de datos entre comillas**.
+Por convención lo llamamos `R/data.R`:
+
+::: en-vivo
+💻 En vivo
+
+```r
+usethis::use_r("data")
+```
+
+```r
+#' Dichos y expresiones populares de América Latina
+#'
+#' Una colección de dichos, refranes y expresiones que se usan en distintos
+#' países de América Latina, con su significado.
+#'
+#' @format Un data frame con 48 filas y 4 columnas:
+#' \describe{
+#'   \item{dicho}{El dicho o la expresión, como texto.}
+#'   \item{significado}{Qué quiere decir, explicado en pocas palabras.}
+#'   \item{pais}{País donde se usa. "Varios países" si se usa en muchos lugares.}
+#'   \item{tema}{Tema del dicho: "dinero", "comida", "animales", etc.}
+#' }
+#' @source Recopilado para el taller de desarrollo de paquetes de LatinR 2026.
+"dichos"
+```
+
+```r
+devtools::document()
+?dichos
+```
+:::
+
+- **`@format`** describe la estructura: qué tipo de objeto, cuántas filas y columnas, y qué tiene cada columna.
+- **`@source`** dice de dónde vienen los datos. ¡Es importante para dar crédito!
+- No hace falta `@export`: los datos de `data/` siempre están disponibles.
+
+## Usar los datos en una función
+
+Ahora `dicho_al_azar()` puede usar la tabla, y de paso le agregamos un argumento para elegir el país:
+
+::: en-vivo
+💻 En vivo, en `R/dicho_al_azar.R`
+
+```r
+#' Elegir un dicho al azar
+#'
+#' Devuelve un dicho elegido al azar del conjunto de datos [dichos].
+#' Podés elegir de qué país querés el dicho.
+#'
+#' @param pais Texto con el nombre de un país, por ejemplo `"Argentina"`.
+#'   Si es `NULL` (el valor por defecto) se elige entre todos los países.
+#'
+#' @return Un texto (vector de caracteres) con el dicho.
+#' @export
+#'
+#' @examples
+#' dicho_al_azar()
+#' dicho_al_azar(pais = "Argentina")
+dicho_al_azar <- function(pais = NULL) {
+  opciones <- dichos
+
+  if (!is.null(pais)) {
+    opciones <- dichos[dichos$pais == pais, ]
+  }
+
+  fila <- sample(nrow(opciones), size = 1)
+  opciones$dicho[fila]
+}
+```
+
+```r
+devtools::document()
+dicho_al_azar(pais = "Chile")
+#> [1] "Pasarlo chancho"
+```
+:::
+
+Las funciones del paquete pueden usar `dichos` directamente, porque los datos son parte del paquete.
+
+
+{{< include ../_ejercicios/ep05.qmd >}}
+
+::: puntos-clave
+Puntos clave
+
+- `usethis::use_data_raw()` crea un lugar para los datos crudos y el código que los prepara.
+- `usethis::use_data()` guarda los datos en `data/` para que sean parte del paquete.
+- Los datos se documentan en `R/data.R`, con un bloque de `roxygen2` arriba del nombre entre comillas.
+- Las funciones del paquete pueden usar sus propios datos.
+:::

@@ -1,0 +1,142 @@
+---
+title: "4. Documentar funciones"
+---
+
+::: resumen
+::: tiempo
+⏱ Enseñanza: 7 minutos · Ejercicios: 13 minutos
+:::
+::: {}
+Preguntas
+
+- ¿Cómo hago para que mi función tenga una página de ayuda?
+- ¿Qué quiere decir que una función se "exporta"?
+:::
+::: {}
+Objetivos
+
+- Escribir comentarios de `roxygen2` para una función.
+- Generar la documentación con `devtools::document()`.
+- Explicar qué hace la etiqueta `@export`.
+:::
+:::
+
+## ¿Por qué documentar?
+
+El código lo lee la computadora. La documentación la leen **las personas**: vos dentro de ocho meses, tu equipo, alguien que encontró tu paquete.
+
+En R, la documentación de una función es lo que aparece cuando escribimos `? funcion` o presionamos F1 arriba del nombre de la función.
+Esas páginas se guardan en archivos `.Rd` en la carpeta `man/`, con un formato específico.
+Por esa razón, **no los vamos a escribir a mano**: `roxygen2` los genera a partir de comentarios especiales, que escribimos justo arriba de la función.
+
+## El esqueleto de roxygen2
+
+::: en-vivo
+💻 En vivo
+
+Con el cursor adentro de la función, seleccionamos el menú: *Code > Insert Roxygen Skeleton* (o `Ctrl + Alt + Shift + R`).
+
+En Positron: hacé clic en la bombilla 💡 que aparece cerca del nombre de la función y elegí *Generate a roxygen template*.
+:::
+
+```r
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
+dicho_al_azar <- function() {
+```
+
+Cada línea empieza con `#'` (numeral y apóstrofo).
+Las **etiquetas** empiezan con `@`.
+
+## Completar la documentación
+
+::: en-vivo
+💻 En vivo, en `R/dicho_al_azar.R`
+
+```r
+#' Elegir un dicho al azar
+#'
+#' Devuelve un dicho popular de América Latina elegido al azar.
+#'
+#' @return Un texto (vector de caracteres) con el dicho.
+#' @export
+#'
+#' @examples
+#' dicho_al_azar()
+dicho_al_azar <- function() {
+  dichos <- c(
+    "Estar al horno",
+    "Como perro en cancha de bochas",
+    "Pasarlo chancho"
+  )
+  sample(dichos, size = 1)
+}
+```
+:::
+
+- **La primera línea es el título.** Corto, sin punto final.
+- **El párrafo siguiente es la descripción.** Qué hace la función.
+- **`@param`** documenta cada argumento. Esta función todavía no tiene, pero se lo vamos a agregar en el episodio de datos.
+- **`@return`** dice qué devuelve la función: qué tipo de objeto, de qué largo, qué columnas.
+- **`@examples`** tiene código que muestra cómo se usa. Tiene que funcionar porque `check()` lo corre.
+- **`@export`** hace que la función esté disponible para quien instale el paquete.
+
+## Generar la documentación
+
+::: en-vivo
+💻 En vivo
+
+```r
+devtools::document()
+#> ℹ Updating dichosos documentation
+#> ℹ Loading dichosos
+#> Writing NAMESPACE
+#> Writing dicho_al_azar.Rd
+
+?dicho_al_azar
+```
+
+Atajo de teclado: `Ctrl + Shift + D` (en Mac, `Cmd + Shift + D`).
+:::
+
+`document()` hizo dos cosas:
+
+1. Escribió `man/dicho_al_azar.Rd`, la página de ayuda.
+2. Agregó `export(dicho_al_azar)` en `NAMESPACE`.
+
+## Funciones exportadas e internas
+
+No todas las funciones de un paquete tienen que estar disponibles para las personas que lo usan.
+A veces escribimos funciones **auxiliares**, que solo usan otras funciones del paquete.
+
+- Con `@export`: la función es **pública**. Se puede usar después de `library(dichosos)`.
+- Sin `@export`: la función es **interna**. Solo la usan otras funciones del paquete (o vos, con `dichosos:::funcion()`).
+
+::: callout-note
+## `load_all()` es generosa
+
+Con `load_all()` podés usar **todas** las funciones, exportadas o no.
+Por eso a veces no nos damos cuenta de que olvidamos un `@export` hasta que instalamos el paquete.
+:::
+
+::: callout-tip
+## Markdown en la documentación
+
+usethis activa Markdown en roxygen2 (fijate la línea `Roxygen: list(markdown = TRUE)` en `DESCRIPTION`).
+Podés usar `**negrita**`, `` `código` `` y enlaces a otras funciones como `[dicho_del_dia()]`.
+:::
+
+{{< include ../_ejercicios/ep04.qmd >}}
+
+::: puntos-clave
+Puntos clave
+
+- La documentación se escribe con comentarios `#'` arriba de cada función.
+- `devtools::document()` genera las páginas de ayuda en `man/` y actualiza `NAMESPACE`.
+- `@export` hace que una función sea pública.
+- Nunca edites a mano `NAMESPACE` ni los archivos de `man/`.
+:::
