@@ -1,0 +1,29 @@
+---
+title: "Recursos"
+---
+
+## En castellano
+
+- [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/), en especial los talleres [Desarrollo de paquetes para principiantes](https://desarrollo-paquetes-basico-2026.netlify.app), [Desarrollo de paquetes avanzado](https://desarrollo-paquetes-avanzado-2026.netlify.app) y [¡Código hermoso, porque lo valemos!](https://codigo-hermoso-2026.netlify.app) de Maëlle Salmon, que se usaron para generar este taller.
+
+- [Introducción a la Programación II](https://intro-programacion.netlify.app/), de Paola Corrales y Yanina Bellini Saibene. Los capítulos [Funciones](https://intro-programacion.netlify.app/07_funciones), [Empaquetando funciones](https://intro-programacion.netlify.app/09_paquetes-1), [Documentando paquetes y funciones](https://intro-programacion.netlify.app/10_documentacion), [Dependencias y tests](https://intro-programacion.netlify.app/11_errores) y [Contribuir y aceptar contribuciones](https://intro-programacion.netlify.app/12_contribuir) son la base de este taller.
+
+- [Guía de desarrollo de paquetes de rOpenSci](https://devguide.ropensci.org/es/index.es.html): buenas prácticas, en castellano.
+
+- [Revisión de software por pares de rOpenSci](https://ropensci.org/es/software-review/).
+
+## En inglés
+
+- [R Packages (2e)](https://r-pkgs.org/), de Hadley Wickham y Jennifer Bryan. En especial el capítulo [The whole game](https://r-pkgs.org/whole-game.html).
+
+- Los sitios de [usethis](https://usethis.r-lib.org/), [devtools](https://devtools.r-lib.org/), [roxygen2](https://roxygen2.r-lib.org/), [testthat](https://testthat.r-lib.org/), [cli](https://cli.r-lib.org/) y [pkgdown](https://pkgdown.r-lib.org/).
+
+- [Blog de rOpenSci](https://ropensci.org/blog/), con muchos artículos sobre desarrollo de paquetes.
+
+- [R-universe](https://r-universe.dev/search), para buscar paquetes y publicar los tuyos.
+
+## Sobre cómo enseñamos
+
+- [The Carpentries](https://carpentries.org/) y su [manual para instructores](https://carpentries.github.io/instructor-training/).
+
+- [Enseñar tecnología en comunidad](https://teachtogether.tech/es/), de Greg Wilson, traducido al castellano por la comunidad con edicion de Yanina Bellini Saibene y Natalia Morandeira.
