@@ -1,0 +1,58 @@
+::: desafio
+Desafío 8.1: Un README y a instalar [10 minutos]{.duracion}
+
+1. Creá el README con `usethis::use_readme_rmd()`.
+2. Escribí una oración sobre qué hace el paquete y un ejemplo con `dicho_al_azar()`.
+3. Construilo con `devtools::build_readme()`.
+4. Instalá el paquete con `devtools::install()`.
+5. **Reiniciá R**, o mejor, abrí otro proyecto, y escribí `library(dichosos)` y `dicho_al_azar()`.
+
+¡Si te salió un dicho, ya tenés tu primer paquete instalado! 🎉
+
+::: {.callout-tip collapse="true" title="Solución"}
+````markdown
+# dichosos
+
+¡Dichos y expresiones populares de América Latina, directo a tu consola de R!
+
+## Ejemplo
+
+```{r}
+library(dichosos)
+dicho_al_azar(pais = "Chile")
+```
+````
+
+```r
+devtools::build_readme()
+devtools::install()
+```
+
+En otra sesión:
+
+```r
+library(dichosos)
+dicho_al_azar()
+```
+:::
+:::
+
+::: desafio
+Desafío 8.2 (opcional, si tenés GitHub configurado): Al mundo [5 minutos]{.duracion}
+
+1. `usethis::use_git()` y aceptá hacer el primer *commit*.
+2. `usethis::use_github()`.
+3. Pegá el enlace a tu repositorio en el documento colaborativo.
+4. Instalá el paquete de otra persona del taller con `pak::pak("usuario/dichosos")`. ¿Qué dichos agregó?
+:::
+
+::: desafio
+Desafío 8.3: Para cerrar [3 minutos]{.duracion}
+
+En el documento colaborativo (o en tus notas adhesivas):
+
+- **Para mantener**: una cosa que aprendiste hoy y te gustó.
+- **Para mejorar**: una cosa que mejorarías del taller, o que todavía no te quedó clara.
+
+Y una más: ¿qué código tuyo vas a convertir en paquete?
+:::

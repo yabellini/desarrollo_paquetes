@@ -1,0 +1,107 @@
+::: desafio
+Desafío 5.1: Datos adentro del paquete [10 minutos]{.duracion}
+
+1. Corré `usethis::use_data_raw("dichos")`.
+2. Descargá [dichos.csv](../datos/dichos.csv) y guardalo en la carpeta `data-raw/` de tu paquete.
+3. Completá `data-raw/dichos.R` para leer el CSV y guardarlo con `usethis::use_data()`. Corré el script.
+4. Corré `devtools::load_all()` y mirá los datos: `head(dichos)`, `table(dichos$pais)`.
+
+::: {.callout-tip collapse="true" title="Solución"}
+```r
+usethis::use_data_raw("dichos")
+download.file(
+  "https://URL-DEL-TALLER/datos/dichos.csv",
+  "data-raw/dichos.csv"
+)
+```
+
+En `data-raw/dichos.R`:
+
+```r
+dichos <- read.csv("data-raw/dichos.csv", encoding = "UTF-8")
+usethis::use_data(dichos, overwrite = TRUE)
+```
+
+```r
+source("data-raw/dichos.R")
+devtools::load_all()
+head(dichos)
+table(dichos$pais)
+```
+:::
+:::
+
+::: desafio
+Desafío 5.2: Completá los espacios [7 minutos]{.duracion}
+
+Esta nueva versión de `dicho_al_azar()` usa los datos y tiene un argumento `pais`.
+Completá los `____`, guardá, cargá y probá con `dicho_al_azar(pais = "Chile")`.
+
+```r
+#' Elegir un dicho al azar
+#'
+#' Devuelve un dicho elegido al azar del conjunto de datos [dichos].
+#'
+#' @param ____ Texto con el nombre de un país, por ejemplo `"Argentina"`.
+#'   Si es `NULL` (el valor por defecto) se elige entre todos los países.
+#'
+#' @return Un texto (vector de caracteres de largo 1) con el dicho.
+#' @export
+#'
+#' @examples
+#' dicho_al_azar()
+#' dicho_al_azar(pais = "Argentina")
+dicho_al_azar <- function(pais = ____) {
+  opciones <- dichos
+
+  if (!is.null(pais)) {
+    opciones <- dichos[dichos$____ == pais, ]
+  }
+
+  fila <- sample(nrow(____), size = 1)
+  opciones$____[fila]
+}
+```
+
+::: {.callout-tip collapse="true" title="Solución"}
+```r
+#' @param pais Texto con el nombre de un país, ...
+dicho_al_azar <- function(pais = NULL) {
+  opciones <- dichos
+
+  if (!is.null(pais)) {
+    opciones <- dichos[dichos$pais == pais, ]
+  }
+
+  fila <- sample(nrow(opciones), size = 1)
+  opciones$dicho[fila]
+}
+```
+
+No te olvides de `devtools::document()`: cambiamos la documentación.
+:::
+:::
+
+::: desafio
+Desafío 5.3: ¿Y si el país no existe? [3 minutos]{.duracion}
+
+Probá `dicho_al_azar(pais = "Narnia")`. ¿Qué devuelve? ¿Es útil para quien usa el paquete?
+Escribí en el documento colaborativo qué te gustaría que pase.
+
+::: {.callout-tip collapse="true" title="Solución"}
+Devuelve `character(0)`: un vector de texto vacío, sin ningún aviso.
+La función "falla en silencio", y quien la usa no sabe qué hizo mal.
+Lo vamos a arreglar en el próximo episodio con un mensaje de error claro.
+:::
+:::
+
+::: desafio
+Desafío 5.4 (para llevar a casa): Sumá un dicho de tu país [5 minutos]{.duracion}
+
+1. Agregá una fila a `data-raw/dichos.csv` con un dicho de tu país.
+2. Volvé a correr `data-raw/dichos.R`.
+3. Si agregaste un país nuevo, actualizá el número de filas en la documentación de `R/data.R`.
+4. Corré `devtools::load_all()` y buscá tu dicho.
+
+Compartilo en el documento colaborativo: ¡juntamos todos los dichos del taller!
+:::

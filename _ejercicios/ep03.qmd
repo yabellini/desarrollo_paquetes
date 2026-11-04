@@ -1,0 +1,74 @@
+::: desafio
+Desafío 3.1: Tu primera función en un paquete [8 minutos]{.duracion}
+
+1. Creá el archivo de la función con `usethis::use_r("dicho_al_azar")`.
+2. Escribí la función `dicho_al_azar()` (podés copiarla de los [snippets](../snippets.qmd)).
+3. Agregá al vector un dicho **de tu país** o de algún otro lado pero que te guste.
+4. Guardá, cargá el paquete con `devtools::load_all()` y llamá a la función varias veces.
+
+::: {.callout-tip collapse="true" title="Solución"}
+```r
+usethis::use_r("dicho_al_azar")
+```
+
+En `R/dicho_al_azar.R`:
+
+```r
+dicho_al_azar <- function() {
+  dichos <- c(
+    "Estar al horno",
+    "Perdido como perro en cancha de bochas",
+    "Pasarlo chancho",
+    "Un dicho tuyo"          # <- ¡el tuyo!
+  )
+  sample(dichos, size = 1)
+}
+```
+
+En la consola:
+
+```r
+devtools::load_all()
+dicho_al_azar()
+dicho_al_azar()
+```
+:::
+:::
+
+::: desafio
+Desafío 3.2: Poné los pasos en orden [3 minutos]{.duracion}
+
+Estos son los pasos para agregar una función nueva a un paquete, pero están desordenados.
+Ordenalos.
+
+- `devtools::load_all()`
+- Escribir la función en el archivo.
+- `usethis::use_r("nombre_funcion")`
+- Probar la función en la consola.
+- Guardar el archivo.
+
+::: {.callout-tip collapse="true" title="Solución"}
+1. `usethis::use_r("nombre_funcion")`
+2. Escribir la función en el archivo.
+3. Guardar el archivo.
+4. `devtools::load_all()`
+5. Probar la función en la consola.
+
+Y si algo no anda: volver al paso 2. ¡Es un ciclo!
+:::
+:::
+
+::: desafio
+Desafío 3.3: ¿Qué va a pasar? [4 minutos]{.duracion}
+
+Agregá otro dicho al vector y **guardá el archivo**, pero **no** corras `load_all()`.
+Antes de llamar a `dicho_al_azar()` muchas veces, pensá: ¿va a aparecer el dicho nuevo?
+
+Probalo. Después corré `load_all()` y volvé a probar.
+
+::: {.callout-tip collapse="true" title="Solución"}
+Sin `load_all()`, R sigue usando la versión de la función que cargó la última vez: el dicho nuevo **no aparece nunca**.
+Guardar el archivo no alcanza; hay que volver a cargar el paquete.
+Este es uno de los errores más comunes cuando empezamos a desarrollar paquetes: "¡cambié el código y no pasa nada!".
+:::
+:::

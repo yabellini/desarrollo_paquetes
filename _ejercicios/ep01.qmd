@@ -1,0 +1,29 @@
+::: desafio
+Desafío 1.1: ¿Qué hay en un paquete? [5 minutos, en el documento colaborativo]{.duracion}
+
+¿Cuál de estas afirmaciones sobre los paquetes de R es **correcta**?
+
+a. Un paquete solo puede tener funciones.
+b. Para crear un paquete hay que publicarlo en CRAN.
+c. Un paquete es una carpeta organizada de una manera específica, que puede tener código, documentación y datos.
+d. Para crear un paquete hay que saber programar en C.
+
+Escribí tu respuesta (la letra) en el documento colaborativo.
+
+::: {.callout-tip collapse="true" title="Solución"}
+La respuesta correcta es la **c**.
+
+- Si elegiste la **a**: los paquetes también pueden tener datos, documentación, tests, plantillas, aplicaciones Shiny... 
+- Si elegiste la **b**: CRAN es solo uno de los lugares donde se pueden publicar paquetes. Un paquete puede vivir en tu computadora, en GitHub o en [R-universe](https://r-universe.dev/search), y sigue siendo un paquete.
+- Si elegiste la **d**: algunos paquetes usan C o C++ para ser más rápidos, pero la gran mayoría está escrita solo en R.
+:::
+:::
+
+::: desafio
+Desafío 1.2: Tu código repetido [3 minutos]{.duracion}
+
+Pensá en algún código que hayas copiado y pegado en más de un proyecto: una función, una limpieza de datos, un gráfico con tus colores favoritos, unos datos que siempre usás.
+
+Escribilo en una línea en el documento colaborativo.
+¡Ese puede ser tu primer paquete!
+:::

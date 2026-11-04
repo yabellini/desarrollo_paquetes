@@ -1,0 +1,70 @@
+::: desafio
+Desafío 2.1: Crear tu paquete [10 minutos]{.duracion}
+
+1. Comprobá el nombre con `pak::pkg_name_check("dichosos")`.
+2. Creá el paquete con `usethis::create_package()`. Guardalo en una carpeta que encuentres fácil, por ejemplo en `Documentos` o en tu carpeta de proyectos, **pero no adentro de otro proyecto de RStudio**.
+3. En la nueva sesión de RStudio, corré `devtools::check()`.
+4. Agregá la licencia MIT y volvé a correr `devtools::check()` hasta ver **0 errores y 0 warnings**.
+
+
+::: {.callout-tip collapse="true" title="Solución"}
+```r
+pak::pkg_name_check("dichosos")
+usethis::create_package("~/Documents/dichosos")   # o la ruta que elijas
+
+# En la sesión nueva, la del paquete:
+devtools::check()
+usethis::use_mit_license("Tu Nombre")
+devtools::check()
+```
+
+Si te aparece una NOTE que dice `unable to verify current time`, no te preocupes: pasa cuando no hay conexión a internet o la red es lenta.
+:::
+:::
+
+::: desafio
+Desafío 2.2: ¿Quién es quién? [5 minutos, en parejas]{.duracion}
+
+Uní cada archivo o carpeta con lo que hace.
+
+| Archivo o carpeta | | Qué hace |
+|:--|:--|:--|
+| 1. `DESCRIPTION` | | a. Lista las funciones que el paquete exporta. No se edita a mano. |
+| 2. `R/` | | b. Lista archivos que R ignora cuando construye el paquete. |
+| 3. `NAMESPACE` | | c. Tiene los metadatos: nombre, título, autoría, licencia, dependencias. |
+| 4. `.Rbuildignore` | | d. Guarda los scripts con las funciones. |
+| 5. `dichosos.Rproj` | | e. Es el archivo del proyecto de RStudio. |
+
+::: {.callout-tip collapse="true" title="Solución"}
+1-c, 2-d, 3-a, 4-b, 5-e.
+:::
+:::
+
+::: desafio
+Desafío 2.3: Presentá tu paquete [5 minutos]{.duracion}
+
+Abrí el archivo `DESCRIPTION` y completá:
+
+- `Title`: una línea, con mayúscula en cada palabra importante y sin punto final.
+- `Description`: un párrafo que explique qué hace el paquete.
+- `Authors@R`: tu nombre y tu correo.
+
+Corré `devtools::check()` otra vez. ¿Cambió algo?
+
+::: {.callout-tip collapse="true" title="Solución"}
+```
+Package: dichosos
+Title: Dichos y Expresiones Populares de America Latina
+Version: 0.0.0.9000
+Authors@R:
+    person("Yanina", "Bellini Saibene", , "tu.correo@ejemplo.com",
+           role = c("aut", "cre"))
+Description: Un paquete de ejemplo para aprender a desarrollar paquetes
+    de R. Incluye dichos y expresiones populares de America Latina y
+    funciones para elegirlos al azar y buscarlos por palabra.
+License: MIT + file LICENSE
+```
+
+`check()` debería seguir dando 0 errores y 0 warnings. Estos campos no se comprueban por su contenido, pero son lo primero que ve cualquier persona que mira tu paquete.
+:::
+:::

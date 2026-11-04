@@ -1,0 +1,82 @@
+::: desafio
+Desafío 6.1: ¿Imports o Suggests? [3 minutos]{.duracion}
+
+Para cada caso, ¿la dependencia va en `Imports` o en `Suggests`?
+
+1. Tu función usa `cli::cli_abort()` para avisar errores.
+2. Usás `testthat` para los tests del paquete.
+3. Usás rmarkdown solo para construir el README.
+4. Tu función principal filtra datos con `dplyr::filter()`.
+
+::: {.callout-tip collapse="true" title="Solución"}
+1. **Imports**: sin `cli`, la función no puede funcionar.
+2. **Suggests**: los tests solo los corre quien desarrolla el paquete.
+3. **Suggests** (o ni siquiera eso: `README.Rmd` está en `.Rbuildignore`).
+4. **Imports**.
+
+Regla práctica: si tu paquete no funciona sin esa dependencia, va en `Imports`.
+:::
+:::
+
+::: desafio
+Desafío 6.2: Un error que ayude [10 minutos]{.duracion}
+
+1. Agregá cli como dependencia con `usethis::use_package("cli")`.
+2. Modificá `dicho_al_azar()` para que, si el país no está en los datos, dé un error con `cli::cli_abort()` que diga qué país pidió la persona y cuáles están disponibles.
+3. Cargá y probá con `dicho_al_azar(pais = "Narnia")`.
+4. Corré `devtools::check()`. Si aparece un WARNING por caracteres no ASCII, arreglalo.
+
+::: {.callout-tip collapse="true" title="Solución"}
+```r
+dicho_al_azar <- function(pais = NULL) {
+  opciones <- dichos
+
+  if (!is.null(pais)) {
+    if (!pais %in% dichos$pais) {
+      cli::cli_abort(c(
+        "No tengo dichos de {.val {pais}}.",
+        "i" = "Los pa\u00edses disponibles son: {.val {unique(dichos$pais)}}."
+      ))
+    }
+    opciones <- dichos[dichos$pais == pais, ]
+  }
+
+  fila <- sample(nrow(opciones), size = 1)
+  opciones$dicho[fila]
+}
+```
+
+```r
+devtools::load_all()
+dicho_al_azar(pais = "Narnia")
+#> Error in `dicho_al_azar()`:
+#> ! No tengo dichos de "Narnia".
+#> ℹ Los países disponibles son: "Argentina", "Brasil", "Chile", ...
+```
+
+Si escribiste `países` con tilde, `check()` da un WARNING. La tilde se escribe `\u00ed`.
+:::
+:::
+
+::: desafio
+Desafío 6.3: ¿Qué está mal? [2 minutos]{.duracion}
+
+Una persona escribió esto en `R/dicho_del_dia.R`. ¿Qué le dirías?
+
+```r
+library(cli)
+
+dicho_del_dia <- function(fecha = Sys.Date()) {
+  if (!inherits(fecha, "Date")) {
+    cli_abort("{.arg fecha} tiene que ser una fecha.")
+  }
+  # ...
+}
+```
+
+::: {.callout-tip collapse="true" title="Solución"}
+Nunca uses `library()` adentro del código de un paquete.
+En un paquete, el código de `R/` se corre cuando se **construye** el paquete, no cuando se usa, y `library()` cambiaría la sesión de quien lo usa.
+Lo correcto: declarar la dependencia con `usethis::use_package("cli")` y llamar a la función con `cli::cli_abort()`.
+:::
+:::

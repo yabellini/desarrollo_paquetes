@@ -1,0 +1,90 @@
+::: desafio
+Desafío 7.1: Tus primeros tests [8 minutos]{.duracion}
+
+1. Corré `usethis::use_testthat(3)` y `usethis::use_test("dicho_al_azar")`.
+2. Escribí un test que compruebe que `dicho_al_azar()` devuelve **un solo texto**.
+3. Escribí un test que compruebe que, para un país que no existe, la función da un error.
+4. Corré los tests con `devtools::test()`.
+
+::: {.callout-tip collapse="true" title="Solución"}
+```r
+test_that("dicho_al_azar() devuelve un solo texto", {
+  resultado <- dicho_al_azar()
+  expect_type(resultado, "character")
+  expect_length(resultado, 1)
+})
+
+test_that("dicho_al_azar() avisa si no conoce el país", {
+  expect_error(dicho_al_azar(pais = "Narnia"), "Narnia")
+})
+```
+
+```r
+devtools::test()
+#> [ FAIL 0 | WARN 0 | SKIP 0 | PASS 3 ]
+```
+:::
+:::
+
+::: desafio
+Desafío 7.2: Rompé el paquete a propósito [3 minutos]{.duracion}
+
+En `R/dicho_al_azar.R`, cambiá `size = 1` por `size = 2`.
+Antes de correr los tests, pensá: ¿qué test va a fallar?
+
+Corré `devtools::test()`, leé el mensaje y después volvé a dejar `size = 1`.
+
+::: {.callout-tip collapse="true" title="Solución"}
+Falla `expect_length(resultado, 1)`, porque ahora la función devuelve dos dichos:
+
+```
+── Failure: dicho_al_azar() devuelve un solo texto ──
+`resultado` has length 2, not length 1.
+```
+
+Romper el código a propósito es una forma de comprobar que los tests sirven.
+:::
+:::
+
+::: desafio
+Desafío 7.3: Una función nueva con su test [para quien termine antes]{.duracion}
+
+Escribí la función `buscar_dicho(palabra)`, que devuelve las filas de `dichos` donde la palabra aparece en el dicho o en el significado. Pista: `grepl(palabra, dichos$dicho, ignore.case = TRUE)`.
+
+Documentala, escribí un test con `usethis::use_test("buscar_dicho")` y corré `devtools::check()`.
+
+::: {.callout-tip collapse="true" title="Solución"}
+```r
+#' Buscar dichos por palabra
+#'
+#' Busca una palabra en los dichos y en sus significados.
+#'
+#' @param palabra Texto a buscar. No distingue mayúsculas de minúsculas.
+#'
+#' @return Un data frame con las filas de [dichos] que contienen la palabra.
+#' @export
+#'
+#' @examples
+#' buscar_dicho("dinero")
+buscar_dicho <- function(palabra) {
+  encontrados <- grepl(palabra, dichos$dicho, ignore.case = TRUE) |
+    grepl(palabra, dichos$significado, ignore.case = TRUE)
+  dichos[encontrados, ]
+}
+```
+
+```r
+test_that("buscar_dicho() encuentra dichos", {
+  resultado <- buscar_dicho("dinero")
+  expect_s3_class(resultado, "data.frame")
+  expect_gt(nrow(resultado), 0)
+})
+
+test_that("buscar_dicho() no distingue mayúsculas", {
+  expect_equal(buscar_dicho("PERRO"), buscar_dicho("perro"))
+})
+```
+
+La versión completa, con un mensaje cuando no encuentra nada, está en el [paquete terminado](../datos/dichosos.zip).
+:::
+:::
