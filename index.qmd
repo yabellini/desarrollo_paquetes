@@ -1,0 +1,96 @@
+---
+title: "De la idea al paquete: programá tu primer paquete de R"
+subtitle: "Taller de LatinR 2026"
+toc: false
+---
+
+```{=html}
+<div class="hero-dicho" aria-live="polite">
+  <div class="consola">&gt; dichosos::dicho_al_azar()</div>
+  <p class="dicho nuevo" id="dicho">Estoy al horno</p>
+  <p class="significado" id="significado">Estar en un problema muy grande y sin salida fácil.</p>
+  <p class="pais" id="pais">Argentina</p>
+</div>
+```
+
+Este dicho salió del paquete que vamos a construir en el taller: **`dichosos`**, un paquete con dichos y expresiones populares de América Latina.
+Al final de la tarde vas a tener en tu computadora un paquete de R funcional, con **funciones, datos, documentación y tests**.
+Y vas a llevarte las herramientas para poder hacer lo mismo con tu propio código.
+
+## Fuentes
+
+- Los talleres de desarrollo de paquetes del [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/), cuya autora es **Maëlle Salmon**. De ahí vienen la secuencia de herramientas, muchas de las preguntas frecuentes y la analogía de la bicicleta.
+
+- El libro [Introducción a la Programación II](https://intro-programacion.netlify.app/), de **Paola Corrales** y **Yanina Bellini Saibene**, en especial los capítulos [Funciones](https://intro-programacion.netlify.app/07_funciones), [Empaquetando funciones](https://intro-programacion.netlify.app/09_paquetes-1), [Documentando paquetes y funciones](https://intro-programacion.netlify.app/10_documentacion), [Dependencias y tests](https://intro-programacion.netlify.app/11_errores) y [Contribuir y aceptar contribuciones](https://intro-programacion.netlify.app/12_contribuir).
+
+- La charla ...
+
+## ¿Para quién es este taller?
+
+Para personas que **ya programan en R** y escriben (o están aprendiendo a escribir) sus propias funciones, pero **nunca crearon un paquete**.
+
+Si te reconocés en alguna de estas personas, este taller es para vos:
+
+- **Valentina** es bióloga en Córdoba. Tiene un script de 300 líneas que copia de proyecto en proyecto, y cada vez que corrige un error lo tiene que corregir en cada uno de los proyectos donde lo uso.
+- **Diego** trabaja en una oficina de estadística en Bogotá. Su equipo comparte funciones en un DropBox y nadie sabe cuál es la versión actualizada.
+- **Julian** da clases en una universidad de Lima. Quiere que sus estudiantes instalen los datos del curso con una sola línea de código.
+
+::: callout-important
+## Antes del taller
+
+Seguí las instrucciones de la página de [Preparación](preparacion.qmd) para tener tu entorno listo para desarrollar paquetes.
+Lleva unos 20 minutos.
+:::
+
+## Lo que vas a aprender
+
+Al terminar el taller vas a poder:
+
+1. Explicar qué es un paquete de R y por qué conviene crear uno, aunque sea solo para vos.
+2. Crear la estructura de un paquete con `usethis` y comprobarla con `devtools::check()`.
+3. Agregar funciones y usar el ciclo *editar, cargar, probar*.
+4. Documentar funciones con `roxygen2`.
+5. Incluir datos en un paquete y documentarlos.
+6. Declarar dependencias y escribir mensajes de error claros con `cli`.
+7. Escribir tests con `testthat`.
+8. Escribir un README e instalar tu paquete para usarlo desde cualquier proyecto.
+
+## Cómo vamos a trabajar
+
+- **Programación en vivo**: la instructora escribe el código en vivo, despacio, y vos lo escribís a la par en tu computadora. Si se equivoca (¡va a pasar!), vemos juntos cómo resolverlo.
+- **Desafíos cortos** después de cada parte, para practicar y comprobar que todo se entendió.
+- **Notas adhesivas**  cuando necesitás ayuda pegas tu nota adhesiva en tu computadora y una persona del equipo docente se acerca a ayudarte.
+- **Un documento colaborativo** con notas, los enlaces, las preguntas y las respuestas, que queda para después del taller.
+- **Equivocarse está bien.** Los errores son la mejor parte del aprendizaje y vamos a ver varios a propósito.
+
+## Horario
+
+| Hora | Episodio |
+|:-----|:---------|
+| 0:00 | Bienvenida, código de conducta y presentaciones |
+| 0:10 | [1. ¿Qué es un paquete?](episodios/01-que-es-un-paquete.qmd) |
+| 0:25 | [2. Crear el paquete](episodios/02-crear-el-paquete.qmd) |
+| 0:50 | [3. Nuestra primera función](episodios/03-primera-funcion.qmd) |
+| 1:15 | 🧉 Pausa (10 minutos) |
+| 1:25 | [4. Documentar funciones](episodios/04-documentar.qmd) |
+| 1:45 | [5. Datos en el paquete](episodios/05-datos.qmd) |
+| 2:10 | 🤸 Pausa (10 minutos) |
+| 2:20 | [6. Dependencias y mensajes claros](episodios/06-dependencias.qmd) |
+| 2:35 | [7. Tests](episodios/07-tests.qmd) |
+| 3:00 | [8. Compartir el paquete](episodios/08-compartir.qmd) |
+| 3:20 | Cierre, próximos pasos y opiniones |
+| 3:30 | Fin |
+
+## Código de conducta
+
+Este taller es parte de LatinR y se rige por su [código de conducta](https://latinr.org/sobre/coc/).
+Queremos que todas las personas se sientan bienvenidas, sin importar su experiencia, su país, su género o la cantidad de veces que pregunten lo mismo.
+Si algo te hace sentir incómoda o incómodo, hablá con la organización de LatinR.
+
+## ¿Por qué dichos?
+
+Porque un paquete de ejemplo tiene que ser simple, funcional y presentar las características mínimas de lo que hace un paquete de R un paquete.
+
+Los dichos son una excusa perfecta: nos dan un conjunto de datos manejable sobre el que podemos conducir acciones, como filtrar y buscar con la yapa de aprender expresiones de diferentes paises.
+
+Algo divertido que podemos hacer es **sumar los dichos de tu país** y el paquete se hace más rico con cada taller.
