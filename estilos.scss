@@ -1,0 +1,125 @@
+/*-- scss:defaults --*/
+// Paleta de rOpenSci (https://ropensci.org)
+$ro-primary: #4177ca;    // --primary
+$ro-secondary: #43d5ec;  // --secondary
+$ro-info: #17a2b8;       // --info
+$ro-orange: #fd7e14;     // --orange (ejercicios)
+$ro-green: #28a745;      // --green / --success (soluciones y puntos clave)
+$ro-dark: #343a40;       // --dark / --gray-dark (texto)
+$ro-light: #f8f9fa;      // --light
+$ro-gray: #6c757d;       // --gray
+
+// Tonos más oscuros de la misma paleta, solo para texto chico (contraste AA)
+$ro-primary-texto: darken($ro-primary, 12%);
+$ro-green-texto: darken($ro-green, 10%);
+$ro-info-texto: darken($ro-info, 10%);
+$azul-claro: mix($ro-primary, #fff, 10%);
+
+$body-bg: #FFFFFF;
+$body-color: $ro-dark;
+$primary: $ro-primary;
+$secondary: $ro-secondary;
+$info: $ro-info;
+$success: $ro-green;
+$warning: $ro-orange;
+$link-color: $ro-primary-texto;
+$navbar-bg: $ro-primary;
+$navbar-fg: #FFFFFF;
+$navbar-hl: $ro-secondary;
+$footer-bg: $ro-light;
+
+// Proxima Nova (la de rOpenSci) es paga: usamos Montserrat, la gratuita más parecida.
+$font-family-sans-serif: "Montserrat", "proxima-nova", sans-serif;
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+$headings-font-family: "Montserrat", "proxima-nova", sans-serif;
+$headings-font-weight: 700;
+$headings-color: $ro-primary-texto;
+$font-size-root: 17px;
+$line-height-base: 1.65;
+$code-color: $ro-dark;
+$code-bg: $azul-claro;
+$callout-color-note: $ro-info;
+$callout-color-tip: $ro-green;
+$callout-color-important: $ro-primary;
+$callout-color-warning: $ro-orange;
+$callout-color-caution: $ro-orange;
+
+/*-- scss:rules --*/
+h1.title { font-weight: 800; color: $ro-primary; line-height: 1.15; }
+h2 { margin-top: 2.2rem; }
+main p, main li { max-width: 72ch; }
+
+.navbar-title { font-weight: 800; }
+.navbar .nav-link.active { color: #fff; text-decoration: underline; text-decoration-color: $ro-secondary; text-decoration-thickness: 3px; text-underline-offset: 6px; }
+
+code:not(pre code) { background: $azul-claro; padding: .1em .3em; border-radius: 4px; }
+
+/* --- Resumen al inicio de cada episodio (estilo Carpentries) --- */
+.resumen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border: 2px solid $ro-primary;
+  border-radius: 10px;
+  margin: 1.5rem 0 2rem;
+  overflow: hidden;
+  > div { padding: 1rem 1.25rem; }
+  > div:nth-child(2) { background: $azul-claro; }
+  > div.tiempo { grid-column: 1 / -1; background: $ro-primary; color: #fff; padding: .5rem 1.25rem; font-weight: 700; }
+  p { margin-bottom: .3rem; font-weight: 700; color: $ro-primary-texto; }
+  ul { margin-bottom: 0; padding-left: 1.2rem; }
+}
+@media (max-width: 700px) { .resumen { grid-template-columns: 1fr; } }
+
+/* --- Desafíos: naranja --- */
+.desafio {
+  border-left: 8px solid $ro-orange;
+  background: mix($ro-orange, #fff, 8%);
+  padding: 1rem 1.25rem .5rem;
+  margin: 1.75rem 0;
+  border-radius: 0 10px 10px 0;
+  > p:first-child { font-weight: 700; font-size: 1.1rem; }
+  .duracion { font-weight: 400; font-size: .9rem; color: $ro-gray; }
+}
+
+/* --- Soluciones y puntos clave: verde --- */
+.puntos-clave {
+  border: 2px solid $ro-green;
+  border-radius: 10px;
+  padding: 1rem 1.25rem .4rem;
+  margin: 2.5rem 0 1rem;
+  > p:first-child { color: $ro-green-texto; font-weight: 700; font-size: 1.1rem; }
+}
+
+/* --- Programación en vivo: celeste --- */
+.en-vivo {
+  border: 2px dashed $ro-info;
+  border-radius: 10px;
+  padding: .75rem 1.25rem .25rem;
+  margin: 1.5rem 0;
+  > p:first-child { color: $ro-info-texto; font-weight: 700; }
+}
+
+/* --- Portada --- */
+.hero-dicho {
+  margin: 1rem 0 2.5rem;
+  padding: 2rem 0 1.5rem;
+  border-bottom: 4px solid $ro-secondary;
+  .consola { font-family: $font-family-monospace; font-size: .95rem; color: $ro-gray; margin-bottom: .5rem; }
+  .dicho { font-weight: 800; font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.1; letter-spacing: -0.01em; color: $ro-primary; margin: 0 0 .75rem; max-width: 18ch; }
+  .significado { font-size: 1.2rem; margin-bottom: .25rem; }
+  .pais { font-size: .95rem; color: $ro-gray; }
+  button { margin-top: 1rem; background: $ro-primary; color: #fff; border: 0; border-radius: 6px; padding: .5rem 1rem; font-weight: 700; }
+  button:hover { background: $ro-primary-texto; }
+  button:focus-visible { outline: 3px solid $ro-secondary; outline-offset: 2px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dicho .dicho.nuevo { animation: aparecer .5s ease-out; }
+  @keyframes aparecer { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+}
+
+table { font-size: .95rem; }
+
+ol.recorrido { counter-reset: paso; list-style: none; padding-left: 0; }
+ol.recorrido li { counter-increment: paso; padding: .35rem 0 .35rem 2.6rem; position: relative; border-left: 3px solid $azul-claro; margin-left: 1rem; }
+ol.recorrido li::before { content: counter(paso); position: absolute; left: -1rem; top: .3rem; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: $ro-primary; color: #fff; text-align: center; line-height: 1.8rem; font-weight: 700; font-size: .9rem; }
