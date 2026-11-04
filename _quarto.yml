@@ -1,0 +1,86 @@
+project:
+  type: website
+  output-dir: _site
+  pre-render: R/dichos-js.R
+  resources:
+    - datos/dichos.csv
+    - datos/dichosos.zip
+
+lang: es
+
+website:
+  title: "Tu primer paquete de R: de la idea al paquete"
+  description: "Taller de LatinR 2026"
+  site-url: "https://example.org"
+  page-navigation: true
+  open-graph: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Inicio
+      - href: preparacion.qmd
+        text: Preparación
+      - text: Lecciones
+        menu:
+          - episodios/01-que-es-un-paquete.qmd
+          - episodios/02-crear-el-paquete.qmd
+          - episodios/03-primera-funcion.qmd
+          - episodios/04-documentar.qmd
+          - episodios/05-datos.qmd
+          - episodios/06-dependencias.qmd
+          - episodios/07-tests.qmd
+          - episodios/08-compartir.qmd
+      - href: ejercicios.qmd
+        text: Ejercicios
+      - href: slides/index.qmd
+        text: Diapositivas
+        target: _blank
+      - text: Más
+        menu:
+          - referencia.qmd
+          - snippets.qmd
+          - recursos.qmd
+          - creditos.qmd
+#          - text: "---"
+#          - docentes/notas.qmd
+#          - docentes/guion.qmd
+#          - docentes/documento-colaborativo.qmd
+  sidebar:
+    - title: Lecciones
+      style: docked
+      contents:
+        - section: "Bloque 1 · Del script al paquete"
+          contents:
+            - episodios/01-que-es-un-paquete.qmd
+            - episodios/02-crear-el-paquete.qmd
+            - episodios/03-primera-funcion.qmd
+        - section: "Bloque 2 · Que se entienda"
+          contents:
+            - episodios/04-documentar.qmd
+            - episodios/05-datos.qmd
+        - section: "Bloque 3 · Que sea confiable"
+          contents:
+            - episodios/06-dependencias.qmd
+            - episodios/07-tests.qmd
+            - episodios/08-compartir.qmd
+  page-footer:
+    left: "Materiales con licencia [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.es). Código con licencia MIT."
+    right: "Hecho con [Quarto](https://quarto.org) para LatinR 2026"
+
+format:
+  html:
+    theme: [cosmo, estilos.scss]
+    toc: true
+    toc-title: "En esta página"
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: a11y
+    link-external-newwindow: true
+    include-in-header:
+      text: |
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+execute:
+  eval: false
+  echo: true
