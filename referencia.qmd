@@ -1,0 +1,116 @@
+---
+title: "Referencia"
+subtitle: "Guía rápida de funciones y glosario"
+---
+
+## Guía rápida
+
+| Para... | Usá | Atajo en RStudio |
+|:--|:--|:--|
+| Comprobar un nombre | `pak::pkg_name_check("nombre")` | |
+| Crear un paquete | `usethis::create_package("ruta/nombre")` | |
+| Guardar tus datos para usethis | `usethis::edit_r_profile()` | |
+| Elegir licencia | `usethis::use_mit_license()` | |
+| Crear o abrir un archivo de funciones | `usethis::use_r("nombre")` | |
+| Cargar el paquete en desarrollo | `devtools::load_all()` | `Ctrl/Cmd + Shift + L` |
+| Insertar el esqueleto de roxygen2 | *Code > Insert Roxygen Skeleton* | `Ctrl/Cmd + Alt/Option + Shift + R` |
+| Generar la documentación | `devtools::document()` | `Ctrl/Cmd + Shift + D` |
+| Preparar los datos crudos | `usethis::use_data_raw("nombre")` | |
+| Guardar datos en el paquete | `usethis::use_data(objeto)` | |
+| Agregar una dependencia | `usethis::use_package("paquete")` | |
+| Preparar los tests | `usethis::use_testthat(3)` | |
+| Crear o abrir un archivo de tests | `usethis::use_test("nombre")` | |
+| Correr los tests | `devtools::test()` | `Ctrl/Cmd + Shift + T` |
+| Revisar todo el paquete | `devtools::check()` | `Ctrl/Cmd + Shift + E` |
+| Crear el README | `usethis::use_readme_rmd()` | |
+| Construir el README | `devtools::build_readme()` | |
+| Instalar el paquete | `devtools::install()` | `Ctrl/Cmd + Shift + B` |
+| Versionar con Git | `usethis::use_git()` | |
+| Subir a GitHub | `usethis::use_github()` | |
+
+## Etiquetas de roxygen2
+
+| Etiqueta | Para qué |
+|:--|:--|
+| primera línea | El título |
+| primer párrafo | La descripción |
+| `@param nombre` | Un argumento |
+| `@return` | Qué devuelve la función |
+| `@examples` | Código de ejemplo (se ejecuta en `check()`) |
+| `@export` | Hace pública la función |
+| `@format` | La estructura de un conjunto de datos |
+| `@source` | De dónde vienen los datos |
+
+## La estructura final de `dichosos`
+
+```
+dichosos/
+├── DESCRIPTION          # metadatos y dependencias
+├── NAMESPACE            # lo escribe roxygen2: no tocar
+├── LICENSE, LICENSE.md  # la licencia MIT
+├── README.Rmd           # lo editás vos
+├── README.md            # lo genera build_readme()
+├── R/
+│   ├── buscar_dicho.R
+│   ├── data.R           # documentación de los datos
+│   ├── dicho_al_azar.R
+│   └── dicho_del_dia.R
+├── data/
+│   └── dichos.rda       # lo genera use_data()
+├── data-raw/
+│   ├── dichos.csv       # datos crudos
+│   └── dichos.R         # código que prepara los datos
+├── man/                 # lo genera document(): no tocar
+└── tests/               # lo genera testthat  
+    ├── testthat.R
+    └── testthat/
+        ├── test-buscar_dicho.R
+        ├── test-dicho_al_azar.R
+        └── test-dicho_del_dia.R
+```
+
+Podés descargar el paquete terminado: [dichosos.zip](datos/dichosos.zip).
+
+## Glosario
+
+**Paquete**
+: Una carpeta organizada de una manera específica que R sabe instalar. Puede tener código, documentación, datos y tests.
+
+**`DESCRIPTION`**
+: Archivo con los metadatos del paquete: nombre, título, descripción, autoría, licencia, versión y dependencias.
+
+**`NAMESPACE`**
+: Archivo que dice qué funciones exporta el paquete y qué importa de otros. Lo escribe roxygen2.
+
+**Exportar**
+: Hacer que una función esté disponible para quien usa el paquete con `library()`.
+
+**Dependencia**
+: Otro paquete que nuestro paquete usa. Puede ir en `Imports` (imprescindible) o `Suggests` (opcional).
+
+**roxygen2**
+: Paquete que convierte comentarios `#'` en páginas de ayuda y en el `NAMESPACE`.
+
+**R CMD check**
+: La revisión oficial de R para paquetes. La corremos con `devtools::check()`. Informa ERROR, WARNING y NOTE.
+
+**Test**
+: Código que comprueba automáticamente que una función hace lo que esperamos.
+
+**Expectativa**
+: Cada comprobación adentro de un test, como `expect_equal()`.
+
+**Snapshot**
+: Una "foto" de la salida de un código que testthat guarda para comparar en el futuro.
+
+**Lazy data**
+: Datos que se cargan recién cuando alguien los usa.
+
+**ASCII**
+: El conjunto básico de caracteres, sin tildes ni eñes. El código de un paquete solo puede usar ASCII.
+
+**Instalar**
+: Copiar el paquete a la librería de R, para usarlo desde cualquier proyecto con `library()`.
+
+**README**
+: La puerta de entrada al paquete: qué hace, cómo se instala y un ejemplo.
