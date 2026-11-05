@@ -55,7 +55,7 @@ Bajamos el CSV a esa carpeta:
 
 ```r
 download.file(
-  "https://URL-DEL-TALLER/datos/dichos.csv",
+  "https://yabellini.github.io/desarrollo_paquetes/datos/dichos.csv",
   "data-raw/dichos.csv"
 )
 ```

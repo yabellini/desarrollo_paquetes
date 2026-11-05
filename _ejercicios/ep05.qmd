@@ -10,7 +10,7 @@ Desafío 5.1: Datos adentro del paquete [10 minutos]{.duracion}
 ```r
 usethis::use_data_raw("dichos")
 download.file(
-  "https://URL-DEL-TALLER/datos/dichos.csv",
+  "https://yabellini.github.io/desarrollo_paquetes/datos/dichos.csv",
   "data-raw/dichos.csv"
 )
 ```

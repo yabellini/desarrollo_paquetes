@@ -10,7 +10,7 @@ lang: es
 website:
   title: "Tu primer paquete de R: de la idea al paquete"
   description: "Taller de LatinR 2026"
-  site-url: "https://example.org"
+  site-url: "https://yabellini.github.io/desarrollo_paquetes/"
   page-navigation: true
   open-graph: true
   navbar:

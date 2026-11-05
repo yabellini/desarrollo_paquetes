@@ -30,6 +30,11 @@ execute:
 
 ::: chico
 Todo el material está en el sitio del taller: slides, episodios, ejercicios y código para copiar.
+https://yabellini.github.io/desarrollo_paquetes/
+:::
+
+::: footer
+Web del taller: https://yabellini.github.io/desarrollo_paquetes/
 :::
 
 ## Cómo vamos a trabajar
@@ -382,7 +387,7 @@ dicho_al_azar <- function(pais = NULL) {
 ::: envivo
 ```r
 usethis::use_data_raw("dichos")
-download.file("https://URL-DEL-TALLER/datos/dichos.csv",
+download.file("https://yabellini.github.io/desarrollo_paquetes/datos/dichos.csv",
               "data-raw/dichos.csv")
 ```
 
