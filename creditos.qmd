@@ -6,9 +6,14 @@ Este taller fue preparado por Yanina Bellini Saibene para [LatinR 2026](https://
 
 Se basa en:
 
-- Los talleres de desarrollo de paquetes del [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/), cuya autora es Maëlle Salmon. De ahí vienen la analogía de la bicicleta, la idea del `.Rprofile` como "los ajustes del asiento" y muchas de las preguntas frecuentes.
-- La charla *Desarrollando paquetes de R con la ayuda de rOpenSci*, de Yanina Bellini Saibene, donde nació la idea de un paquete de dichos.
-- Los capítulos 9, 11, 12, 13 y 14 del libro [Introducción a la Programación II](https://intro-programacion.netlify.app/), de Paola Corrales y Yanina Bellini Saibene.
+- Los talleres [Desarrollo de paquetes para principiantes](https://desarrollo-paquetes-basico-2026.netlify.app), [Desarrollo de paquetes avanzado](https://desarrollo-paquetes-avanzado-2026.netlify.app) y [¡Código hermoso, porque lo valemos!](https://codigo-hermoso-2026.netlify.app) del [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/) desarrollados y dictados por **Maëlle Salmon**. De ahí vienen la secuencia de herramientas, muchas de las preguntas frecuentes, la idea de los snippets de código y la analogía de la bicicleta.
+
+- El libro [Introducción a la Programación II](https://intro-programacion.netlify.app/), de **Paola Corrales** y **Yanina Bellini Saibene**, en especial los capítulos [Funciones](https://intro-programacion.netlify.app/07_funciones), [Empaquetando funciones](https://intro-programacion.netlify.app/09_paquetes-1), [Documentando paquetes y funciones](https://intro-programacion.netlify.app/10_documentacion), [Dependencias y tests](https://intro-programacion.netlify.app/11_errores) y [Contribuir y aceptar contribuciones](https://intro-programacion.netlify.app/12_contribuir).
+
+- La charla [Desarrollando paquetes de R con la ayuda de rOpenSci](https://yabellini.netlify.app/talk/2025_r-ladies_ropensci/), de Yanina Bellini Saibene, donde nació la idea de un paquete de dichos regionales y la primera version de las slides de este taller.
+
+- La lección 9 adapta el taller [Modern R Workflow (ft. Positron and AI)](https://github.com/posit-conf-2026/modern-r-workflow), de Hadley Wickham y Jenny Bryan (posit::conf 2026), y las pautas de rOpenSci sobre el uso de IA publicadas en [Software Review in the Era of AI](https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/).
+
 - La forma de diseñar talleres de [The Carpentries](https://carpentries.org/).
 
 Los dichos del conjunto de datos fueron recopilados para el taller. 
@@ -19,9 +24,13 @@ Si encontrás un significado que no es exacto en tu país, ¡avisanos o mandá u
 
 El sitio web se construye con Quarto en un proyecto de RStudio y se publica con GitHub Pages.  
 
-Se uso Claude Cowork para generar el diseño visual de la pagina web basados en los estilos de rOpenSci y el formato de presentacion de contenidos del workbench de The Carpentries.
+Se uso Claude Cowork para:
 
-Tambien se procesaron los subtitulos de la charla *Desarrollando paquetes de R con la ayuda de rOpenSci* con Claude Cowork para limpiarlos y extraer lo que dijo la disertante (Yanina Bellini Saibene) para utilizar esas notas en el contenido de este curso.
+- generar el diseño visual de la pagina web basados en los estilos de rOpenSci y el formato de presentacion de contenidos del workbench de The Carpentries.
+
+- procesar los subtitulos de la charla *Desarrollando paquetes de R con la ayuda de rOpenSci* para limpiarlos y extraer lo que dijo la disertante (Yanina) para utilizar esas notas en el contenido de este curso.
+
+- armar el relojito con el tiempo en las slides.
 
 Las traducciones se realizan utilizando DeepL. Siempre son revisadas y editadas por una persona antes de su publicación. En este caso Yanina hizo las revisiones.
 

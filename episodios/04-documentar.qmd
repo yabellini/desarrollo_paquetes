@@ -4,7 +4,7 @@ title: "4. Documentar funciones"
 
 ::: resumen
 ::: tiempo
-⏱ Enseñanza: 7 minutos · Ejercicios: 13 minutos
+⏱ Enseñanza: 7 minutos · Ejercicios: 10 minutos
 :::
 ::: {}
 Preguntas
@@ -69,7 +69,7 @@ Las **etiquetas** empiezan con `@`.
 #' dicho_al_azar()
 dicho_al_azar <- function() {
   dichos <- c(
-    "Estar al horno",
+    "Estoy al horno",
     "Como perro en cancha de bochas",
     "Pasarlo chancho"
   )

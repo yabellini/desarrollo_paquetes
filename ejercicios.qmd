@@ -37,3 +37,7 @@ Si te trabás, poné tu nota adhesiva visible, asi te podemos ayudar.
 ## 8. Compartir el paquete
 
 {{< include _ejercicios/ep08.qmd >}}
+
+## 9. La IA en el ciclo de desarrollo
+
+{{< include _ejercicios/ep09.qmd >}}

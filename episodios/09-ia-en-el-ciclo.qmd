@@ -1,0 +1,172 @@
+---
+title: "9. La IA en el ciclo de desarrollo"
+subtitle: "Dónde ayudan las herramientas de IA y dónde no"
+---
+
+::: resumen
+::: tiempo
+⏱ Enseñanza: 8 minutos · Ejercicios: 12 minutos
+:::
+::: {}
+Preguntas
+
+- ¿Cambia el ciclo de desarrollo de paquetes cuando usamos IA?
+- ¿En qué partes del ciclo conviene usar herramientas de IA y en cuáles no?
+- ¿Qué formas hay de usar un modelo de IA?
+- ¿Qué riesgos tiene dejar que un agente trabaje en mi computadora?
+:::
+::: {}
+Objetivos
+
+- Distinguir tres formas de usar un modelo: chat, cliente y agente.
+- Decidir, para cada paso del ciclo, si conviene delegarlo, pedir un borrador o hacerlo a mano.
+- Revisar código y tests generados por IA con los criterios que aprendimos en el taller.
+- Nombrar los riesgos principales y cómo protegerse.
+:::
+:::
+
+
+## ¿Por qué vemos este tema al final?
+
+Porque primero había que entender el ciclo.
+Hoy hicimos todo "a mano" a propósito: `create_package()`, `use_r()`, `load_all()`, `roxygen2`, `use_data()`, `testthat`, `check()`.
+Ahora que sabés qué hace cada paso, podés decidir cuáles darle a una herramienta de IA y, sobre todo, **entender para poder revisar lo que te devuelve**.
+
+En un taller, el proceso **es** el objetivo. En tu trabajo de todos los días, a veces no.
+
+## El ciclo clásico no cambia
+
+De acuerdo a Hadley Wickham y Jenny Bryan el flujo de trabajo es el mismo de siempre:
+
+1. Escribir una función en `R/`.
+2. `load_all()` y probarla en la consola.
+3. Crear el archivo de tests con `use_test()` y escribir tests.
+4. `test()` hasta que pasen.
+5. `document()` para actualizar la documentación.
+6. `check()` al final.
+7. Reiniciar R.
+
+Lo que cambia es **quién escribe** cada parte, y qué te toca hacer a vos.
+
+## Qué cambia con la IA
+
+| Parte del ciclo | Qué hace bien la IA | Qué te toca a vos |
+|:--|:--|:--|
+| **Código** | Lo escribe a partir de tu descripción. | Probarlo en la consola con `load_all()`, para ver cómo se siente usarlo. Entender cada línea. |
+| **Tests** | A los agentes les encanta escribir tests. | Que sean los necesarios (menos es más), claros y rápidos. Romper el código a propósito para ver que fallan. |
+| **Documentación** | Un primer borrador. | La documentación es comunicación entre personas: revisala y escribila con tu voz. |
+| **`check()`** | Arreglar los problemas que encuentra. | Correrlo siempre. Sigue siendo igual de importante. |
+| **Datos** | Leer, limpiar y transformar archivos. | **Los datos son tu responsabilidad.** Un modelo puede inventar un dicho o un significado con total seguridad. |
+
+::: callout-warning
+## Lo que pedimos en rOpenSci
+
+En rOpenSci pedimos que **todo lo generado con IA sea revisado con cuidado por la persona autora** antes de que otra persona lo lea, y que **siempre se diga** cómo se usó la IA. Lo contamos en el blog: [Revisión de Software en la era de la IA (*Software Review in the Era of AI*)](https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/) (en inglés).
+
+- **Nunca le hagas leer a otra persona algo que vos no revisaste.** Un README, la respuesta a un *issue* o la descripción de un *pull request* son mensajes para personas.
+- **La comunicación personal la escribís vos, nunca la IA.** Si una persona te escribe, te responde una persona.
+- **Usarla para traducir está bien**, sobre todo cuando tenes que comunicarte en un idioma que no es tu lengua nativa.
+- **Siempre, siempre, que uses IA, decilo.** La transparencia da una buena señal.
+:::
+
+## Tres formas de usar un modelo
+
+El **modelo** es el que genera las respuestas (Claude, GPT, Gemini, Kimi...). Lo podemos usar de diferentes manera, aqui te presentamos tres formas, de menos a más autonomía:
+
+| Forma | Cómo funciona | Ejemplos | Qué ve y qué hace |
+|:--|:--|:--|:--|
+| **Chat** | Una página web o una aplicación donde conversás con el modelo. | GitHub Copilot en github.com, claude.ai, ChatGPT | Solo ve lo que le pegás o adjuntás. Vos copiás el resultado a tu código. |
+| **Cliente** | Un programa que conecta el modelo con tus herramientas: tu editor o tu código de R. | Copilot en Positron, RStudio o VS Code; el paquete [ellmer](https://ellmer.tidyverse.org/) desde R | Ve el archivo que tenés abierto, sugiere código mientras escribís, responde preguntas sobre tu proyecto. Vos decidís qué aceptar. |
+| **Agente** | Un modelo que **hace cosas en tu computadora**: lee y escribe archivos, corre código de R, ejecuta comandos. | Posit Assistant, Claude Code, Codex, el modo agente de Copilot | Trabaja solo, en un ciclo, hasta terminar la tarea. Vos revisás lo que hizo. |
+
+Un angente es un modelo, dentro de un software que le da herramientas y guardarails y que se ejecuta en un ciclo donde usa esas herramientas y restricciones para lograr un objetivo.
+
+- El **modelo** decide qué herramienta usar.
+- El **software** que lo contiene ejecuta la herramienta y le devuelve el resultado. Este software también aplica las restricciones que le impusimos (por ejemplo que no pueda borrar archivos)
+- Se repite hasta que el modelo dice que terminó.
+
+Las herramientas típicas son: buscar en los archivos, leer, escribir, editar, correr código de R, correr comandos de la terminal, preguntarte algo y leer páginas web.
+_Cuanta más autonomía, más importante es revisar._
+
+## Riesgos y cómo cuidarte
+
+El peligro principal son las **acciones que no se pueden deshacer**:
+
+- editar archivos sin Git;
+- borrar archivos o tablas sin copia de seguridad;
+- mandar un correo o publicar algo;
+- revelar un _secreto_ (una contraseña, una clave de API, datos sensibles).
+
+Cómo cuidarte:
+
+- **Usá Git siempre.** Si el agente rompe algo, volvés atrás. Es la mejor razón para aprender Git.
+- **Hacé copias de seguridad** de lo que no está en Git.
+- **Mirá lo que hace**. Leé los cambios antes de aceptarlos.
+- **No le pegues secretos ni datos privados** a un chat: contraseñas, claves de API, datos personales.
+
+::: callout-tip
+## Conversaciones cortas
+
+Cada mensaje nuevo le manda al modelo **toda** la conversación anterior. Las conversaciones largas cuestan más (en dinero y en energía) y arrastran confusiones.
+Empezá conversaciones nuevas seguido: es tan importante como reiniciar tu sesión de R.
+:::
+
+## Cómo pedir ayuda: corto y preciso
+
+Algunos consejos del taller de Posit para hacer buenas preguntas:
+
+- **Ser un poco más específica mejora mucho el resultado.** Usá las palabras del tema: `load_all()`, `@export`, *snapshot test*.
+- **Achicá el alcance**: preguntá sobre *este* paquete, *esta* función, *este* error.
+- **Pedí pruebas**: "mostrame en qué parte de la documentación dice eso".
+- **Preguntas cortas, respuestas cortas, y de a una.** Así vas construyendo tu propia comprensión.
+
+Y no todo es chat: la búsqueda de código de GitHub sigue siendo buenísima. Por ejemplo, [`user:cran path:data-raw`](https://github.com/search?q=user%3Acran+path%3Adata-raw&type=code) te muestra cómo otros paquetes de CRAN preparan sus datos.
+
+## Cuánto delegar: más riesgo, más controles tuyos
+
+Hadley y Jenny proponen ajustar el proceso según cuánto cuesta un error: si se puede deshacer, cuántas personas lo notarían y cuánto te lleva revisarlo.
+Cuanto más caro sería equivocarse, más puntos de control ponés vos antes y después de que trabaje la IA.
+
+| Si un error... | Cómo trabajar | Ejemplo en dichosos |
+|:--|:--|:--|
+| se arregla en un minuto | Pedilo y revisá el resultado. | Arreglar el WARNING de tildes. |
+| lleva un rato arreglar | Pedí un plan primero, corregilo, y después que lo haga. | Agregar `dichos_por_tema()`. |
+| afecta a otras personas | Revisá el plan **y** el resultado: leé cada cambio, probá con `load_all()`, corré los tests y `check()`. | Cambiar cómo funciona `dicho_al_azar()`, que ya usan otras personas. |
+| es difícil de deshacer | Las decisiones de diseño las tomás vos; la IA ayuda a implementar. | Preparar el paquete para CRAN o para la revisión de rOpenSci. |
+
+Cuando le pidas un plan, pedí que lo escriba en un archivo Markdown que puedas leer y editar.
+
+## Contarle al agente cómo es tu paquete
+
+Si le repetís lo mismo a un agente tres veces ("usá cli para los errores", "nada de tildes en el código"), conviene escribirlo en un archivo **`AGENTS.md`** en la raíz del proyecto.
+Los agentes lo leen al empezar cada conversación.
+Existe la función `usethis::use_tidy_agents()`, que crea uno con las convenciones del tidyverse.
+
+Mantenelo corto: se manda en cada pedido, y lo estás pagando.
+
+::: callout-note
+## ¿Y si quiero probar? Con tu cuenta de GitHub, gratis
+
+Si tenés una cuenta personal de GitHub, ya tenés **GitHub Copilot Free**, sin pagar nada:
+
+- **Como chat**, en el navegador: entrá a <https://github.com/copilot>. Le podés preguntar sobre tu código, y si tu paquete está en GitHub, sobre tu repositorio.
+- **Como cliente**, en tu editor: Copilot funciona en Positron, RStudio y VS Code.
+- Tiene un límite mensual de uso. Estudiantes, docentes y personas que mantienen proyectos de código abierto pueden pedir acceso gratuito a planes más completos.
+
+Otras opciones, que en general necesitan una suscripción o una clave de API: [**Posit Assistant**](https://assistant.posit.co/) en Positron y RStudio, **Claude Code**, **Codex**, [Mistral](https://mistral.ai).
+
+Para aprender, ninguna es imprescindible: todo lo que vimos hoy funciona sin IA.
+:::
+
+{{< include ../_ejercicios/ep09.qmd >}}
+
+::: puntos-clave
+Puntos clave
+
+- El ciclo de desarrollo es el mismo con o sin IA: `load_all()`, `test()`, `document()`, `check()`.
+- Saber hacerlo "a mano" es lo que te permite revisar lo que hace la IA.
+- Delegá lo mecánico (arreglar lo que encuentra `check()`), revisá el código y los tests, y quedate con las decisiones, los datos y la comunicación con personas.
+- Usá Git siempre: es tu botón de deshacer.
+- Pedidos cortos y precisos, y conversaciones cortas.
+- Como pedimos en rOpenSci: revisá todo antes de que lo lea otra persona, escribí vos tu comunicación personal y siempre decí cuando usaste IA.
+:::

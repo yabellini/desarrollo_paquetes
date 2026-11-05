@@ -4,7 +4,7 @@ title: "7. Tests"
 
 ::: resumen
 ::: tiempo
-⏱ Enseñanza: 10 minutos · Ejercicios: 15 minutos
+⏱ Enseñanza: 8 minutos · Ejercicios: 12 minutos
 :::
 ::: {}
 Preguntas
@@ -113,7 +113,7 @@ test_that("dicho_al_azar() avisa si no conoce el país", {
 El segundo argumento es un texto que tiene que aparecer en el mensaje de error.
 
 ::: callout-tip
-## *Snapshots*: una foto del mensaje
+## *Snapshots*: una foto del mensaje (para leer en casa)
 
 Para ver el mensaje completo, usá un *snapshot test*:
 

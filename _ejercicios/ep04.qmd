@@ -59,7 +59,7 @@ dicho_al_azar <- function(pais = NULL) {
 :::
 
 ::: desafio
-Desafío 4.3 (si te sobra tiempo): La ayuda por dentro [2 minutos]{.duracion}
+Desafío 4.3 (si te sobra tiempo o para hacerlo en casa): La ayuda por dentro [2 minutos]{.duracion}
 
 Abrí la carpeta `man/` y el archivo `dicho_al_azar.Rd`.
 ¿Lo escribiste vos? ¿Lo deberías editar?

@@ -1,0 +1,94 @@
+::: desafio
+Desafío 9.1: ¿Dónde sí y dónde no? [5 minutos, en parejas]{.duracion}
+
+Para cada tarea de dichosos, decidí: ¿le darías el trabajo a una herramienta de IA, la usarías solo para un borrador que después revisás, o la harías vos?
+
+1. Elegir el nombre del paquete.
+2. Escribir el código de `buscar_dicho()`.
+3. Escribir los significados de los dichos de tu país.
+4. Escribir los tests de `dicho_del_dia()`.
+5. Arreglar el WARNING de caracteres no ASCII.
+6. Escribir el README.
+7. Responder un *issue* de otra persona que encontró un error en tu paquete.
+
+Anotá tus respuestas en el documento colaborativo. No hay una sola respuesta correcta: lo interesante es el *por qué*.
+
+::: {.callout-tip collapse="true" title="Una respuesta posible"}
+1. **Vos.** La IA no sabe si un nombre es una mala palabra en tu país (`pkg_name_check()` tampoco), y el nombre es una decisión de diseño.
+2. **IA, y después vos.** Pedile algo específico, probalo en la consola con `load_all()` y leé cada línea. Si no entendés el código, no lo agregues.
+3. **Vos.** Los datos son tu responsabilidad. Un modelo de lenguaje puede inventar un dicho o un significado con total seguridad, y en `@source` dice de dónde salieron.
+4. **IA, con supervisión.** A los agentes les encanta escribir tests: tu trabajo es que sean pocos, claros y que de verdad fallen cuando algo se rompe.
+5. **IA.** Es un problema mecánico, con un mensaje de `check()` claro. Las herramientas de IA son muy buenas arreglando lo que encuentra `check()`.
+6. **Borrador.** La IA puede armar la estructura, pero el README es comunicación entre personas: revisalo, escribilo con tu voz y contá que usaste IA.
+7. **Vos.** Podés usar IA para entender el error o probar un arreglo, pero la respuesta es comunicación personal: la escribís vos. Si la usaste para traducir, está bien, y lo decís. Son pautas que pedimos en [rOpenSci](https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/).
+:::
+:::
+
+::: desafio
+Desafío 9.2: Revisá lo que escribió la IA [7 minutos]{.duracion}
+
+Le pedimos a un asistente de IA: *"Agregá a dichosos una función que devuelva los dichos de un tema"*. Esto es lo que escribió.
+Con lo que aprendiste hoy, encontrá **al menos cinco** problemas.
+
+```r
+library(dplyr)
+
+# Esta función recibe un tema y devuelve los dichos de ese tema.
+# Primero filtra los datos por tema y después devuelve el resultado.
+dichos_por_tema <- function(tema) {
+  if (!tema %in% dichos$tema) {
+    stop("No hay dichos de ese tema. Probá con otro.")
+  }
+  dichos %>% filter(tema == tema)
+}
+```
+
+Y en `tests/testthat/test-dichos_por_tema.R`:
+
+```r
+test_that("dichos_por_tema() funciona", {
+  expect_true(TRUE)
+  resultado <- dichos_por_tema("dinero")
+  expect_s3_class(resultado, "data.frame")
+  expect_equal(nrow(resultado), 6)
+  expect_equal(ncol(resultado), 4)
+  expect_equal(names(resultado), c("dicho", "significado", "pais", "tema"))
+  expect_true(all(resultado$tema == "dinero"))
+  expect_error(dichos_por_tema("dinosaurios"))
+})
+```
+
+::: {.callout-tip collapse="true" title="Solución"}
+En la función:
+
+1. **`library(dplyr)` en el código del paquete.** Nunca. Hay que declarar la dependencia con `usethis::use_package("dplyr")` y usar `dplyr::filter()`. O mejor: ¿hace falta dplyr? Con R base alcanza (`dichos[dichos$tema == tema, ]`) y el paquete tiene una dependencia menos.
+2. **`filter(tema == tema)` no filtra nada.** Adentro de `filter()`, los dos `tema` son la columna, así que la condición siempre es verdadera y devuelve **todos** los dichos. Es el tipo de error que solo aparece si probás la función en la consola.
+3. **No tiene documentación** de roxygen2 ni `@export`.
+4. **"Probá" tiene tilde en el código**: `check()` da un WARNING. Va `Prob\u00e1`.
+5. **El error no ayuda**: no dice qué tema se pidió ni cuáles existen. Mejor `cli::cli_abort()` con la lista de temas, como hicimos en `dicho_al_azar()`.
+6. **Los comentarios explican el *qué*, no el *por qué*.** Si el código se entiende, sobran.
+
+En el test:
+
+7. **`expect_true(TRUE)` no comprueba nada.**
+8. **`expect_equal(nrow(resultado), 6)` se rompe** cada vez que alguien suma un dicho de dinero. Es un test frágil.
+9. **Es un solo test gigante.** Mejor varios `test_that()` cortos, cada uno con una descripción de lo que comprueba.
+10. **Lo bueno:** `all(resultado$tema == "dinero")` sí detecta el error del punto 2... pero solo si alguien corre los tests. Revisar lo que escribe la IA incluye **correr los tests y probar en la consola**.
+:::
+:::
+
+::: desafio
+Desafío 9.3 (opcional, con GitHub Copilot Free u otro asistente): Pedilo bien [para casa]{.duracion}
+
+Escribí un pedido **corto y preciso** para que un asistente agregue `dichos_por_tema()` a tu paquete. Con tu cuenta de GitHub podés usar el chat de Copilot en <https://github.com/copilot>. Por ejemplo:
+
+> Agregá a dichosos la función `dichos_por_tema(tema)` en `R/dichos_por_tema.R`.
+> Usá R base, sin dependencias nuevas.
+> Si el tema no existe, dá un error con `cli::cli_abort()` que liste los temas disponibles, como en `dicho_al_azar()`.
+> Documentala con roxygen2 y exportala.
+> Escribí tests cortos en `tests/testthat/test-dichos_por_tema.R`.
+> Antes de escribir código, mostrame un plan.
+
+Después: leé el plan, pedile el código, copialo a tu paquete, revisá los cambios con Git, probá la función con `load_all()` y corré `devtools::check()`.
+¿Qué hizo distinto a lo que habrías hecho vos?
+:::
