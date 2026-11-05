@@ -1,0 +1,881 @@
+---
+title: "De idea a paquete: programá tu primer paquete de R"
+subtitle: "Taller de LatinR 2026"
+author: "Yanina Bellini Saibene | rOpenSci Community Manager - Sovereign Tech Fellow 2026"
+format:
+  revealjs:
+    theme: [default, slides.scss]
+    slide-number: true
+    hash-type: number
+    transition: none
+    navigation-mode: linear
+    code-copy: true
+    highlight-style: a11y
+    footer: "Tu primer paquete de R · LatinR 2026"
+    include-in-header:
+      text: |
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+    include-after-body: reloj.html
+execute:
+  eval: false
+  echo: true
+---
+
+## ¡Hola! 👋
+
+- Soy **Yani Bellini Saibene**.
+- Este taller es para personas que **programan en R** y **nunca hicieron un paquete**.
+- Al final de la tarde vas a tener un paquete funcionando, con **funciones, datos, documentación y tests**.
+
+::: chico
+Todo el material está en el sitio del taller: slides, episodios, ejercicios y código para copiar.
+:::
+
+## Cómo vamos a trabajar
+
+- 💻 **Programación en vivo**: yo escribo, vos escribís a la par.
+- 🧩 **Desafíos** cortos después de cada parte.
+- 📌 **Nota adhesiva** en tu computadora = necesito ayuda.
+- 📝 **Documento colaborativo** para preguntas, errores y respuestas.
+- 🙌 **Equivocarse está bien.** Vamos a ver varios errores a propósito.
+
+## Código de conducta
+
+Este taller se rige por el **código de conducta de LatinR**.
+
+Queremos que todas las personas se sientan bienvenidas, sin importar su experiencia, su país, su género, su religión o la cantidad de veces que pregunten lo mismo.
+
+::: footer
+Código de Conducta: https://latinr.org/sobre/coc/
+:::
+
+## ¿Quiénes somos?
+
+Presentate a las personas que tenes al lado 👋
+
+- ¿Tenés alguna mascota? 
+- Contá sobre algo que te guste mucho
+- ¿Qué es lo que más te molesta de R?
+- ¿Qué es lo que más te gusta hacer en R?
+
+## El plan de hoy
+
+| | |
+|:--|:--|
+| **Bloque 1** | ¿Qué es un paquete? · Crear el paquete · Primera función |
+| 🧉 | Pausa |
+| **Bloque 2** | Documentar · Datos |
+| 🤸 | Pausa |
+| **Bloque 3** | Dependencias y mensajes · Tests · Compartir · La IA en el ciclo de desarrollo|
+
+# 1. ¿Qué es un paquete? {.seccion background-color="#4177ca"}
+
+## ¿Quién puede escribir un paquete?
+
+- ¿Podés abrir R o RStudio?
+- ¿Podés instalar un paquete?
+- ¿Escribiste alguna vez una función en R?
+- ¿Podrías *aprender* a escribir una función en R?
+
+. . .
+
+[¡Podés escribir un paquete de R!]{.grande}
+
+::: chico
+Preguntas de _Susan Johnston_.
+:::
+
+## ¿Qué es un paquete?
+
+> Para calmar tus temores, recordá que no es más que una carpeta organizada de una manera específica.
+>
+> — Sébastien Rochette
+
+. . .
+
+Una **carpeta bien organizada** que puede contener:
+
+- 🧑‍💻 **código**
+- 📖 **documentación**
+- 📊 **datos**
+
+## Del script al paquete
+
+1. **Consola**: cerrás R y se perdió.
+2. **Script**: lo guardás, pero lo copiás y pegás en cada proyecto.
+3. **Funciones**: mejor, pero viven en un script.
+4. **Paquete**: funciones, datos y documentación juntos. Se instala una vez y se usa con `library()`.
+
+## ¿Por qué crear un paquete?
+
+Para compartir código y datos con:
+
+- **vos** (y tu yo del futuro),
+- **las personas con las que trabajás**,
+- **las personas que hacen un trabajo parecido al tuyo**.
+
+. . .
+
+Y para **aprender**: buenas prácticas, herramientas, y poder **contribuir** a otros paquetes.
+
+::: clave
+**Regla práctica:** si una función la usás en más de un proyecto, ya merece un paquete.
+:::
+
+## Las herramientas
+
+| | |
+|:--|:--|
+| **usethis** | crea archivos y carpetas |
+| **devtools** | carga, documenta, testea, revisa, instala |
+| **roxygen2** | documentación: páginas de ayuda |
+| **testthat** | tests |
+| **cli** | mensajes y errores claros |
+| **pak** | instalar paquetes y comprobar nombres |
+
+## Nuestro paquete: `dichosos`
+
+::: dicho
+Estoy al horno con papas
+:::
+
+Estar en un problema muy grande y sin salida fácil. *(Argentina)*
+
+. . .
+
+- Datos: `dichos`, 27 dichos de 9 países.
+- Funciones: `dicho_al_azar()`, `dicho_del_dia()`, `buscar_dicho()`.
+- Documentación, tests y README.
+
+## 🧩 Desafío 1.1 {.desafio-slide}
+
+::: desafio
+¿Cuál es **correcta**?
+
+a. Un paquete solo puede tener funciones.
+b. Para crear un paquete hay que publicarlo en CRAN.
+c. Un paquete es una carpeta organizada que puede tener código, documentación y datos.
+d. Para crear un paquete hay que saber programar en C.
+:::
+
+Levanten la mano los que responden... [⏱ 3:00]{.reloj data-min="3" role="button" tabindex="0"}
+
+## 🧩 Desafío 1.2
+
+::: desafio
+Pensá en un código que copiaste y pegaste en más de un proyecto.
+
+Escribilo en una línea en el documento colaborativo.
+
+**¡Ese puede ser tu primer paquete!**
+:::
+
+[⏱ 2:00]{.reloj data-min="2" role="button" tabindex="0"}
+
+# 2. Crear el paquete {.seccion background-color="#4177ca"}
+
+## Un buen nombre
+
+- Solo **letras, números y puntos**.
+- Empieza con **letra**, no termina con punto.
+- Sin guiones ni guiones bajos.
+
+```r
+pak::pkg_name_check("dichosos")
+```
+
+::: chico
+⚠️ Solo conoce malas palabras **en inglés**.
+:::
+
+## 💻 En vivo: crear el paquete
+
+::: envivo
+```r
+pak::pkg_name_check("dichosos")
+usethis::create_package("/Users/yabellini/Documents/GitHub/dichosos")
+devtools::check()
+usethis::use_mit_license("Tu Nombre")
+devtools::check()
+```
+:::
+
+## Lo que creó `usethis`
+
+```
+dichosos/
+├── DESCRIPTION     ← metadatos
+├── NAMESPACE       ← no se toca a mano
+├── R/              ← las funciones
+├── .Rbuildignore   ← lo que no es parte del paquete y se debe ignorar al construirlo
+└── dichosos.Rproj  ← proyecto de RStudio (en Positron no está)
+```
+
+## `devtools::check()`
+
+- **ERROR**: algo grave. Arreglar.
+- **WARNING**: probablemente mal. Arreglar.
+- **NOTE**: para mirar.
+
+. . .
+
+::: clave
+**El objetivo:** `0 errors ✔ | 0 warnings ✔`
+:::
+
+::: chico
+Atajo: `Ctrl/Cmd + Shift + E`
+:::
+
+## 🧩 Desafíos 2.1, 2.2 y 2.3
+
+::: desafio
+1. Creá tu paquete `dichosos`.
+2. `check()`, licencia MIT, `check()` hasta 0 errores y 0 warnings.
+3. Uní cada archivo con lo que hace.
+4. Completá `Title`, `Description` y `Authors@R` en `DESCRIPTION`.
+:::
+
+[⏱ 15:00]{.reloj data-min="15" role="button" tabindex="0"} Nota adhesiva en tu compu cuando termines.
+
+# 3. Nuestra primera función {.seccion background-color="#4177ca"}
+
+## 💻 En vivo: `use_r()`
+
+::: envivo
+```r
+usethis::use_r("dicho_al_azar")
+```
+
+```r
+dicho_al_azar <- function() {
+  dichos <- c(
+    "Estoy al horno",
+    "Perdido como perro en cancha de bochas",
+    "Pasarlo chancho"
+  )
+  sample(dichos, size = 1)
+}
+```
+:::
+
+## R no la conoce
+
+```r
+dicho_al_azar()
+#> Error in dicho_al_azar() : could not find function "dicho_al_azar"
+```
+
+. . .
+
+```r
+devtools::load_all()
+#> ℹ Loading dichosos
+dicho_al_azar()
+#> [1] "Pasarlo chancho"
+```
+
+::: chico
+Atajo: `Ctrl/Cmd + Shift + L`
+:::
+
+## El ciclo
+
+::: {.grande}
+✏️ Editar → 🔄 `load_all()` → 🧪 Probar → ✏️ ...
+:::
+
+<br>
+
+Guardar **no alcanza**: después de cada cambio, hay que volver a cargar.
+
+## 🧩 Desafíos 3.1, 3.2 y 3.3
+
+::: desafio
+1. Creá `dicho_al_azar()` con un dicho **de tu país** en el vector.
+2. Ordená los pasos para agregar una función.
+3. Agregá un dicho, guardá **sin** `load_all()`. ¿Aparece?
+:::
+
+[⏱ 15:00]{.reloj data-min="15" role="button" tabindex="0"}
+
+# 🧉 Pausa {.seccion background-color="#17a2b8"}
+
+10 minutos. [⏱ 10:00]{.reloj data-min="10" role="button" tabindex="0"}
+
+# 4. Documentar funciones {.seccion background-color="#4177ca"}
+
+## 💻 En vivo: roxygen2
+
+::: envivo
+*Code > Insert Roxygen Skeleton*
+
+```r
+#' Elegir un dicho al azar
+#'
+#' Devuelve un dicho popular de América Latina elegido al azar.
+#'
+#' @return Un texto (vector de caracteres de largo 1) con el dicho.
+#' @export
+#'
+#' @examples
+#' dicho_al_azar()
+```
+
+```r
+devtools::document()
+?dicho_al_azar
+```
+:::
+
+## Qué hizo `document()`
+
+1. Escribió `man/dicho_al_azar.Rd` → la página de ayuda.
+2. Escribió `export(dicho_al_azar)` en `NAMESPACE`.
+
+. . .
+
+::: clave
+**Nunca** edites a mano `NAMESPACE` ni los archivos de `man/`.
+:::
+
+::: chico
+Atajo: `Ctrl/Cmd + Shift + D`
+:::
+
+## Exportadas e internas
+
+- Con `@export`: **pública**. Se usa después de `library(dichosos)`.
+- Sin `@export`: **interna**. Solo para otras funciones del paquete.
+
+::: chico
+`load_all()` es generosa: te deja usar todas. Por eso a veces nos olvidamos del `@export`.
+:::
+
+## 🧩 Desafíos 4.1 y 4.2
+
+::: desafio
+1. Documentá `dicho_al_azar()`, corré `document()` y mirá `?dicho_al_azar`.
+2. Encontrá los **tres** errores:
+
+```r
+#' Elegir un dicho al azar
+#
+#' Devuelve un dicho popular elegido al azar.
+#'
+#' @params pais El país del que queremos el dicho.
+#' @return Un texto con el dicho.
+#'
+#' @examples
+#' dicho_al_azar()
+dicho_al_azar <- function(pais = NULL) {
+```
+:::
+
+[⏱ 10:00]{.reloj data-min="10" role="button" tabindex="0"}
+
+# 5. Datos en el paquete {.seccion background-color="#4177ca"}
+
+## 💻 En vivo: `data-raw/`
+
+::: envivo
+```r
+usethis::use_data_raw("dichos")
+download.file("https://URL-DEL-TALLER/datos/dichos.csv",
+              "data-raw/dichos.csv")
+```
+
+En `data-raw/dichos.R`:
+
+```r
+dichos <- read.csv("data-raw/dichos.csv", encoding = "UTF-8")
+usethis::use_data(dichos, overwrite = TRUE)
+```
+:::
+
+## Datos crudos + código
+
+- `data-raw/`: **el CSV y el código** que lo prepara. No se instala.
+- `data/dichos.rda`: **los datos listos**. Se instalan con el paquete.
+
+<br>
+
+Dentro de un año vas a saber de dónde salieron tus datos. 🙏
+
+## 💻 En vivo: documentar datos
+
+::: envivo
+En `R/data.R`, arriba del **nombre entre comillas**:
+
+```r
+#' Dichos y expresiones populares de América Latina
+#'
+#' @format Un data frame con 48 filas y 4 columnas:
+#' \describe{
+#'   \item{dicho}{El dicho o la expresión.}
+#'   \item{significado}{Qué quiere decir.}
+#'   \item{pais}{País donde se usa.}
+#'   \item{tema}{Tema del dicho.}
+#' }
+#' @source Recopilado para el taller de LatinR 2026.
+"dichos"
+```
+:::
+
+## 💻 En vivo: usar los datos
+
+::: envivo
+```r
+dicho_al_azar <- function(pais = NULL) {
+  opciones <- dichos
+  if (!is.null(pais)) {
+    opciones <- dichos[dichos$pais == pais, ]
+  }
+  fila <- sample(nrow(opciones), size = 1)
+  opciones$dicho[fila]
+}
+```
+:::
+
+. . .
+
+```r
+dicho_al_azar(pais = "Narnia")
+#> character(0)
+```
+
+🤔
+
+## 🧩 Desafíos 5.1, 5.2 y 5.3
+
+::: desafio
+1. Agregá los datos con `use_data_raw()` y `use_data()`.
+2. Completá los espacios `____` de la nueva `dicho_al_azar()`.
+3. Probá `dicho_al_azar(pais = "Narnia")`. ¿Qué te gustaría que pase?
+:::
+
+[⏱ 15:00]{.reloj data-min="15" role="button" tabindex="0"}
+
+# 🤸 Pausa {.seccion background-color="#17a2b8"}
+
+10 minutos para estirarse. [⏱ 10:00]{.reloj data-min="10" role="button" tabindex="0"}
+
+# 6. Dependencias y mensajes claros {.seccion background-color="#4177ca"}
+
+## Dependencias
+
+```r
+usethis::use_package("cli")
+```
+
+- **`Imports`**: lo que el paquete **necesita**.
+- **`Suggests`**: lo que se usa **a veces** (tests, viñetas).
+- Adentro de las funciones: `paquete::funcion()`.
+
+. . .
+
+::: clave
+**Nunca** `library()` adentro de un paquete.
+:::
+
+## 💻 En vivo: un error que ayuda
+
+::: envivo
+```r
+if (!pais %in% dichos$pais) {
+  cli::cli_abort(c(
+    "No tengo dichos de {.val {pais}}.",
+    "i" = "Los países disponibles son: {.val {unique(dichos$pais)}}."
+  ))
+}
+```
+:::
+
+```
+Error in `dicho_al_azar()`:
+! No tengo dichos de "Narnia".
+ℹ Los países disponibles son: "Argentina", "Brasil", "Chile", ...
+```
+
+## La sorpresa de las tildes
+
+```
+❯ checking R files for non-ASCII characters ... WARNING
+  Portable packages must use only ASCII characters in their R code,
+  except perhaps in comments.
+```
+
+. . .
+
+| | |
+|:--:|:--|
+| á é í ó ú | `\u00e1` `\u00e9` `\u00ed` `\u00f3` `\u00fa` |
+| ñ | `\u00f1` |
+
+::: chico
+En los comentarios y en los datos, las tildes están bien.
+:::
+
+## 🧩 Desafíos 6.1, 6.2 y 6.3
+
+::: desafio
+1. ¿`Imports` o `Suggests`?
+2. Agregá cli y un error claro para los países que no existen. `check()`.
+3. ¿Qué está mal con `library(cli)` en `R/`?
+:::
+
+[⏱ 10:00]{.reloj data-min="10" role="button" tabindex="0"}
+
+# 7. Tests {.seccion background-color="#4177ca"}
+
+## De la consola a los tests
+
+Un **test** es un experimento de la consola, **guardado**, que se corre solo y avisa si algo cambió.
+
+```r
+usethis::use_testthat(3)
+usethis::use_test("dicho_al_azar")
+```
+
+## 💻 En vivo: un test
+
+::: envivo
+```r
+test_that("dicho_al_azar() devuelve un solo texto", {
+  resultado <- dicho_al_azar()
+  expect_type(resultado, "character")
+  expect_length(resultado, 1)
+})
+
+test_that("dicho_al_azar() avisa si no conoce el país", {
+  expect_error(dicho_al_azar(pais = "Narnia"), "Narnia")
+})
+```
+
+```r
+devtools::test()
+```
+:::
+
+## ¿Cómo testeo algo al azar?
+
+No sé **qué** dicho va a salir.
+
+Pero sé **cómo** tiene que ser:
+
+- un texto,
+- de largo 1,
+- que esté en los datos del país pedido.
+
+## Rompé el código a propósito 💥
+
+Cambiá `size = 1` por `size = 2` y corré los tests.
+
+```
+── Failure: dicho_al_azar() devuelve un solo texto ──
+`resultado` has length 2, not length 1.
+```
+
+. . .
+
+::: clave
+Si nunca viste fallar un test, no sabés si sirve.
+:::
+
+## 🧩 Desafíos 7.1, 7.2 y 7.3
+
+::: desafio
+1. Dos tests para `dicho_al_azar()`.
+2. Rompé el código. ¿Qué test falla?
+3. Si terminaste: escribí `buscar_dicho()` con su test.
+:::
+
+[⏱ 12:00]{.reloj data-min="15" role="button" tabindex="0"}
+
+# 8. Compartir el paquete {.seccion background-color="#4177ca"}
+
+## 💻 En vivo: README e instalar
+
+::: envivo
+```r
+usethis::use_readme_rmd()
+devtools::build_readme()
+devtools::install()
+```
+
+En **otra** sesión de R:
+
+```r
+library(dichosos)
+dicho_al_azar(pais = "Perú")
+```
+:::
+
+## Al mundo 🌎
+
+Lo muestro yo; ustedes lo prueban en casa (desafío 8.2).
+
+```r
+usethis::use_git()
+usethis::use_github()
+```
+
+Y cualquier persona lo instala con:
+
+```r
+pak::pak("tu-usuario/dichosos")
+```
+
+## El recorrido completo
+
+1. `pak::pkg_name_check()`
+2. `usethis::create_package()` y `use_mit_license()`
+3. `usethis::use_r()` y `devtools::load_all()`
+4. roxygen2 y `devtools::document()`
+5. `usethis::use_data_raw()` y `use_data()`
+6. `usethis::use_package()`
+7. `usethis::use_testthat()`, `use_test()` y `devtools::test()`
+8. `usethis::use_readme_rmd()` y `devtools::install()`
+
+**Y siempre:** `devtools::check()`
+
+## 🧩 Desafíos 8.1 y 8.2
+
+::: desafio
+1. README, `build_readme()`, `install()`.
+2. En **otra** sesión: `library(dichosos)` y `dicho_al_azar()`.
+3. (Opcional) `use_git()`, `use_github()` y compartí el enlace.
+:::
+
+[⏱ 7:00]{.reloj data-min="13" role="button" tabindex="0"}
+
+## ¿Qué sigue?
+
+- 🌐 Un sitio web con **pkgdown**.
+- 📚 **Viñetas** con `usethis::use_vignette()`.
+- 🤖 `check()` en la nube con **GitHub Actions**.
+- 🤝 Código de conducta y guía para contribuir.
+
+. . .
+
+En castellano:
+
+- Libro [Introducción a la Programación II](https://intro-programacion.netlify.app/09_paquetes-1), capítulos 11 a 14.
+- [Guía de desarrollo de rOpenSci](https://devguide.ropensci.org/es/index.es.html).
+- [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/).
+
+# 9. La IA en el ciclo de desarrollo {.seccion background-color="#4177ca"}
+
+Dónde ayudan las herramientas de IA y dónde no
+
+## ¿Por qué al final?
+
+Hoy hicimos **todo a mano**, a propósito.
+
+. . .
+
+Ahora sabés qué hace cada paso.
+
+Eso te permite **revisar** lo que hace una herramienta de IA.
+
+## La tarea no es el trabajo
+
+> Si me siento a hacer música porque quiero hacer músicaentregarme la canción ya hecha es entender todo al revés.El proceso no era un obstáculo que había que sortear para llegar al resultado.
+
+::: chico
+[*The task isn't the job*](https://sunilpai.dev/posts/the-task-isnt-the-job/), Sunil Pai.
+:::
+
+. . .
+
+En un taller, **el proceso es el objetivo**.
+
+## El ciclo clásico no cambia
+
+1. Escribir la función en `R/`
+2. `load_all()` y probar en la consola
+3. `use_test()` y escribir tests
+4. `test()` hasta que pasen
+5. `document()`
+6. `check()`
+7. Reiniciar R
+
+. . .
+
+Cambia **quién escribe** cada parte.
+
+## Qué cambia con la IA
+
+| | La IA | Vos |
+|:--|:--|:--|
+| **Código** | lo escribe | lo probás y lo entendés |
+| **Tests** | le encantan | que sean pocos y fallen cuando deben |
+| **Docs** | un borrador | tu voz, para personas |
+| **`check()`** | arregla lo que encuentra | lo corrés siempre |
+| **Datos** | limpia y transforma | **son tu responsabilidad** |
+
+## Lo que pedimos en rOpenSci
+
+- **Revisá todo** lo generado con IA antes de que lo lea otra persona.
+- **La comunicación personal la escribís vos**, nunca la IA.
+- Usarla **para traducir** está bien.
+
+. . .
+
+::: clave
+**Siempre, siempre, aclará tu uso de la IA.**
+:::
+
+::: chico
+[*Software Review in the Era of AI*](https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/), blog de rOpenSci.
+:::
+
+## Tres formas de usar un modelo
+
+| | Cómo | Ejemplos |
+|:--|:--|:--|
+| **Chat** | Conversás en una página web; vos copiás el resultado | Copilot en github.com, claude.ai, ChatGPT |
+| **Cliente** | Conecta el modelo con tu editor o tu código de R | Copilot en Positron o RStudio, ellmer |
+| **Agente** | **Hace cosas** en tu computadora: edita archivos, corre código | Posit Assistant, Claude Code, Codex |
+
+. . .
+
+Más autonomía → **más importante revisar**.
+
+## ¿Qué es un agente?
+
+> Un modelo, adentro de un programa que le da herramientas, corriendo en un ciclo, usando esas herramientas para lograr un objetivo.
+
+::: chico
+Hadley Wickham y Jenny Bryan.
+:::
+
+- **Herramientas**: leer, escribir, editar, correr R, correr comandos, buscar en la web.
+
+## Gratis con tu cuenta de GitHub
+
+**GitHub Copilot Free**: con cualquier cuenta personal de GitHub.
+
+- **Chat** en el navegador: <https://github.com/copilot>
+- **Cliente** en Positron, RStudio y VS Code
+- Tiene un límite mensual de uso
+
+::: chico
+Estudiantes, docentes y personas que mantienen proyectos de código abierto pueden pedir planes más completos gratis.
+:::
+
+## Riesgos: lo que no se puede deshacer
+
+- Editar archivos **sin Git**
+- Borrar sin copia de seguridad
+- Mandar un correo, publicar algo
+- Revelar un secreto
+
+. . .
+
+::: clave
+**Usá Git siempre.** Es tu botón de deshacer.
+:::
+
+## Pedidos cortos y precisos
+
+- Usá las palabras del tema: `load_all()`, `@export`, *snapshot*.
+- Achicá el alcance: *este* paquete, *esta* función.
+- Pedí pruebas: "¿dónde dice eso?"
+- Conversaciones cortas: empezá de nuevo seguido.
+
+## Cuánto delegar: más riesgo, más controles tuyos
+
+| Si un error... | Cómo trabajar | Ejemplo en dichosos |
+|:--|:--|:--|
+| se arregla en un minuto | Pedilo y revisá el resultado | Arreglar el WARNING de tildes |
+| lleva un rato arreglar | Pedí un plan primero | Agregar `dichos_por_tema()` |
+| afecta a otras personas | Revisá el plan **y** el resultado | Cambiar `dicho_al_azar()` |
+| es difícil de deshacer | Diseñá vos, la IA implementa | Preparar el paquete para CRAN |
+
+## 💻 En vivo con Copilot: pedirlo bien
+
+::: envivo
+En <https://github.com/copilot>, con el repositorio de dichosos:
+
+> Agregá a dichosos la función `dichos_por_tema(tema)` en `R/dichos_por_tema.R`.
+> Usá R base, sin dependencias nuevas.
+> Si el tema no existe, dá un error con `cli::cli_abort()` que liste los temas, como en `dicho_al_azar()`.
+> Documentala con roxygen2 y exportala. Tests cortos.
+> Antes de escribir código, mostrame un plan.
+:::
+
+Después: leer el plan → pedir el código → copiarlo al paquete → mirar los cambios en Git → `load_all()` → `check()`.
+
+## 🧩 Desafío 9.1: ¿dónde sí y dónde no?
+
+::: desafio
+¿Delegar, borrador o a mano?
+
+1. Elegir el nombre del paquete
+2. Escribir `buscar_dicho()`
+3. Escribir los significados de los dichos
+4. Tests de `dicho_del_dia()`
+5. Arreglar el WARNING de tildes
+6. El README
+7. Responder un *issue*
+:::
+
+[⏱ 5:00]{.reloj data-min="5" role="button" tabindex="0"}
+
+## 🧩 Desafío 9.2: revisá lo que escribió la IA
+
+::: desafio
+```r
+library(dplyr)
+
+# Esta función recibe un tema y devuelve los dichos de ese tema.
+dichos_por_tema <- function(tema) {
+  if (!tema %in% dichos$tema) {
+    stop("No hay dichos de ese tema. Probá con otro.")
+  }
+  dichos %>% filter(tema == tema)
+}
+```
+
+Encontrá **al menos cinco** problemas (los tests están en el sitio).
+:::
+
+[⏱ 7:00]{.reloj data-min="7" role="button" tabindex="0"}
+
+## Puntos clave
+
+- El ciclo es el mismo con o sin IA.
+- Saber hacerlo a mano te permite **revisar**.
+- Delegá lo mecánico, revisá código y tests, **quedate con las decisiones, los datos y las personas**.
+- Git siempre.
+- Revisá todo y **siempre decí que usaste IA**.
+
+
+# Cierre {.seccion background-color="#2c5ea8"}
+
+## Para cerrar
+
+En el documento colaborativo:
+
+- [Verde]{.nota-verde}: algo que aprendiste y te gustó.
+- [Rosa]{.nota-rosa}: algo para mejorar o que no te quedó claro.
+
+<br>
+
+**¿Qué código tuyo vas a convertir en paquete?**
+
+## ¡Gracias! 💚
+
+::: dicho
+Más vale tarde que nunca (Varios paises)
+:::
+
+Y nunca es tarde para tu primer paquete.
+
+<br>
+
+::: chico
+Gracias a LatinR, a quienes ayudaron hoy, a las personas que me pasaron sus dichos favoritos (Elio, Luis, Olivier, Alejandra), a la gente de Posit por compartir los materiales de sus talleres, a Maëlle Salmon y Paola Corrales, con quienes escribí los materiales en los que se basa este taller.
+:::

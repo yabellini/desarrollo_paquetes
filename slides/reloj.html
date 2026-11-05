@@ -1,0 +1,19 @@
+<script>
+document.addEventListener("click", function (e) {
+  var b = e.target.closest(".reloj");
+  if (!b) return;
+  if (b._t) { clearInterval(b._t); b._t = null; b.classList.remove("corriendo"); return; }
+  var total = (b._resto != null) ? b._resto : parseInt(b.dataset.min, 10) * 60;
+  b.classList.add("corriendo"); b.classList.remove("fin");
+  function pintar() {
+    var m = Math.floor(total / 60), s = total % 60;
+    b.textContent = "⏱ " + m + ":" + (s < 10 ? "0" : "") + s;
+  }
+  pintar();
+  b._t = setInterval(function () {
+    total -= 1; b._resto = total; pintar();
+    if (total <= 0) { clearInterval(b._t); b._t = null; b._resto = null; b.classList.remove("corriendo"); b.classList.add("fin"); b.textContent = "⏱ ¡Tiempo!"; }
+  }, 1000);
+});
+document.addEventListener("keydown", function (e) { if ((e.key === "Enter" || e.key === " ") && e.target.closest && e.target.closest(".reloj")) { e.preventDefault(); e.target.click(); } });
+</script>
