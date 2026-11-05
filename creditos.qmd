@@ -21,9 +21,9 @@ El sitio web se construye con Quarto en un proyecto de RStudio y se publica con 
 
 Se uso Claude Cowork para generar el diseño visual de la pagina web basados en los estilos de rOpenSci y el formato de presentacion de contenidos del workbench de The Carpentries.
 
-Tambien se procesaron los subtitulos de la charla *Desarrollando paquetes de R con la ayuda de rOpenSci* con Claude Cowork para limpiarlos y extraer lo que dijo la disertante (Yanina Bellini Saibene) y utilizar esas notas para armar contenido para este curso.
+Tambien se procesaron los subtitulos de la charla *Desarrollando paquetes de R con la ayuda de rOpenSci* con Claude Cowork para limpiarlos y extraer lo que dijo la disertante (Yanina Bellini Saibene) para utilizar esas notas en el contenido de este curso.
 
-Las traducciones se realizan utilizando DeepL. Siempre son revisadas y editadas por una persona antes de su publicación. 
+Las traducciones se realizan utilizando DeepL. Siempre son revisadas y editadas por una persona antes de su publicación. En este caso Yanina hizo las revisiones.
 
 Grammarly se usa para correcciones ortográficas y gramaticales (en castellano y en inglés).
 
