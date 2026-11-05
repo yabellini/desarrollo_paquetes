@@ -90,7 +90,7 @@ Algo divertido que podemos hacer es **sumar los dichos de tu país** y el paquet
 
 ## Fuentes
 
-- Los talleres [Desarrollo de paquetes para principiantes](https://desarrollo-paquetes-basico-2026.netlify.app), [Desarrollo de paquetes avanzado](https://desarrollo-paquetes-avanzado-2026.netlify.app) y [¡Código hermoso, porque lo valemos!](https://codigo-hermoso-2026.netlify.app) del [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/) desarrollados y dictados por **Maëlle Salmon**. De ahí vienen la secuencia de herramientas, muchas de las preguntas frecuentes y la analogía de la bicicleta.
+- Los talleres [Desarrollo de paquetes para principiantes](https://desarrollo-paquetes-basico-2026.netlify.app), [Desarrollo de paquetes avanzado](https://desarrollo-paquetes-avanzado-2026.netlify.app) y [¡Código hermoso, porque lo valemos!](https://codigo-hermoso-2026.netlify.app) del [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/) desarrollados y dictados por **Maëlle Salmon**. De ahí vienen la secuencia de herramientas, muchas de las preguntas frecuentes, la idea de los snippets de código y la analogía de la bicicleta.
 
 - El libro [Introducción a la Programación II](https://intro-programacion.netlify.app/), de **Paola Corrales** y **Yanina Bellini Saibene**, en especial los capítulos [Funciones](https://intro-programacion.netlify.app/07_funciones), [Empaquetando funciones](https://intro-programacion.netlify.app/09_paquetes-1), [Documentando paquetes y funciones](https://intro-programacion.netlify.app/10_documentacion), [Dependencias y tests](https://intro-programacion.netlify.app/11_errores) y [Contribuir y aceptar contribuciones](https://intro-programacion.netlify.app/12_contribuir).
 
