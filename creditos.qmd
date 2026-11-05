@@ -1,0 +1,33 @@
+---
+title: "Créditos y licencia"
+---
+
+Este taller fue preparado por Yanina Bellini Saibene para [LatinR 2026](https://latinr.org).
+
+Se basa en:
+
+- Los talleres de desarrollo de paquetes del [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/), cuya autora es Maëlle Salmon. De ahí vienen la analogía de la bicicleta, la idea del `.Rprofile` como "los ajustes del asiento" y muchas de las preguntas frecuentes.
+- La charla *Desarrollando paquetes de R con la ayuda de rOpenSci*, de Yanina Bellini Saibene, donde nació la idea de un paquete de dichos.
+- Los capítulos 9, 11, 12, 13 y 14 del libro [Introducción a la Programación II](https://intro-programacion.netlify.app/), de Paola Corrales y Yanina Bellini Saibene.
+- La forma de diseñar talleres de [The Carpentries](https://carpentries.org/).
+
+Los dichos del conjunto de datos fueron recopilados para el taller. 
+Gracias a Elio Campitelli, Luis Verde, Olivier por sus contribiciones de dichos. 
+Si encontrás un significado que no es exacto en tu país, ¡avisanos o mandá una corrección!
+
+## Herramienta y software utilizado para generar estos materiales
+
+El sitio web se construye con Quarto en un proyecto de RStudio y se publica con GitHub Pages.  
+
+Se uso Claude Cowork para generar el diseño visual de la pagina web basados en los estilos de rOpenSci y el formato de presentacion de contenidos del workbench de The Carpentries.
+
+Tambien se procesaron los subtitulos de la charla *Desarrollando paquetes de R con la ayuda de rOpenSci* con Claude Cowork para limpiarlos y extraer lo que dijo la disertante (Yanina Bellini Saibene) y utilizar esas notas para armar contenido para este curso.
+
+Las traducciones se realizan utilizando DeepL. Siempre son revisadas y editadas por una persona antes de su publicación. 
+
+Grammarly se usa para correcciones ortográficas y gramaticales (en castellano y en inglés).
+
+## Licencia
+
+Los materiales del taller tienen licencia [Creative Commons Atribución 4.0 Internacional (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/deed.es).
+El código, incluido el paquete `dichosos`, tiene licencia MIT.
