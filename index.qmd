@@ -17,13 +17,6 @@ Este dicho salió del paquete que vamos a construir en el taller: **`dichosos`**
 Al final de la tarde vas a tener en tu computadora un paquete de R funcional, con **funciones, datos, documentación y tests**.
 Y vas a llevarte las herramientas para poder hacer lo mismo con tu propio código.
 
-## Fuentes
-
-- Los talleres [Desarrollo de paquetes para principiantes](https://desarrollo-paquetes-basico-2026.netlify.app), [Desarrollo de paquetes avanzado](https://desarrollo-paquetes-avanzado-2026.netlify.app) y [¡Código hermoso, porque lo valemos!](https://codigo-hermoso-2026.netlify.app) del [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/) desarrollados y dictados por **Maëlle Salmon**. De ahí vienen la secuencia de herramientas, muchas de las preguntas frecuentes y la analogía de la bicicleta.
-
-- El libro [Introducción a la Programación II](https://intro-programacion.netlify.app/), de **Paola Corrales** y **Yanina Bellini Saibene**, en especial los capítulos [Funciones](https://intro-programacion.netlify.app/07_funciones), [Empaquetando funciones](https://intro-programacion.netlify.app/09_paquetes-1), [Documentando paquetes y funciones](https://intro-programacion.netlify.app/10_documentacion), [Dependencias y tests](https://intro-programacion.netlify.app/11_errores) y [Contribuir y aceptar contribuciones](https://intro-programacion.netlify.app/12_contribuir).
-
-- - La charla [Desarrollando paquetes de R con la ayuda de rOpenSci](https://yabellini.netlify.app/talk/2025_r-ladies_ropensci/), de Yanina Bellini Saibene, donde nació la idea de un paquete de dichos regionales y la primera version de las slides de este taller.
 
 ## ¿Para quién es este taller?
 
@@ -94,3 +87,11 @@ Porque un paquete de ejemplo tiene que ser simple, funcional y presentar las car
 Los dichos son una excusa perfecta: nos dan un conjunto de datos manejable sobre el que podemos conducir acciones, como filtrar y buscar con la yapa de aprender expresiones de diferentes paises.
 
 Algo divertido que podemos hacer es **sumar los dichos de tu país** y el paquete se hace más rico con cada taller.
+
+## Fuentes
+
+- Los talleres [Desarrollo de paquetes para principiantes](https://desarrollo-paquetes-basico-2026.netlify.app), [Desarrollo de paquetes avanzado](https://desarrollo-paquetes-avanzado-2026.netlify.app) y [¡Código hermoso, porque lo valemos!](https://codigo-hermoso-2026.netlify.app) del [Programa de Campeones y Campeonas de rOpenSci](https://ropensci.org/es/champions/) desarrollados y dictados por **Maëlle Salmon**. De ahí vienen la secuencia de herramientas, muchas de las preguntas frecuentes y la analogía de la bicicleta.
+
+- El libro [Introducción a la Programación II](https://intro-programacion.netlify.app/), de **Paola Corrales** y **Yanina Bellini Saibene**, en especial los capítulos [Funciones](https://intro-programacion.netlify.app/07_funciones), [Empaquetando funciones](https://intro-programacion.netlify.app/09_paquetes-1), [Documentando paquetes y funciones](https://intro-programacion.netlify.app/10_documentacion), [Dependencias y tests](https://intro-programacion.netlify.app/11_errores) y [Contribuir y aceptar contribuciones](https://intro-programacion.netlify.app/12_contribuir).
+
+- La charla [Desarrollando paquetes de R con la ayuda de rOpenSci](https://yabellini.netlify.app/talk/2025_r-ladies_ropensci/), de Yanina Bellini Saibene, donde nació la idea de un paquete de dichos regionales y la primera version de las slides de este taller.
