@@ -238,3 +238,19 @@ buscar_dicho <- function(palabra) {
   dichos[encontrados, ]
 }
 ```
+## Episodio 9: un pedido para un asistente de IA
+
+Para probar con el chat de GitHub Copilot en <https://github.com/copilot> (gratis con tu cuenta de GitHub) o con otro asistente.
+Si usás Copilot en el navegador, elegí primero el repositorio de tu paquete para que pueda leerlo.
+
+```text
+Agregá a dichosos la función `dichos_por_tema(tema)` en `R/dichos_por_tema.R`.
+Usá R base, sin dependencias nuevas.
+Si el tema no existe, dá un error con `cli::cli_abort()` que liste los temas disponibles, como en `dicho_al_azar()`.
+Documentala con roxygen2 y exportala.
+Escribí tests cortos en `tests/testthat/test-dichos_por_tema.R`.
+Antes de escribir código, mostrame un plan.
+```
+
+Después: leé el plan, pedile el código, copialo a tu paquete, revisá los cambios con Git, probá la función con `load_all()` y corré `devtools::check()`.
+Y si compartís el resultado, contá que usaste IA.
