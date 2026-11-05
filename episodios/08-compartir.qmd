@@ -4,7 +4,7 @@ title: "8. Compartir el paquete"
 
 ::: resumen
 ::: tiempo
-⏱ Enseñanza: 7 minutos · Ejercicios: 13 minutos
+⏱ Enseñanza: 5 minutos · Ejercicios: 7 minutos
 :::
 ::: {}
 Preguntas
@@ -76,8 +76,10 @@ dicho_al_azar(pais = "Perú")
 
 ## Compartir en GitHub
 
+En el taller lo mostramos sin hacerlo; el desafío 8.2 es para que lo pruebes en casa.
+
 Si el paquete está en GitHub, cualquier persona lo puede instalar con una línea.
-usethis también ayuda con esto:
+`usethis` también ayuda con esto:
 
 ```r
 usethis::use_git()      # crea el repositorio local y hace el primer commit
