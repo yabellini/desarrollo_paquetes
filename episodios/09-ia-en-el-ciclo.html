@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9. La IA en el ciclo de desarrollo – Tu primer paquete de R: de la idea al paquete</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-d640c705e8c17715bca3574aa719063f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-346c8a4756a85ad127e9c9fc3a0ae6c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet">
+
+
+<meta property="og:title" content="9. La IA en el ciclo de desarrollo – Tu primer paquete de R: de la idea al paquete">
+<meta property="og:description" content="Dónde ayudan las herramientas de IA y dónde no">
+<meta property="og:site_name" content="Tu primer paquete de R: de la idea al paquete">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Tu primer paquete de R: de la idea al paquete</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../preparacion.html"> 
+<span class="menu-text">Preparación</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lecciones" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lecciones</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lecciones">    
+        <li>
+    <a class="dropdown-item" href="../episodios/01-que-es-un-paquete.html">
+ <span class="dropdown-text">1. ¿Qué es un paquete?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../episodios/02-crear-el-paquete.html">
+ <span class="dropdown-text">2. Crear el paquete</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../episodios/03-primera-funcion.html">
+ <span class="dropdown-text">3. Nuestra primera función</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../episodios/04-documentar.html">
+ <span class="dropdown-text">4. Documentar funciones</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../episodios/05-datos.html">
+ <span class="dropdown-text">5. Datos en el paquete</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../episodios/06-dependencias.html">
+ <span class="dropdown-text">6. Dependencias y mensajes claros</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../episodios/07-tests.html">
+ <span class="dropdown-text">7. Tests</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../episodios/08-compartir.html">
+ <span class="dropdown-text">8. Compartir el paquete</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../episodios/09-ia-en-el-ciclo.html">
+ <span class="dropdown-text">9. La IA en el ciclo de desarrollo</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../ejercicios.html"> 
+<span class="menu-text">Ejercicios</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../slides/index.html" target="_blank"> 
+<span class="menu-text">Diapositivas</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-recursos" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Recursos</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-recursos">    
+        <li>
+    <a class="dropdown-item" href="../referencia.html">
+ <span class="dropdown-text">Referencia</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../snippets.html">
+ <span class="dropdown-text">Snippets</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../recursos.html">
+ <span class="dropdown-text">Recursos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../creditos.html">
+ <span class="dropdown-text">Créditos y licencia</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#por-qué-vemos-este-tema-al-final" id="toc-por-qué-vemos-este-tema-al-final" class="nav-link active" data-scroll-target="#por-qué-vemos-este-tema-al-final">¿Por qué vemos este tema al final?</a></li>
+  <li><a href="#el-ciclo-clásico-no-cambia" id="toc-el-ciclo-clásico-no-cambia" class="nav-link" data-scroll-target="#el-ciclo-clásico-no-cambia">El ciclo clásico no cambia</a></li>
+  <li><a href="#qué-cambia-con-la-ia" id="toc-qué-cambia-con-la-ia" class="nav-link" data-scroll-target="#qué-cambia-con-la-ia">Qué cambia con la IA</a></li>
+  <li><a href="#tres-formas-de-usar-un-modelo" id="toc-tres-formas-de-usar-un-modelo" class="nav-link" data-scroll-target="#tres-formas-de-usar-un-modelo">Tres formas de usar un modelo</a></li>
+  <li><a href="#riesgos-y-cómo-cuidarte" id="toc-riesgos-y-cómo-cuidarte" class="nav-link" data-scroll-target="#riesgos-y-cómo-cuidarte">Riesgos y cómo cuidarte</a></li>
+  <li><a href="#cómo-pedir-ayuda-corto-y-preciso" id="toc-cómo-pedir-ayuda-corto-y-preciso" class="nav-link" data-scroll-target="#cómo-pedir-ayuda-corto-y-preciso">Cómo pedir ayuda: corto y preciso</a></li>
+  <li><a href="#cuánto-delegar-más-riesgo-más-controles-tuyos" id="toc-cuánto-delegar-más-riesgo-más-controles-tuyos" class="nav-link" data-scroll-target="#cuánto-delegar-más-riesgo-más-controles-tuyos">Cuánto delegar: más riesgo, más controles tuyos</a></li>
+  <li><a href="#contarle-al-agente-cómo-es-tu-paquete" id="toc-contarle-al-agente-cómo-es-tu-paquete" class="nav-link" data-scroll-target="#contarle-al-agente-cómo-es-tu-paquete">Contarle al agente cómo es tu paquete</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">9. La IA en el ciclo de desarrollo</h1>
+<p class="subtitle lead">Dónde ayudan las herramientas de IA y dónde no</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="resumen">
+<div class="tiempo">
+<p>⏱ Enseñanza: 8 minutos · Ejercicios: 12 minutos</p>
+</div>
+<div>
+<p>Preguntas</p>
+<ul>
+<li>¿Cambia el ciclo de desarrollo de paquetes cuando usamos IA?</li>
+<li>¿En qué partes del ciclo conviene usar herramientas de IA y en cuáles no?</li>
+<li>¿Qué formas hay de usar un modelo de IA?</li>
+<li>¿Qué riesgos tiene dejar que un agente trabaje en mi computadora?</li>
+</ul>
+</div>
+<div>
+<p>Objetivos</p>
+<ul>
+<li>Distinguir tres formas de usar un modelo: chat, cliente y agente.</li>
+<li>Decidir, para cada paso del ciclo, si conviene delegarlo, pedir un borrador o hacerlo a mano.</li>
+<li>Revisar código y tests generados por IA con los criterios que aprendimos en el taller.</li>
+<li>Nombrar los riesgos principales y cómo protegerse.</li>
+</ul>
+</div>
+</div>
+<section id="por-qué-vemos-este-tema-al-final" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-vemos-este-tema-al-final">¿Por qué vemos este tema al final?</h2>
+<p>Porque primero había que entender el ciclo. Hoy hicimos todo “a mano” a propósito: <code>create_package()</code>, <code>use_r()</code>, <code>load_all()</code>, <code>roxygen2</code>, <code>use_data()</code>, <code>testthat</code>, <code>check()</code>. Ahora que sabés qué hace cada paso, podés decidir cuáles darle a una herramienta de IA y, sobre todo, <strong>entender para poder revisar lo que te devuelve</strong>.</p>
+<p>En un taller, el proceso <strong>es</strong> el objetivo. En tu trabajo de todos los días, a veces no.</p>
+</section>
+<section id="el-ciclo-clásico-no-cambia" class="level2">
+<h2 class="anchored" data-anchor-id="el-ciclo-clásico-no-cambia">El ciclo clásico no cambia</h2>
+<p>De acuerdo a Hadley Wickham y Jenny Bryan el flujo de trabajo es el mismo de siempre:</p>
+<ol type="1">
+<li>Escribir una función en <code>R/</code>.</li>
+<li><code>load_all()</code> y probarla en la consola.</li>
+<li>Crear el archivo de tests con <code>use_test()</code> y escribir tests.</li>
+<li><code>test()</code> hasta que pasen.</li>
+<li><code>document()</code> para actualizar la documentación.</li>
+<li><code>check()</code> al final.</li>
+<li>Reiniciar R.</li>
+</ol>
+<p>Lo que cambia es <strong>quién escribe</strong> cada parte, y qué te toca hacer a vos.</p>
+</section>
+<section id="qué-cambia-con-la-ia" class="level2">
+<h2 class="anchored" data-anchor-id="qué-cambia-con-la-ia">Qué cambia con la IA</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Parte del ciclo</th>
+<th style="text-align: left;">Qué hace bien la IA</th>
+<th style="text-align: left;">Qué te toca a vos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Código</strong></td>
+<td style="text-align: left;">Lo escribe a partir de tu descripción.</td>
+<td style="text-align: left;">Probarlo en la consola con <code>load_all()</code>, para ver cómo se siente usarlo. Entender cada línea.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Tests</strong></td>
+<td style="text-align: left;">A los agentes les encanta escribir tests.</td>
+<td style="text-align: left;">Que sean los necesarios (menos es más), claros y rápidos. Romper el código a propósito para ver que fallan.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Documentación</strong></td>
+<td style="text-align: left;">Un primer borrador.</td>
+<td style="text-align: left;">La documentación es comunicación entre personas: revisala y escribila con tu voz.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong><code>check()</code></strong></td>
+<td style="text-align: left;">Arreglar los problemas que encuentra.</td>
+<td style="text-align: left;">Correrlo siempre. Sigue siendo igual de importante.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Datos</strong></td>
+<td style="text-align: left;">Leer, limpiar y transformar archivos.</td>
+<td style="text-align: left;"><strong>Los datos son tu responsabilidad.</strong> Un modelo puede inventar un dicho o un significado con total seguridad.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Lo que pedimos en rOpenSci
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En rOpenSci pedimos que <strong>todo lo generado con IA sea revisado con cuidado por la persona autora</strong> antes de que otra persona lo lea, y que <strong>siempre se diga</strong> cómo se usó la IA. Lo contamos en el blog: <a href="https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/">Revisión de Software en la era de la IA (<em>Software Review in the Era of AI</em>)</a> (en inglés).</p>
+<ul>
+<li><strong>Nunca le hagas leer a otra persona algo que vos no revisaste.</strong> Un README, la respuesta a un <em>issue</em> o la descripción de un <em>pull request</em> son mensajes para personas.</li>
+<li><strong>La comunicación personal la escribís vos, nunca la IA.</strong> Si una persona te escribe, te responde una persona.</li>
+<li><strong>Usarla para traducir está bien</strong>, sobre todo cuando tenes que comunicarte en un idioma que no es tu lengua nativa.</li>
+<li><strong>Siempre, siempre, que uses IA, decilo.</strong> La transparencia da una buena señal.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="tres-formas-de-usar-un-modelo" class="level2">
+<h2 class="anchored" data-anchor-id="tres-formas-de-usar-un-modelo">Tres formas de usar un modelo</h2>
+<p>El <strong>modelo</strong> es el que genera las respuestas (Claude, GPT, Gemini, Kimi…). Lo podemos usar de diferentes manera, aqui te presentamos tres formas, de menos a más autonomía:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Forma</th>
+<th style="text-align: left;">Cómo funciona</th>
+<th style="text-align: left;">Ejemplos</th>
+<th style="text-align: left;">Qué ve y qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Chat</strong></td>
+<td style="text-align: left;">Una página web o una aplicación donde conversás con el modelo.</td>
+<td style="text-align: left;">GitHub Copilot en github.com, claude.ai, ChatGPT</td>
+<td style="text-align: left;">Solo ve lo que le pegás o adjuntás. Vos copiás el resultado a tu código.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Cliente</strong></td>
+<td style="text-align: left;">Un programa que conecta el modelo con tus herramientas: tu editor o tu código de R.</td>
+<td style="text-align: left;">Copilot en Positron, RStudio o VS Code; el paquete <a href="https://ellmer.tidyverse.org/">ellmer</a> desde R</td>
+<td style="text-align: left;">Ve el archivo que tenés abierto, sugiere código mientras escribís, responde preguntas sobre tu proyecto. Vos decidís qué aceptar.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Agente</strong></td>
+<td style="text-align: left;">Un modelo que <strong>hace cosas en tu computadora</strong>: lee y escribe archivos, corre código de R, ejecuta comandos.</td>
+<td style="text-align: left;">Posit Assistant, Claude Code, Codex, el modo agente de Copilot</td>
+<td style="text-align: left;">Trabaja solo, en un ciclo, hasta terminar la tarea. Vos revisás lo que hizo.</td>
+</tr>
+</tbody>
+</table>
+<p>Un angente es un modelo, dentro de un software que le da herramientas y guardarails y que se ejecuta en un ciclo donde usa esas herramientas y restricciones para lograr un objetivo.</p>
+<ul>
+<li>El <strong>modelo</strong> decide qué herramienta usar.</li>
+<li>El <strong>software</strong> que lo contiene ejecuta la herramienta y le devuelve el resultado. Este software también aplica las restricciones que le impusimos (por ejemplo que no pueda borrar archivos)</li>
+<li>Se repite hasta que el modelo dice que terminó.</li>
+</ul>
+<p>Las herramientas típicas son: buscar en los archivos, leer, escribir, editar, correr código de R, correr comandos de la terminal, preguntarte algo y leer páginas web. <em>Cuanta más autonomía, más importante es revisar.</em></p>
+</section>
+<section id="riesgos-y-cómo-cuidarte" class="level2">
+<h2 class="anchored" data-anchor-id="riesgos-y-cómo-cuidarte">Riesgos y cómo cuidarte</h2>
+<p>El peligro principal son las <strong>acciones que no se pueden deshacer</strong>:</p>
+<ul>
+<li>editar archivos sin Git;</li>
+<li>borrar archivos o tablas sin copia de seguridad;</li>
+<li>mandar un correo o publicar algo;</li>
+<li>revelar un <em>secreto</em> (una contraseña, una clave de API, datos sensibles).</li>
+</ul>
+<p>Cómo cuidarte:</p>
+<ul>
+<li><strong>Usá Git siempre.</strong> Si el agente rompe algo, volvés atrás. Es la mejor razón para aprender Git.</li>
+<li><strong>Hacé copias de seguridad</strong> de lo que no está en Git.</li>
+<li><strong>Mirá lo que hace</strong>. Leé los cambios antes de aceptarlos.</li>
+<li><strong>No le pegues secretos ni datos privados</strong> a un chat: contraseñas, claves de API, datos personales.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Conversaciones cortas
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cada mensaje nuevo le manda al modelo <strong>toda</strong> la conversación anterior. Las conversaciones largas cuestan más (en dinero y en energía) y arrastran confusiones. Empezá conversaciones nuevas seguido: es tan importante como reiniciar tu sesión de R.</p>
+</div>
+</div>
+</section>
+<section id="cómo-pedir-ayuda-corto-y-preciso" class="level2">
+<h2 class="anchored" data-anchor-id="cómo-pedir-ayuda-corto-y-preciso">Cómo pedir ayuda: corto y preciso</h2>
+<p>Algunos consejos del taller de Posit para hacer buenas preguntas:</p>
+<ul>
+<li><strong>Ser un poco más específica mejora mucho el resultado.</strong> Usá las palabras del tema: <code>load_all()</code>, <code>@export</code>, <em>snapshot test</em>.</li>
+<li><strong>Achicá el alcance</strong>: preguntá sobre <em>este</em> paquete, <em>esta</em> función, <em>este</em> error.</li>
+<li><strong>Pedí pruebas</strong>: “mostrame en qué parte de la documentación dice eso”.</li>
+<li><strong>Preguntas cortas, respuestas cortas, y de a una.</strong> Así vas construyendo tu propia comprensión.</li>
+</ul>
+<p>Y no todo es chat: la búsqueda de código de GitHub sigue siendo buenísima. Por ejemplo, <a href="https://github.com/search?q=user%3Acran+path%3Adata-raw&amp;type=code"><code>user:cran path:data-raw</code></a> te muestra cómo otros paquetes de CRAN preparan sus datos.</p>
+</section>
+<section id="cuánto-delegar-más-riesgo-más-controles-tuyos" class="level2">
+<h2 class="anchored" data-anchor-id="cuánto-delegar-más-riesgo-más-controles-tuyos">Cuánto delegar: más riesgo, más controles tuyos</h2>
+<p>Hadley y Jenny proponen ajustar el proceso según cuánto cuesta un error: si se puede deshacer, cuántas personas lo notarían y cuánto te lleva revisarlo. Cuanto más caro sería equivocarse, más puntos de control ponés vos antes y después de que trabaje la IA.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Si un error…</th>
+<th style="text-align: left;">Cómo trabajar</th>
+<th style="text-align: left;">Ejemplo en dichosos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">se arregla en un minuto</td>
+<td style="text-align: left;">Pedilo y revisá el resultado.</td>
+<td style="text-align: left;">Arreglar el WARNING de tildes.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">lleva un rato arreglar</td>
+<td style="text-align: left;">Pedí un plan primero, corregilo, y después que lo haga.</td>
+<td style="text-align: left;">Agregar <code>dichos_por_tema()</code>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">afecta a otras personas</td>
+<td style="text-align: left;">Revisá el plan <strong>y</strong> el resultado: leé cada cambio, probá con <code>load_all()</code>, corré los tests y <code>check()</code>.</td>
+<td style="text-align: left;">Cambiar cómo funciona <code>dicho_al_azar()</code>, que ya usan otras personas.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">es difícil de deshacer</td>
+<td style="text-align: left;">Las decisiones de diseño las tomás vos; la IA ayuda a implementar.</td>
+<td style="text-align: left;">Preparar el paquete para CRAN o para la revisión de rOpenSci.</td>
+</tr>
+</tbody>
+</table>
+<p>Cuando le pidas un plan, pedí que lo escriba en un archivo Markdown que puedas leer y editar.</p>
+</section>
+<section id="contarle-al-agente-cómo-es-tu-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="contarle-al-agente-cómo-es-tu-paquete">Contarle al agente cómo es tu paquete</h2>
+<p>Si le repetís lo mismo a un agente tres veces (“usá cli para los errores”, “nada de tildes en el código”), conviene escribirlo en un archivo <strong><code>AGENTS.md</code></strong> en la raíz del proyecto. Los agentes lo leen al empezar cada conversación. Existe la función <code>usethis::use_tidy_agents()</code>, que crea uno con las convenciones del tidyverse.</p>
+<p>Mantenelo corto: se manda en cada pedido, y lo estás pagando.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>¿Y si quiero probar? Con tu cuenta de GitHub, gratis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si tenés una cuenta personal de GitHub, ya tenés <strong>GitHub Copilot Free</strong>, sin pagar nada:</p>
+<ul>
+<li><strong>Como chat</strong>, en el navegador: entrá a <a href="https://github.com/copilot" class="uri">https://github.com/copilot</a>. Le podés preguntar sobre tu código, y si tu paquete está en GitHub, sobre tu repositorio.</li>
+<li><strong>Como cliente</strong>, en tu editor: Copilot funciona en Positron, RStudio y VS Code.</li>
+<li>Tiene un límite mensual de uso. Estudiantes, docentes y personas que mantienen proyectos de código abierto pueden pedir acceso gratuito a planes más completos.</li>
+</ul>
+<p>Otras opciones, que en general necesitan una suscripción o una clave de API: <a href="https://assistant.posit.co/"><strong>Posit Assistant</strong></a> en Positron y RStudio, <strong>Claude Code</strong>, <strong>Codex</strong>, <a href="https://mistral.ai">Mistral</a>.</p>
+<p>Para aprender, ninguna es imprescindible: todo lo que vimos hoy funciona sin IA.</p>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 9.1: ¿Dónde sí y dónde no? <span class="duracion">5 minutos, en parejas</span></p>
+<p>Para cada tarea de dichosos, decidí: ¿le darías el trabajo a una herramienta de IA, la usarías solo para un borrador que después revisás, o la harías vos?</p>
+<ol type="1">
+<li>Elegir el nombre del paquete.</li>
+<li>Escribir el código de <code>buscar_dicho()</code>.</li>
+<li>Escribir los significados de los dichos de tu país.</li>
+<li>Escribir los tests de <code>dicho_del_dia()</code>.</li>
+<li>Arreglar el WARNING de caracteres no ASCII.</li>
+<li>Escribir el README.</li>
+<li>Responder un <em>issue</em> de otra persona que encontró un error en tu paquete.</li>
+</ol>
+<p>Anotá tus respuestas en el documento colaborativo. No hay una sola respuesta correcta: lo interesante es el <em>por qué</em>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Una respuesta posible">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Una respuesta posible
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Vos.</strong> La IA no sabe si un nombre es una mala palabra en tu país (<code>pkg_name_check()</code> tampoco), y el nombre es una decisión de diseño.</li>
+<li><strong>IA, y después vos.</strong> Pedile algo específico, probalo en la consola con <code>load_all()</code> y leé cada línea. Si no entendés el código, no lo agregues.</li>
+<li><strong>Vos.</strong> Los datos son tu responsabilidad. Un modelo de lenguaje puede inventar un dicho o un significado con total seguridad, y en <code>@source</code> dice de dónde salieron.</li>
+<li><strong>IA, con supervisión.</strong> A los agentes les encanta escribir tests: tu trabajo es que sean pocos, claros y que de verdad fallen cuando algo se rompe.</li>
+<li><strong>IA.</strong> Es un problema mecánico, con un mensaje de <code>check()</code> claro. Las herramientas de IA son muy buenas arreglando lo que encuentra <code>check()</code>.</li>
+<li><strong>Borrador.</strong> La IA puede armar la estructura, pero el README es comunicación entre personas: revisalo, escribilo con tu voz y contá que usaste IA.</li>
+<li><strong>Vos.</strong> Podés usar IA para entender el error o probar un arreglo, pero la respuesta es comunicación personal: la escribís vos. Si la usaste para traducir, está bien, y lo decís. Son pautas que pedimos en <a href="https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/">rOpenSci</a>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 9.2: Revisá lo que escribió la IA <span class="duracion">7 minutos</span></p>
+<p>Le pedimos a un asistente de IA: <em>“Agregá a dichosos una función que devuelva los dichos de un tema”</em>. Esto es lo que escribió. Con lo que aprendiste hoy, encontrá <strong>al menos cinco</strong> problemas.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Esta función recibe un tema y devuelve los dichos de ese tema.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Primero filtra los datos por tema y después devuelve el resultado.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>dichos_por_tema <span class="ot">&lt;-</span> <span class="cf">function</span>(tema) {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>tema <span class="sc">%in%</span> dichos<span class="sc">$</span>tema) {</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"No hay dichos de ese tema. Probá con otro."</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  dichos <span class="sc">%&gt;%</span> <span class="fu">filter</span>(tema <span class="sc">==</span> tema)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Y en <code>tests/testthat/test-dichos_por_tema.R</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"dichos_por_tema() funciona"</span>, {</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_true</span>(<span class="cn">TRUE</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  resultado <span class="ot">&lt;-</span> <span class="fu">dichos_por_tema</span>(<span class="st">"dinero"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_s3_class</span>(resultado, <span class="st">"data.frame"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">nrow</span>(resultado), <span class="dv">6</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">ncol</span>(resultado), <span class="dv">4</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">names</span>(resultado), <span class="fu">c</span>(<span class="st">"dicho"</span>, <span class="st">"significado"</span>, <span class="st">"pais"</span>, <span class="st">"tema"</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_true</span>(<span class="fu">all</span>(resultado<span class="sc">$</span>tema <span class="sc">==</span> <span class="st">"dinero"</span>))</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_error</span>(<span class="fu">dichos_por_tema</span>(<span class="st">"dinosaurios"</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>En la función:</p>
+<ol type="1">
+<li><strong><code>library(dplyr)</code> en el código del paquete.</strong> Nunca. Hay que declarar la dependencia con <code>usethis::use_package("dplyr")</code> y usar <code>dplyr::filter()</code>. O mejor: ¿hace falta dplyr? Con R base alcanza (<code>dichos[dichos$tema == tema, ]</code>) y el paquete tiene una dependencia menos.</li>
+<li><strong><code>filter(tema == tema)</code> no filtra nada.</strong> Adentro de <code>filter()</code>, los dos <code>tema</code> son la columna, así que la condición siempre es verdadera y devuelve <strong>todos</strong> los dichos. Es el tipo de error que solo aparece si probás la función en la consola.</li>
+<li><strong>No tiene documentación</strong> de roxygen2 ni <code>@export</code>.</li>
+<li><strong>“Probá” tiene tilde en el código</strong>: <code>check()</code> da un WARNING. Va <code>Prob\u00e1</code>.</li>
+<li><strong>El error no ayuda</strong>: no dice qué tema se pidió ni cuáles existen. Mejor <code>cli::cli_abort()</code> con la lista de temas, como hicimos en <code>dicho_al_azar()</code>.</li>
+<li><strong>Los comentarios explican el <em>qué</em>, no el <em>por qué</em>.</strong> Si el código se entiende, sobran.</li>
+</ol>
+<p>En el test:</p>
+<ol start="7" type="1">
+<li><strong><code>expect_true(TRUE)</code> no comprueba nada.</strong></li>
+<li><strong><code>expect_equal(nrow(resultado), 6)</code> se rompe</strong> cada vez que alguien suma un dicho de dinero. Es un test frágil.</li>
+<li><strong>Es un solo test gigante.</strong> Mejor varios <code>test_that()</code> cortos, cada uno con una descripción de lo que comprueba.</li>
+<li><strong>Lo bueno:</strong> <code>all(resultado$tema == "dinero")</code> sí detecta el error del punto 2… pero solo si alguien corre los tests. Revisar lo que escribe la IA incluye <strong>correr los tests y probar en la consola</strong>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 9.3 (opcional, con GitHub Copilot Free u otro asistente): Pedilo bien <span class="duracion">para casa</span></p>
+<p>Escribí un pedido <strong>corto y preciso</strong> para que un asistente agregue <code>dichos_por_tema()</code> a tu paquete. Con tu cuenta de GitHub podés usar el chat de Copilot en <a href="https://github.com/copilot" class="uri">https://github.com/copilot</a>. Por ejemplo:</p>
+<blockquote class="blockquote">
+<p>Agregá a dichosos la función <code>dichos_por_tema(tema)</code> en <code>R/dichos_por_tema.R</code>. Usá R base, sin dependencias nuevas. Si el tema no existe, dá un error con <code>cli::cli_abort()</code> que liste los temas disponibles, como en <code>dicho_al_azar()</code>. Documentala con roxygen2 y exportala. Escribí tests cortos en <code>tests/testthat/test-dichos_por_tema.R</code>. Antes de escribir código, mostrame un plan.</p>
+</blockquote>
+<p>Después: leé el plan, pedile el código, copialo a tu paquete, revisá los cambios con Git, probá la función con <code>load_all()</code> y corré <code>devtools::check()</code>. ¿Qué hizo distinto a lo que habrías hecho vos?</p>
+</div>
+<div class="puntos-clave">
+<p>Puntos clave</p>
+<ul>
+<li>El ciclo de desarrollo es el mismo con o sin IA: <code>load_all()</code>, <code>test()</code>, <code>document()</code>, <code>check()</code>.</li>
+<li>Saber hacerlo “a mano” es lo que te permite revisar lo que hace la IA.</li>
+<li>Delegá lo mecánico (arreglar lo que encuentra <code>check()</code>), revisá el código y los tests, y quedate con las decisiones, los datos y la comunicación con personas.</li>
+<li>Usá Git siempre: es tu botón de deshacer.</li>
+<li>Pedidos cortos y precisos, y conversaciones cortas.</li>
+<li>Como pedimos en rOpenSci: revisá todo antes de que lo lea otra persona, escribí vos tu comunicación personal y siempre decí cuando usaste IA.</li>
+</ul>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/yabellini\.github\.io\/desarrollo_paquetes\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Materiales con licencia <a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a>. Código con licencia MIT.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Hecho con <a href="https://quarto.org">Quarto</a> para LatinR 2026</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

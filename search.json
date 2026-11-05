@@ -1,0 +1,941 @@
+[
+  {
+    "objectID": "referencia.html",
+    "href": "referencia.html",
+    "title": "Referencia",
+    "section": "",
+    "text": "Para…\nUsá\nAtajo en RStudio\n\n\n\n\nComprobar un nombre\npak::pkg_name_check(\"nombre\")\n\n\n\nCrear un paquete\nusethis::create_package(\"ruta/nombre\")\n\n\n\nGuardar tus datos para usethis\nusethis::edit_r_profile()\n\n\n\nElegir licencia\nusethis::use_mit_license()\n\n\n\nCrear o abrir un archivo de funciones\nusethis::use_r(\"nombre\")\n\n\n\nCargar el paquete en desarrollo\ndevtools::load_all()\nCtrl/Cmd + Shift + L\n\n\nInsertar el esqueleto de roxygen2\nCode &gt; Insert Roxygen Skeleton\nCtrl/Cmd + Alt/Option + Shift + R\n\n\nGenerar la documentación\ndevtools::document()\nCtrl/Cmd + Shift + D\n\n\nPreparar los datos crudos\nusethis::use_data_raw(\"nombre\")\n\n\n\nGuardar datos en el paquete\nusethis::use_data(objeto)\n\n\n\nAgregar una dependencia\nusethis::use_package(\"paquete\")\n\n\n\nPreparar los tests\nusethis::use_testthat(3)\n\n\n\nCrear o abrir un archivo de tests\nusethis::use_test(\"nombre\")\n\n\n\nCorrer los tests\ndevtools::test()\nCtrl/Cmd + Shift + T\n\n\nRevisar todo el paquete\ndevtools::check()\nCtrl/Cmd + Shift + E\n\n\nCrear el README\nusethis::use_readme_rmd()\n\n\n\nConstruir el README\ndevtools::build_readme()\n\n\n\nInstalar el paquete\ndevtools::install()\nCtrl/Cmd + Shift + B\n\n\nVersionar con Git\nusethis::use_git()\n\n\n\nSubir a GitHub\nusethis::use_github()"
+  },
+  {
+    "objectID": "referencia.html#guía-rápida",
+    "href": "referencia.html#guía-rápida",
+    "title": "Referencia",
+    "section": "",
+    "text": "Para…\nUsá\nAtajo en RStudio\n\n\n\n\nComprobar un nombre\npak::pkg_name_check(\"nombre\")\n\n\n\nCrear un paquete\nusethis::create_package(\"ruta/nombre\")\n\n\n\nGuardar tus datos para usethis\nusethis::edit_r_profile()\n\n\n\nElegir licencia\nusethis::use_mit_license()\n\n\n\nCrear o abrir un archivo de funciones\nusethis::use_r(\"nombre\")\n\n\n\nCargar el paquete en desarrollo\ndevtools::load_all()\nCtrl/Cmd + Shift + L\n\n\nInsertar el esqueleto de roxygen2\nCode &gt; Insert Roxygen Skeleton\nCtrl/Cmd + Alt/Option + Shift + R\n\n\nGenerar la documentación\ndevtools::document()\nCtrl/Cmd + Shift + D\n\n\nPreparar los datos crudos\nusethis::use_data_raw(\"nombre\")\n\n\n\nGuardar datos en el paquete\nusethis::use_data(objeto)\n\n\n\nAgregar una dependencia\nusethis::use_package(\"paquete\")\n\n\n\nPreparar los tests\nusethis::use_testthat(3)\n\n\n\nCrear o abrir un archivo de tests\nusethis::use_test(\"nombre\")\n\n\n\nCorrer los tests\ndevtools::test()\nCtrl/Cmd + Shift + T\n\n\nRevisar todo el paquete\ndevtools::check()\nCtrl/Cmd + Shift + E\n\n\nCrear el README\nusethis::use_readme_rmd()\n\n\n\nConstruir el README\ndevtools::build_readme()\n\n\n\nInstalar el paquete\ndevtools::install()\nCtrl/Cmd + Shift + B\n\n\nVersionar con Git\nusethis::use_git()\n\n\n\nSubir a GitHub\nusethis::use_github()"
+  },
+  {
+    "objectID": "referencia.html#etiquetas-de-roxygen2",
+    "href": "referencia.html#etiquetas-de-roxygen2",
+    "title": "Referencia",
+    "section": "Etiquetas de roxygen2",
+    "text": "Etiquetas de roxygen2\n\n\n\nEtiqueta\nPara qué\n\n\n\n\nprimera línea\nEl título\n\n\nprimer párrafo\nLa descripción\n\n\n@param nombre\nUn argumento\n\n\n@return\nQué devuelve la función\n\n\n@examples\nCódigo de ejemplo (se ejecuta en check())\n\n\n@export\nHace pública la función\n\n\n@format\nLa estructura de un conjunto de datos\n\n\n@source\nDe dónde vienen los datos"
+  },
+  {
+    "objectID": "referencia.html#la-estructura-final-de-dichosos",
+    "href": "referencia.html#la-estructura-final-de-dichosos",
+    "title": "Referencia",
+    "section": "La estructura final de dichosos",
+    "text": "La estructura final de dichosos\ndichosos/\n├── DESCRIPTION          # metadatos y dependencias\n├── NAMESPACE            # lo escribe roxygen2: no tocar\n├── LICENSE, LICENSE.md  # la licencia MIT\n├── README.Rmd           # lo editás vos\n├── README.md            # lo genera build_readme()\n├── R/\n│   ├── buscar_dicho.R\n│   ├── data.R           # documentación de los datos\n│   ├── dicho_al_azar.R\n│   └── dicho_del_dia.R\n├── data/\n│   └── dichos.rda       # lo genera use_data()\n├── data-raw/\n│   ├── dichos.csv       # datos crudos\n│   └── dichos.R         # código que prepara los datos\n├── man/                 # lo genera document(): no tocar\n└── tests/               # lo genera testthat  \n    ├── testthat.R\n    └── testthat/\n        ├── test-buscar_dicho.R\n        ├── test-dicho_al_azar.R\n        └── test-dicho_del_dia.R\nPodés descargar el paquete terminado: dichosos.zip."
+  },
+  {
+    "objectID": "referencia.html#glosario",
+    "href": "referencia.html#glosario",
+    "title": "Referencia",
+    "section": "Glosario",
+    "text": "Glosario\n\nPaquete\n\nUna carpeta organizada de una manera específica que R sabe instalar. Puede tener código, documentación, datos y tests.\n\nDESCRIPTION\n\nArchivo con los metadatos del paquete: nombre, título, descripción, autoría, licencia, versión y dependencias.\n\nNAMESPACE\n\nArchivo que dice qué funciones exporta el paquete y qué importa de otros. Lo escribe roxygen2.\n\nExportar\n\nHacer que una función esté disponible para quien usa el paquete con library().\n\nDependencia\n\nOtro paquete que nuestro paquete usa. Puede ir en Imports (imprescindible) o Suggests (opcional).\n\nroxygen2\n\nPaquete que convierte comentarios #' en páginas de ayuda y en el NAMESPACE.\n\nR CMD check\n\nLa revisión oficial de R para paquetes. La corremos con devtools::check(). Informa ERROR, WARNING y NOTE.\n\nTest\n\nCódigo que comprueba automáticamente que una función hace lo que esperamos.\n\nExpectativa\n\nCada comprobación adentro de un test, como expect_equal().\n\nSnapshot\n\nUna “foto” de la salida de un código que testthat guarda para comparar en el futuro.\n\nLazy data\n\nDatos que se cargan recién cuando alguien los usa.\n\nASCII\n\nEl conjunto básico de caracteres, sin tildes ni eñes. El código de un paquete solo puede usar ASCII.\n\nInstalar\n\nCopiar el paquete a la librería de R, para usarlo desde cualquier proyecto con library().\n\nREADME\n\nLa puerta de entrada al paquete: qué hace, cómo se instala y un ejemplo."
+  },
+  {
+    "objectID": "episodios/01-que-es-un-paquete.html",
+    "href": "episodios/01-que-es-un-paquete.html",
+    "title": "1. ¿Qué es un paquete?",
+    "section": "",
+    "text": "⏱ Enseñanza: 10 minutos · Ejercicios: 5 minutos\n\n\nPreguntas\n\n¿Qué es un paquete de R?\n¿Por qué crear un paquete?\n\n\n\nObjetivos\n\nDescribir un paquete como una carpeta organizada que tiene código, documentación y datos.\nDar al menos dos razones para crear un paquete.\nReconocer los paquetes que vamos a usar para crear paquetes.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "1. ¿Qué es un paquete?"
+    ]
+  },
+  {
+    "objectID": "episodios/01-que-es-un-paquete.html#quién-puede-escribir-un-paquete-vos",
+    "href": "episodios/01-que-es-un-paquete.html#quién-puede-escribir-un-paquete-vos",
+    "title": "1. ¿Qué es un paquete?",
+    "section": "¿Quién puede escribir un paquete? ¡Vos!",
+    "text": "¿Quién puede escribir un paquete? ¡Vos!\nSusan Johnston hizo estas preguntas en una charla para RLadies+:\n\n¿Podés abrir R o RStudio?\n¿Podés instalar un paquete?\n¿Escribiste alguna vez una función en R?\n¿Podrías aprender a escribir una función en R?\n\nSi contestaste que sí a todas: ¡podés escribir un paquete de R!",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "1. ¿Qué es un paquete?"
+    ]
+  },
+  {
+    "objectID": "episodios/01-que-es-un-paquete.html#qué-es-un-paquete",
+    "href": "episodios/01-que-es-un-paquete.html#qué-es-un-paquete",
+    "title": "1. ¿Qué es un paquete?",
+    "section": "¿Qué es un paquete?",
+    "text": "¿Qué es un paquete?\nSébastien Rochette tiene una frase que nos encanta:\n\nPara calmar tus temores, recordá que no es más que una carpeta organizada de una manera específica.\n\nUn paquete de R es una carpeta bien organizada que puede contener:\n\ncódigo: nuestras funciones;\ndocumentación: la ayuda que aparece cuando escribimos ? funcion, un README, viñetas;\ndatos: conjuntos de datos listos para usar.\n\nEl truco está en cumplir con el requisito de “una manera específica”: dónde va cada archivo, qué nombre tiene y qué contenido debe tener cada uno. La buena noticia es que no hace falta recordarlo: hay paquetes que lo hacen por nosotros.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "1. ¿Qué es un paquete?"
+    ]
+  },
+  {
+    "objectID": "episodios/01-que-es-un-paquete.html#del-script-al-paquete",
+    "href": "episodios/01-que-es-un-paquete.html#del-script-al-paquete",
+    "title": "1. ¿Qué es un paquete?",
+    "section": "Del script al paquete",
+    "text": "Del script al paquete\nSeguro que ya hiciste parte de este camino trabajando con R:\n\nLa consola. Escribimos código, funciona, cerramos R… y se perdió.\nEl script. Guardamos el código en un archivo .R. Lo podemos volver a correr, pero para usarlo en otro proyecto lo copiamos y pegamos (o usamos source(), y hay que acordarse dónde estaba el archivo).\nLas funciones. Encapsulamos el código que repetimos en funciones. Mucho mejor, pero las funciones siguen estando en un script.\nEl paquete. Las funciones, sus datos y su documentación están juntos y organizados en un formato que R entiende. Se instalan una vez y se pueden usar en cualquier proyecto.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "1. ¿Qué es un paquete?"
+    ]
+  },
+  {
+    "objectID": "episodios/01-que-es-un-paquete.html#por-qué-crear-un-paquete",
+    "href": "episodios/01-que-es-un-paquete.html#por-qué-crear-un-paquete",
+    "title": "1. ¿Qué es un paquete?",
+    "section": "¿Por qué crear un paquete?",
+    "text": "¿Por qué crear un paquete?\nPara compartir código y datos con:\n\nvos (y tu yo del futuro, que no se va a acordar de cómo funcionaba ese script);\nlas personas con las que trabajás;\nlas personas que hacen un trabajo parecido al tuyo, aunque no las conozcas.\n\nY hay otra razón: aprender a desarrollar paquetes te hace mejor programando, aunque nunca publiques uno.\nAprendés buenas prácticas (documentar, testear, organizar), herramientas que sirven para cualquier proyecto y las habilidades poder contribuir a los paquetes de otras personas, porque vas a entender cómo están construidos.\n\n\n\n\n\n\nNotaCuándo vale la pena crear un paquete\n\n\n\nUna regla práctica: si una función la usás en más de un proyecto, ya merece un paquete. Aunque sea una sola función (asi se empieza) y aunque el paquete sea solo para vos.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "1. ¿Qué es un paquete?"
+    ]
+  },
+  {
+    "objectID": "episodios/01-que-es-un-paquete.html#las-herramientas",
+    "href": "episodios/01-que-es-un-paquete.html#las-herramientas",
+    "title": "1. ¿Qué es un paquete?",
+    "section": "Las herramientas",
+    "text": "Las herramientas\nContamos con una serie de paquetes que automatizan el trabajo de crear un paquete:\n\n\n\n\n\n\n\nPaquete\nPara qué lo usamos\n\n\n\n\nusethis\nCrear archivos y carpetas: el paquete, las funciones, la licencia, los tests.\n\n\ndevtools\nCargar, documentar, testear, comprobar e instalar el paquete.\n\n\nroxygen2\nEscribir la documentación al lado del código.\n\n\ntestthat\nEscribir tests.\n\n\ncli\nMensajes y errores lindos y claros.\n\n\npak\nInstalar paquetes y comprobar nombres.\n\n\n\nLa mayoría de las funciones que vamos a usar empiezan con use_ (de usethis): use_r(), use_data(), use_test()… Cuando no sepas cómo hacer algo, escribí usethis::use_ y apretá la tecla Tab para ver todas las opciones.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "1. ¿Qué es un paquete?"
+    ]
+  },
+  {
+    "objectID": "episodios/01-que-es-un-paquete.html#el-paquete-del-taller-dichosos",
+    "href": "episodios/01-que-es-un-paquete.html#el-paquete-del-taller-dichosos",
+    "title": "1. ¿Qué es un paquete?",
+    "section": "El paquete del taller: dichosos",
+    "text": "El paquete del taller: dichosos\nVamos a construir dichosos, un paquete con dichos y expresiones populares de América Latina. Al final va a tener:\n\nun conjunto de datos, dichos, con el dicho, su significado, el país y un tema;\nuna función dicho_al_azar(), que elige un dicho (de un país, si queremos);\nuna función dicho_del_dia(), que da siempre el mismo dicho para la misma fecha;\nuna función buscar_dicho(), que busca dichos por palabra;\ndocumentación, tests y un README.\n\n\nDesafío 1.1: ¿Qué hay en un paquete? 5 minutos, en el documento colaborativo\n¿Cuál de estas afirmaciones sobre los paquetes de R es correcta?\n\nUn paquete solo puede tener funciones.\nPara crear un paquete hay que publicarlo en CRAN.\nUn paquete es una carpeta organizada de una manera específica, que puede tener código, documentación y datos.\nPara crear un paquete hay que saber programar en C.\n\nEscribí tu respuesta (la letra) en el documento colaborativo.\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nLa respuesta correcta es la c.\n\nSi elegiste la a: los paquetes también pueden tener datos, documentación, tests, plantillas, aplicaciones Shiny…\nSi elegiste la b: CRAN es solo uno de los lugares donde se pueden publicar paquetes. Un paquete puede vivir en tu computadora, en GitHub o en R-universe, y sigue siendo un paquete.\nSi elegiste la d: algunos paquetes usan C o C++ para ser más rápidos, pero la gran mayoría está escrita solo en R.\n\n\n\n\n\n\nDesafío 1.2: Tu código repetido 3 minutos\nPensá en algún código que hayas copiado y pegado en más de un proyecto: una función, una limpieza de datos, un gráfico con tus colores favoritos, unos datos que siempre usás.\nEscribilo en una línea en el documento colaborativo. ¡Ese puede ser tu primer paquete!\n\n\nPuntos clave\n\nUn paquete es una carpeta organizada de una manera específica, que puede tener código, documentación y datos.\nVale la pena crear un paquete aunque sea solo para vos y aunque tenga una sola función.\nusethis y devtools automatizan el trabajo, evitando errores.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "1. ¿Qué es un paquete?"
+    ]
+  },
+  {
+    "objectID": "episodios/02-crear-el-paquete.html",
+    "href": "episodios/02-crear-el-paquete.html",
+    "title": "2. Crear el paquete",
+    "section": "",
+    "text": "⏱ Enseñanza: 10 minutos · Ejercicios: 15 minutos\n\n\nPreguntas\n\n¿Cómo elijo un nombre para mi paquete?\n¿Cómo creo la estructura de un paquete?\n¿Cómo sé si mi paquete está bien?\n\n\n\nObjetivos\n\nComprobar si un nombre es válido y está disponible con pak::pkg_name_check().\nCrear un paquete con usethis::create_package().\nDescribir para qué sirve cada archivo de un paquete recién creado.\nCorrer devtools::check() e interpretar el resultado.\nAgregar una licencia.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "2. Crear el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/02-crear-el-paquete.html#elegir-un-nombre",
+    "href": "episodios/02-crear-el-paquete.html#elegir-un-nombre",
+    "title": "2. Crear el paquete",
+    "section": "Elegir un nombre",
+    "text": "Elegir un nombre\nUn nombre de paquete de R:\n\nsolo puede tener letras, números y puntos;\ntiene que empezar con una letra;\nno puede terminar con un punto.\n\nNo se permiten guiones (mis-dichos) ni guiones bajos (mis_dichos). Y aunque los puntos están permitidos, mejor evitarlos.\nAntes de enamorarte de un nombre, comprobá si ya existe:\n\n💻 En vivo\npak::pkg_name_check(\"dichosos\")\n\nLa función revisa si el nombre es válido, si ya hay un paquete con ese nombre en CRAN o Bioconductor, y busca qué significa la palabra (en inglés) para avisarte si tiene connotaciones negativas.\n\n\n\n\n\n\nAdvertenciaLas malas palabras, solo en inglés\n\n\n\npkg_name_check() solo conoce malas palabras en inglés. Un nombre que en castellano (o en el castellano de algún país) es una mala palabra puede pasar sin problemas. Si tenés dudas, preguntá a alguien de otro país. 😅",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "2. Crear el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/02-crear-el-paquete.html#crear-el-paquete",
+    "href": "episodios/02-crear-el-paquete.html#crear-el-paquete",
+    "title": "2. Crear el paquete",
+    "section": "Crear el paquete",
+    "text": "Crear el paquete\n\n💻 En vivo\nusethis::create_package(\"ruta_al_paquete/dichosos\")\n\nEl argumento es la ruta donde se crea el paquete. El último pedazo de la ruta (dichosos) es el nombre del paquete.\nRStudio abre una sesión nueva, con el proyecto del paquete. A partir de ahora trabajamos en esa sesión.\n\n\n\n\n\n\nAdvertenciaNo crees un paquete adentro de otro proyecto\n\n\n\nSi creás el paquete adentro de otro proyecto de RStudio (o adentro de otro paquete), usethis te avisa con un mensaje. Elegí otra carpeta.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "2. Crear el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/02-crear-el-paquete.html#lo-que-creó-usethis",
+    "href": "episodios/02-crear-el-paquete.html#lo-que-creó-usethis",
+    "title": "2. Crear el paquete",
+    "section": "Lo que creó usethis",
+    "text": "Lo que creó usethis\ndichosos/\n├── .gitignore\n├── .Rbuildignore\n├── DESCRIPTION\n├── NAMESPACE\n├── R/\n└── dichosos.Rproj\n\nDESCRIPTION: los metadatos del paquete: nombre, título, descripción, quién lo escribió, la licencia y, más adelante, las dependencias.\nR/: acá van los scripts con las funciones. Por ahora está vacía.\nNAMESPACE: la lista de funciones que el paquete ofrece al mundo. No se edita a mano: lo va a escribir roxygen2 por nosotros.\n.Rbuildignore: se listan los archivos que son parte de nuestro proyecto, pero no del paquete (como el .Rproj). De esta manera son ignorados cuando se construye el paquete.\n.gitignore: archivos que Git no debería versionar (se suele usar para datos muy grandes).\ndichosos.Rproj: el proyecto de RStudio.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "2. Crear el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/02-crear-el-paquete.html#el-primer-check",
+    "href": "episodios/02-crear-el-paquete.html#el-primer-check",
+    "title": "2. Crear el paquete",
+    "section": "El primer check()",
+    "text": "El primer check()\ndevtools::check() corre R CMD check, la revisión oficial de R para paquetes: más de 50 comprobaciones sobre la estructura, la documentación, el código, los datos y los tests.\n\n💻 En vivo\ndevtools::check()\nAtajo de teclado: Ctrl + Shift + E (en Mac, Cmd + Shift + E).\n\nUn paquete vacío ya tiene un problema:\n❯ checking DESCRIPTION meta-information ... WARNING\n  Non-standard license specification:\n    `use_mit_license()`, `use_gpl3_license()` or friends to pick a\n    license\n\n0 errors ✔ | 1 warning ✖ | 0 notes ✔\ncheck() nos dice tres tipos de cosas:\n\nERROR: algo grave. Hay que arreglarlo.\nWARNING: algo que probablemente esté mal. Hay que arreglarlo.\nNOTE: algo para mirar. A veces se puede ignorar.\n\nEl mensaje nos dice qué hacer: elegir una licencia.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "2. Crear el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/02-crear-el-paquete.html#la-licencia",
+    "href": "episodios/02-crear-el-paquete.html#la-licencia",
+    "title": "2. Crear el paquete",
+    "section": "La licencia",
+    "text": "La licencia\nLa licencia dice qué pueden hacer otras personas con tu código. La licencia MIT es permisiva: se puede usar, copiar y modificar tu código, citando la fuente.\n\n💻 En vivo\nusethis::use_mit_license(\"Yanina Bellini Saibene\")\ndevtools::check()\n\n0 errors ✔ | 0 warnings ✔ | 0 notes ✔\n¡Nuestro primer paquete sin problemas! Está vacío, pero es un paquete. 🎉\n\n\n\n\n\n\nTipOtras licencias\n\n\n\nHay una función para cada licencia: use_gpl3_license(), use_apache_license(), use_cc0_license(), use_ccby_license()… Las licencias Creative Commons son para datos y documentos, no para código.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "2. Crear el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/02-crear-el-paquete.html#presentar-el-paquete-description",
+    "href": "episodios/02-crear-el-paquete.html#presentar-el-paquete-description",
+    "title": "2. Crear el paquete",
+    "section": "Presentar el paquete: DESCRIPTION",
+    "text": "Presentar el paquete: DESCRIPTION\nAbrí DESCRIPTION. Hay que completar tres campos:\n\nTitle: una línea, con mayúscula en las palabras importantes, sin punto final.\nDescription: un párrafo sobre qué hace el paquete. Las líneas que siguen a la primera empiezan con cuatro espacios.\nAuthors@R: quiénes hicieron el paquete, con la función person(). El rol \"cre\" es la persona que lo mantiene y \"aut\" quien lo escribió.\n\n\n\n\n\n\n\nTipPara no escribir tu nombre en cada paquete\n\n\n\nPodés guardar tus datos en el archivo .Rprofile, que R lee cada vez que arranca. Así usethis completa Authors@R y la licencia por vos. Abrilo con usethis::edit_r_profile() y agregá:\noptions(\n  usethis.description = list(\n    \"Authors@R\" = utils::person(\n      \"Tu nombre\", \"Tu apellido\",\n      email = \"tu.correo@ejemplo.com\",\n      role = c(\"aut\", \"cre\")\n    ),\n    License = \"MIT + file LICENSE\",\n    Language = \"es\"\n  )\n)\nSe configura una sola vez por computadora. Es como ajustar la altura del asiento de la bicicleta: no lo tenés que hacer cada vez que salís a andar.\n\n\n\nDesafío 2.1: Crear tu paquete 10 minutos\n\nComprobá el nombre con pak::pkg_name_check(\"dichosos\").\nCreá el paquete con usethis::create_package(). Guardalo en una carpeta que encuentres fácil, por ejemplo en Documentos o en tu carpeta de proyectos, pero no adentro de otro proyecto de RStudio.\nEn la nueva sesión de RStudio, corré devtools::check().\nAgregá la licencia MIT y volvé a correr devtools::check() hasta ver 0 errores y 0 warnings.\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\npak::pkg_name_check(\"dichosos\")\nusethis::create_package(\"~/Documents/dichosos\")   # o la ruta que elijas\n\n# En la sesión nueva, la del paquete:\ndevtools::check()\nusethis::use_mit_license(\"Tu Nombre\")\ndevtools::check()\nSi te aparece una NOTE que dice unable to verify current time, no te preocupes: pasa cuando no hay conexión a internet o la red es lenta.\n\n\n\n\n\nDesafío 2.2: ¿Quién es quién? 5 minutos, en parejas\nUní cada archivo o carpeta con lo que hace.\n\n\n\n\n\n\n\n\nArchivo o carpeta\n\nQué hace\n\n\n\n\n1. DESCRIPTION\n\na. Lista las funciones que el paquete exporta. No se edita a mano.\n\n\n2. R/\n\nb. Lista archivos que R ignora cuando construye el paquete.\n\n\n3. NAMESPACE\n\nc. Tiene los metadatos: nombre, título, autoría, licencia, dependencias.\n\n\n4. .Rbuildignore\n\nd. Guarda los scripts con las funciones.\n\n\n5. dichosos.Rproj\n\ne. Es el archivo del proyecto de RStudio.\n\n\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n1-c, 2-d, 3-a, 4-b, 5-e.\n\n\n\n\n\nDesafío 2.3: Presentá tu paquete 5 minutos\nAbrí el archivo DESCRIPTION y completá:\n\nTitle: una línea, con mayúscula en cada palabra importante y sin punto final.\nDescription: un párrafo que explique qué hace el paquete.\nAuthors@R: tu nombre y tu correo.\n\nCorré devtools::check() otra vez. ¿Cambió algo?\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nPackage: dichosos\nTitle: Dichos y Expresiones Populares de America Latina\nVersion: 0.0.0.9000\nAuthors@R:\n    person(\"Yanina\", \"Bellini Saibene\", , \"tu.correo@ejemplo.com\",\n           role = c(\"aut\", \"cre\"))\nDescription: Un paquete de ejemplo para aprender a desarrollar paquetes\n    de R. Incluye dichos y expresiones populares de America Latina y\n    funciones para elegirlos al azar y buscarlos por palabra.\nLicense: MIT + file LICENSE\ncheck() debería seguir dando 0 errores y 0 warnings. Estos campos no se comprueban por su contenido, pero son lo primero que ve cualquier persona que mira tu paquete.\n\n\n\n\n\nPuntos clave\n\npak::pkg_name_check() comprueba si el nombre es válido y está disponible.\nusethis::create_package() crea toda la estructura del paquete.\ndevtools::check() revisa el paquete: el objetivo es 0 errores y 0 warnings.\nDESCRIPTION tiene los metadatos; NAMESPACE no se toca a mano.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "2. Crear el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/06-dependencias.html",
+    "href": "episodios/06-dependencias.html",
+    "title": "6. Dependencias y mensajes claros",
+    "section": "",
+    "text": "⏱ Enseñanza: 5 minutos · Ejercicios: 10 minutos\n\n\nPreguntas\n\n¿Cómo uso funciones de otros paquetes adentro de mi paquete?\n¿Cómo escribo mensajes de error que ayuden?\n\n\n\nObjetivos\n\nDeclarar una dependencia con usethis::use_package().\nDistinguir entre Imports y Suggests.\nEscribir errores claros con cli::cli_abort().\nResolver el WARNING de caracteres no ASCII.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "6. Dependencias y mensajes claros"
+    ]
+  },
+  {
+    "objectID": "episodios/06-dependencias.html#una-función-que-falla-en-silencio",
+    "href": "episodios/06-dependencias.html#una-función-que-falla-en-silencio",
+    "title": "6. Dependencias y mensajes claros",
+    "section": "Una función que falla en silencio",
+    "text": "Una función que falla en silencio\nEn el episodio anterior vimos esto:\ndicho_al_azar(pais = \"Narnia\")\n#&gt; character(0)\nNo hay error, no hay aviso. Quien usa la función no sabe qué paso, si hizo algo mal o esto es el comportamiento esperado. Un buen paquete avisa cuándo algo no salió como esperabamos, por qué y cómo arreglarlo.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "6. Dependencias y mensajes claros"
+    ]
+  },
+  {
+    "objectID": "episodios/06-dependencias.html#cli-mensajes-lindos-y-claros",
+    "href": "episodios/06-dependencias.html#cli-mensajes-lindos-y-claros",
+    "title": "6. Dependencias y mensajes claros",
+    "section": "cli: mensajes lindos y claros",
+    "text": "cli: mensajes lindos y claros\nEl paquete cli tiene funciones para escribir mensajes, advertencias y errores con formato:\n\n\n\nFunción\nPara qué\n\n\n\n\ncli::cli_abort()\nErrores: la función se detiene.\n\n\ncli::cli_warn()\nAdvertencias: la función sigue, pero avisa.\n\n\ncli::cli_inform()\nMensajes informativos.\n\n\n\nLos mensajes son vectores con viñetas: \"i\" para información, \"x\" para lo que salió mal, \"v\" para lo que salió bien, \"!\" para advertencias. Y con {} podemos incluir valores: {.val {pais}} muestra un valor entre comillas y con color, {.arg pais} un argumento.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "6. Dependencias y mensajes claros"
+    ]
+  },
+  {
+    "objectID": "episodios/06-dependencias.html#declarar-la-dependencia",
+    "href": "episodios/06-dependencias.html#declarar-la-dependencia",
+    "title": "6. Dependencias y mensajes claros",
+    "section": "Declarar la dependencia",
+    "text": "Declarar la dependencia\ncli es otro paquete. Si nuestro paquete lo usa, hay que decirlo en DESCRIPTION:\n\n💻 En vivo\nusethis::use_package(\"cli\")\n#&gt; ✔ Adding cli to Imports field in DESCRIPTION.\n#&gt; ☐ Refer to functions with `cli::fun()`.\n\nHay dos tipos principales de dependencias:\n\nImports: paquetes que el nuestro necesita para funcionar. Se instalan automáticamente junto con nuestro paquete.\nSuggests: paquetes que se usan solo a veces (en los tests, en las viñetas, en una función opcional). Para agregarlos: usethis::use_package(\"testthat\", type = \"Suggests\").\n\nAdentro de las funciones, llamamos a las funciones de otros paquetes con paquete::funcion(). Así queda claro de dónde viene cada función.\n\n\n\n\n\n\nAdvertenciaNo se usa library() adentro de un paquete\n\n\n\nEn los scripts usamos library(cli). En un paquete, nunca. Las dependencias se declaran en DESCRIPTION con use_package(), y se usan con ::.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "6. Dependencias y mensajes claros"
+    ]
+  },
+  {
+    "objectID": "episodios/06-dependencias.html#un-error-que-ayuda",
+    "href": "episodios/06-dependencias.html#un-error-que-ayuda",
+    "title": "6. Dependencias y mensajes claros",
+    "section": "Un error que ayuda",
+    "text": "Un error que ayuda\n\n💻 En vivo, en R/dicho_al_azar.R\ndicho_al_azar &lt;- function(pais = NULL) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    if (!pais %in% dichos$pais) {\n      cli::cli_abort(c(\n        \"No tengo dichos de {.val {pais}}.\",\n        \"i\" = \"Los países disponibles son: {.val {unique(dichos$pais)}}.\"\n      ))\n    }\n    opciones &lt;- dichos[dichos$pais == pais, ]\n  }\n\n  fila &lt;- sample(nrow(opciones), size = 1)\n  opciones$dicho[fila]\n}\ndevtools::load_all()\ndicho_al_azar(pais = \"Narnia\")\n#&gt; Error in `dicho_al_azar()`:\n#&gt; ! No tengo dichos de \"Narnia\".\n#&gt; ℹ Los países disponibles son: \"Argentina\", \"Brasil\", \"Chile\", \"Colombia\",\n#&gt;   \"Costa Rica\", \"Cuba\", \"Ecuador\", \"Guatemala\", \"México\", \"Perú\", \"República\n#&gt;   Dominicana\", \"Uruguay\", \"Varios países\", and \"Venezuela\".\n\n¡Mucho mejor! Dice qué pasó y qué opciones hay. (Sí, cli escribe “and” en inglés al final de la lista. Nadie es perfecto.)",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "6. Dependencias y mensajes claros"
+    ]
+  },
+  {
+    "objectID": "episodios/06-dependencias.html#dichosos-acentos",
+    "href": "episodios/06-dependencias.html#dichosos-acentos",
+    "title": "6. Dependencias y mensajes claros",
+    "section": "“Dichosos” acentos",
+    "text": "“Dichosos” acentos\n\n💻 En vivo\ndevtools::check()\n❯ checking R files for non-ASCII characters ... WARNING\n  Found the following file with non-ASCII characters:\n    dicho_al_azar.R\n  Portable packages must use only ASCII characters in their R code,\n  except perhaps in comments.\n  Use \\uxxxx escapes for other characters.\n\n¡Los “dichosos” acentos! Para que el paquete funcione igual en todos los sistemas operativos, el código de R solo puede tener caracteres ASCII. En los comentarios (incluidos los de roxygen2) sí podemos escribir con acentos y eñes. En el código, cada carácter especial se escribe con su código Unicode:\n\n\n\nCarácter\nSe escribe\n\n\n\n\ná é í ó ú\n\\u00e1 \\u00e9 \\u00ed \\u00f3 \\u00fa\n\n\nñ\n\\u00f1\n\n\n¿ ¡\n\\u00bf \\u00a1\n\n\n\n\"i\" = \"Los pa\\u00edses disponibles son: {.val {unique(dichos$pais)}}.\"\nPodemos usar la función stringi::stri_escape_unicode(\"países\") para obtener los códigos que necesitamos.\n\n\n\n\n\n\nNota¿Y los datos?\n\n\n\nLos datos (data/dichos.rda) sí pueden tener tildes. El límite es solo para el código de R/.\n\n\n\nDesafío 6.1: ¿Imports o Suggests? 3 minutos\nPara cada caso, ¿la dependencia va en Imports o en Suggests?\n\nTu función usa cli::cli_abort() para avisar errores.\nUsás testthat para los tests del paquete.\nUsás rmarkdown solo para construir el README.\nTu función principal filtra datos con dplyr::filter().\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n\nImports: sin cli, la función no puede funcionar.\nSuggests: los tests solo los corre quien desarrolla el paquete.\nSuggests (o ni siquiera eso: README.Rmd está en .Rbuildignore).\nImports.\n\nRegla práctica: si tu paquete no funciona sin esa dependencia, va en Imports.\n\n\n\n\n\nDesafío 6.2: Un error que ayude 10 minutos\n\nAgregá cli como dependencia con usethis::use_package(\"cli\").\nModificá dicho_al_azar() para que, si el país no está en los datos, dé un error con cli::cli_abort() que diga qué país pidió la persona y cuáles están disponibles.\nCargá y probá con dicho_al_azar(pais = \"Narnia\").\nCorré devtools::check(). Si aparece un WARNING por caracteres no ASCII, arreglalo.\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\ndicho_al_azar &lt;- function(pais = NULL) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    if (!pais %in% dichos$pais) {\n      cli::cli_abort(c(\n        \"No tengo dichos de {.val {pais}}.\",\n        \"i\" = \"Los pa\\u00edses disponibles son: {.val {unique(dichos$pais)}}.\"\n      ))\n    }\n    opciones &lt;- dichos[dichos$pais == pais, ]\n  }\n\n  fila &lt;- sample(nrow(opciones), size = 1)\n  opciones$dicho[fila]\n}\ndevtools::load_all()\ndicho_al_azar(pais = \"Narnia\")\n#&gt; Error in `dicho_al_azar()`:\n#&gt; ! No tengo dichos de \"Narnia\".\n#&gt; ℹ Los países disponibles son: \"Argentina\", \"Brasil\", \"Chile\", ...\nSi escribiste países con tilde, check() da un WARNING. La tilde se escribe \\u00ed.\n\n\n\n\n\nDesafío 6.3: ¿Qué está mal? 2 minutos\nUna persona escribió esto en R/dicho_del_dia.R. ¿Qué le dirías?\nlibrary(cli)\n\ndicho_del_dia &lt;- function(fecha = Sys.Date()) {\n  if (!inherits(fecha, \"Date\")) {\n    cli_abort(\"{.arg fecha} tiene que ser una fecha.\")\n  }\n  # ...\n}\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nNunca uses library() adentro del código de un paquete. En un paquete, el código de R/ se corre cuando se construye el paquete, no cuando se usa, y library() cambiaría la sesión de quien lo usa. Lo correcto: declarar la dependencia con usethis::use_package(\"cli\") y llamar a la función con cli::cli_abort().\n\n\n\n\n\nPuntos clave\n\nLas dependencias se declaran con usethis::use_package() y se usan con paquete::funcion().\nImports para lo imprescindible, Suggests para lo opcional.\nNunca uses library() en el código de un paquete.\nUn buen error dice qué pasó y cómo arreglarlo: cli::cli_abort() ayuda mucho.\nEn el código de R/, los acentos, eñes y otros caracteres “especiales” se escriben con \\uxxxx.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "6. Dependencias y mensajes claros"
+    ]
+  },
+  {
+    "objectID": "episodios/03-primera-funcion.html",
+    "href": "episodios/03-primera-funcion.html",
+    "title": "3. Nuestra primera función",
+    "section": "",
+    "text": "⏱ Enseñanza: 10 minutos · Ejercicios: 15 minutos\n\n\nPreguntas\n\n¿Dónde van las funciones de un paquete?\n¿Cómo pruebo una función mientras la escribo?\n\n\n\nObjetivos\n\nCrear un archivo para una función con usethis::use_r().\nCargar el paquete en desarrollo con devtools::load_all().\nUsar el ciclo editar, cargar, probar.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "3. Nuestra primera función"
+    ]
+  },
+  {
+    "objectID": "episodios/03-primera-funcion.html#un-archivo-para-la-función",
+    "href": "episodios/03-primera-funcion.html#un-archivo-para-la-función",
+    "title": "3. Nuestra primera función",
+    "section": "Un archivo para la función",
+    "text": "Un archivo para la función\nLas funciones de un paquete deben estar en la carpeta R/. Podríamos crear el archivo a mano, pero usethis tiene una función para hacerlo:\n\n💻 En vivo\nusethis::use_r(\"dicho_al_azar\")\n\nSi el archivo no existe, lo crea y lo abre. Si ya existe, solo lo abre. Es una forma rápida de ir a la función que queremos editar.\n\n\n\n\n\n\nTip¿Una función por archivo?\n\n\n\nNo es obligatorio. Hay paquetes que agrupan en un archivo las funciones relacionadas y el nombre del archivo indica qué contiene. Cuando una función es importante (o es larga), conviene que tenga su propio archivo con su mismo nombre.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "3. Nuestra primera función"
+    ]
+  },
+  {
+    "objectID": "episodios/03-primera-funcion.html#la-primera-versión",
+    "href": "episodios/03-primera-funcion.html#la-primera-versión",
+    "title": "3. Nuestra primera función",
+    "section": "La primera versión",
+    "text": "La primera versión\nEmpezamos simple, como en cualquier función: unos dichos guardados en un vector, y elegimos uno al azar.\n\n💻 En vivo, en R/dicho_al_azar.R\ndicho_al_azar &lt;- function() {\n  dichos &lt;- c(\n    \"Estar al horno\",\n    \"Como perro en cancha de bochas\",\n    \"Pasarlo chancho\"\n  )\n  sample(dichos, size = 1)\n}\n\nAnalicemos las partes de una función:\n\ndicho_al_azar es el nombre de la función\nfunction() es la funcion de R que crea funciones.\nlo que esta entre {} es el cuerpo de la función.\n\nEste es el formato mínimo de una función, ya veremos como ir agregandole mas partes.\nGuardamos el archivo y probamos en la consola:\ndicho_al_azar()\n#&gt; Error in dicho_al_azar() : could not find function \"dicho_al_azar\"\n¡R no la conoce! La función está en un archivo, pero R todavía no la leyó.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "3. Nuestra primera función"
+    ]
+  },
+  {
+    "objectID": "episodios/03-primera-funcion.html#load_all-cargar-el-paquete-en-desarrollo",
+    "href": "episodios/03-primera-funcion.html#load_all-cargar-el-paquete-en-desarrollo",
+    "title": "3. Nuestra primera función",
+    "section": "load_all(): cargar el paquete en desarrollo",
+    "text": "load_all(): cargar el paquete en desarrollo\ndevtools::load_all() carga todo el paquete, como si lo hubiéramos instalado y hecho library():\n\n💻 En vivo\ndevtools::load_all()\n#&gt; ℹ Loading dichosos\n\ndicho_al_azar()\n#&gt; [1] \"Pasarlo chancho\"\nAtajo de teclado: Ctrl + Shift + L (en Mac, Cmd + Shift + L).",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "3. Nuestra primera función"
+    ]
+  },
+  {
+    "objectID": "episodios/03-primera-funcion.html#el-ciclo-editar-cargar-probar",
+    "href": "episodios/03-primera-funcion.html#el-ciclo-editar-cargar-probar",
+    "title": "3. Nuestra primera función",
+    "section": "El ciclo: editar, cargar, probar",
+    "text": "El ciclo: editar, cargar, probar\nDesarrollar un paquete es dar vueltas a este ciclo, muchas veces:\n\n  Ciclo de desarrollo: editar el código, cargar con load_all, probar en la consola, y volver a editar\n  \n  \n    \n    Editarel archivo en R/\n    \n    Cargarload_all()\n    \n    Probaren la consola\n    \n    \n    \n    ¿No anda como esperabas? Otra vuelta.\n  \n\nUna vez que encontramos una versión que nos gusta, corremos devtools::check() cada tanto para ver si rompimos algo.\n\n\n\n\n\n\nNota¿Y si uso Positron?\n\n\n\nTodo el código es igual. En Positron, load_all() también tiene el atajo Ctrl/Cmd + Shift + L.\n\n\n\nDesafío 3.1: Tu primera función en un paquete 8 minutos\n\nCreá el archivo de la función con usethis::use_r(\"dicho_al_azar\").\nEscribí la función dicho_al_azar() (podés copiarla de los snippets).\nAgregá al vector un dicho de tu país o de algún otro lado pero que te guste.\nGuardá, cargá el paquete con devtools::load_all() y llamá a la función varias veces.\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nusethis::use_r(\"dicho_al_azar\")\nEn R/dicho_al_azar.R:\ndicho_al_azar &lt;- function() {\n  dichos &lt;- c(\n    \"Estar al horno\",\n    \"Perdido como perro en cancha de bochas\",\n    \"Pasarlo chancho\",\n    \"Un dicho tuyo\"          # &lt;- ¡el tuyo!\n  )\n  sample(dichos, size = 1)\n}\nEn la consola:\ndevtools::load_all()\ndicho_al_azar()\ndicho_al_azar()\n\n\n\n\n\nDesafío 3.2: Poné los pasos en orden 3 minutos\nEstos son los pasos para agregar una función nueva a un paquete, pero están desordenados. Ordenalos.\n\ndevtools::load_all()\nEscribir la función en el archivo.\nusethis::use_r(\"nombre_funcion\")\nProbar la función en la consola.\nGuardar el archivo.\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n\nusethis::use_r(\"nombre_funcion\")\nEscribir la función en el archivo.\nGuardar el archivo.\ndevtools::load_all()\nProbar la función en la consola.\n\nY si algo no anda: volver al paso 2. ¡Es un ciclo!\n\n\n\n\n\nDesafío 3.3: ¿Qué va a pasar? 4 minutos\nAgregá otro dicho al vector y guardá el archivo, pero no corras load_all(). Antes de llamar a dicho_al_azar() muchas veces, pensá: ¿va a aparecer el dicho nuevo?\nProbalo. Después corré load_all() y volvé a probar.\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nSin load_all(), R sigue usando la versión de la función que cargó la última vez: el dicho nuevo no aparece nunca. Guardar el archivo no alcanza; hay que volver a cargar el paquete. Este es uno de los errores más comunes cuando empezamos a desarrollar paquetes: “¡cambié el código y no pasa nada!”.\n\n\n\n\n\nPuntos clave\n\nLas funciones del paquete van en la carpeta R/; usethis::use_r() crea y abre el archivo.\ndevtools::load_all() carga todo el paquete en desarrollo.\nGuardar no alcanza: después de cada cambio, hay que volver a cargar.\nDesarrollar es un trabajar en el ciclo: editar, cargar, probar.",
+    "crumbs": [
+      "Bloque 1 · Del script al paquete",
+      "3. Nuestra primera función"
+    ]
+  },
+  {
+    "objectID": "creditos.html",
+    "href": "creditos.html",
+    "title": "Créditos y licencia",
+    "section": "",
+    "text": "Este taller fue preparado por Yanina Bellini Saibene para LatinR 2026.\nSe basa en:\nLos dichos del conjunto de datos fueron recopilados para el taller. Gracias a Elio Campitelli, Luis Verde, Olivier por sus contribiciones de dichos. Si encontrás un significado que no es exacto en tu país, ¡avisanos o mandá una corrección!"
+  },
+  {
+    "objectID": "creditos.html#herramienta-y-software-utilizado-para-generar-estos-materiales",
+    "href": "creditos.html#herramienta-y-software-utilizado-para-generar-estos-materiales",
+    "title": "Créditos y licencia",
+    "section": "Herramienta y software utilizado para generar estos materiales",
+    "text": "Herramienta y software utilizado para generar estos materiales\nEl sitio web se construye con Quarto en un proyecto de RStudio y se publica con GitHub Pages.\nSe uso Claude Cowork para:\n\ngenerar el diseño visual de la pagina web basados en los estilos de rOpenSci y el formato de presentacion de contenidos del workbench de The Carpentries.\nprocesar los subtitulos de la charla Desarrollando paquetes de R con la ayuda de rOpenSci para limpiarlos y extraer lo que dijo la disertante (Yanina) para utilizar esas notas en el contenido de este curso.\narmar el relojito con el tiempo en las slides.\n\nLas traducciones se realizan utilizando DeepL. Siempre son revisadas y editadas por una persona antes de su publicación. En este caso Yanina hizo las revisiones.\nGrammarly se usa para correcciones ortográficas y gramaticales (en castellano y en inglés)."
+  },
+  {
+    "objectID": "creditos.html#licencia",
+    "href": "creditos.html#licencia",
+    "title": "Créditos y licencia",
+    "section": "Licencia",
+    "text": "Licencia\nLos materiales del taller tienen licencia Creative Commons Atribución 4.0 Internacional (CC BY 4.0). El código, incluido el paquete dichosos, tiene licencia MIT."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "De la idea al paquete: programá tu primer paquete de R",
+    "section": "",
+    "text": "&gt; dichosos::dicho_al_azar()\n  Estoy al horno\n  Estar en un problema muy grande y sin salida fácil.\n  Argentina\nEste dicho salió del paquete que vamos a construir en el taller: dichosos, un paquete con dichos y expresiones populares de América Latina. Al final de la tarde vas a tener en tu computadora un paquete de R funcional, con funciones, datos, documentación y tests. Y vas a llevarte las herramientas para poder hacer lo mismo con tu propio código."
+  },
+  {
+    "objectID": "index.html#para-quién-es-este-taller",
+    "href": "index.html#para-quién-es-este-taller",
+    "title": "De la idea al paquete: programá tu primer paquete de R",
+    "section": "¿Para quién es este taller?",
+    "text": "¿Para quién es este taller?\nPara personas que ya programan en R y escriben (o están aprendiendo a escribir) sus propias funciones, pero nunca crearon un paquete.\nSi te reconocés en alguna de estas personas, este taller es para vos:\n\nValentina es bióloga en Córdoba. Tiene un script de 300 líneas que copia de proyecto en proyecto, y cada vez que corrige un error lo tiene que corregir en cada uno de los proyectos donde lo uso.\nDiego trabaja en una oficina de estadística en Bogotá. Su equipo comparte funciones en un DropBox y nadie sabe cuál es la versión actualizada.\nJulian da clases en una universidad de Lima. Quiere que sus estudiantes instalen los datos del curso con una sola línea de código.\n\n\n\n\n\n\n\nImportanteAntes del taller\n\n\n\nSeguí las instrucciones de la página de Preparación para tener tu entorno listo para desarrollar paquetes. Lleva unos 20 minutos."
+  },
+  {
+    "objectID": "index.html#lo-que-vas-a-aprender",
+    "href": "index.html#lo-que-vas-a-aprender",
+    "title": "De la idea al paquete: programá tu primer paquete de R",
+    "section": "Lo que vas a aprender",
+    "text": "Lo que vas a aprender\nAl terminar el taller vas a poder:\n\nExplicar qué es un paquete de R y por qué conviene crear uno, aunque sea solo para vos.\nCrear la estructura de un paquete con usethis y comprobarla con devtools::check().\nAgregar funciones y usar el ciclo editar, cargar, probar.\nDocumentar funciones con roxygen2.\nIncluir datos en un paquete y documentarlos.\nDeclarar dependencias y escribir mensajes de error claros con cli.\nEscribir tests con testthat.\nEscribir un README e instalar tu paquete para usarlo desde cualquier proyecto.\nDecidir en qué partes del ciclo conviene usar herramientas de IA y revisar lo que generan."
+  },
+  {
+    "objectID": "index.html#cómo-vamos-a-trabajar",
+    "href": "index.html#cómo-vamos-a-trabajar",
+    "title": "De la idea al paquete: programá tu primer paquete de R",
+    "section": "Cómo vamos a trabajar",
+    "text": "Cómo vamos a trabajar\n\nProgramación en vivo: la instructora escribe el código en vivo, despacio, y vos lo escribís a la par en tu computadora. Si se equivoca (¡va a pasar!), vemos juntos cómo resolverlo.\nDesafíos cortos después de cada parte, para practicar y comprobar que todo se entendió.\nNotas adhesivas cuando necesitás ayuda pegas tu nota adhesiva en tu computadora y una persona del equipo docente se acerca a ayudarte.\nUn documento colaborativo con notas, los enlaces, las preguntas y las respuestas, que queda para después del taller.\nEquivocarse está bien. Los errores son la mejor parte del aprendizaje y vamos a ver varios a propósito."
+  },
+  {
+    "objectID": "index.html#horario",
+    "href": "index.html#horario",
+    "title": "De la idea al paquete: programá tu primer paquete de R",
+    "section": "Horario",
+    "text": "Horario\n\n\n\nHora\nLección\n\n\n\n\n0:00\nBienvenida, código de conducta y presentaciones\n\n\n0:10\n1. ¿Qué es un paquete?\n\n\n0:25\n2. Crear el paquete\n\n\n0:50\n3. Nuestra primera función\n\n\n1:15\n🧉 Pausa (10 minutos)\n\n\n1:25\n4. Documentar funciones\n\n\n1:42\n5. Datos en el paquete\n\n\n2:07\n🤸 Pausa (10 minutos)\n\n\n2:17\n6. Dependencias y mensajes claros\n\n\n2:32\n7. Tests\n\n\n2:52\n8. Compartir el paquete\n\n\n3:04\n9. La IA en el ciclo de desarrollo\n\n\n3:24\nCierre, próximos pasos y opiniones\n\n\n3:30\nFin"
+  },
+  {
+    "objectID": "index.html#código-de-conducta",
+    "href": "index.html#código-de-conducta",
+    "title": "De la idea al paquete: programá tu primer paquete de R",
+    "section": "Código de conducta",
+    "text": "Código de conducta\nEste taller es parte de LatinR y se rige por su código de conducta. Queremos que todas las personas se sientan bienvenidas, sin importar su experiencia, su país, su género o la cantidad de veces que pregunten lo mismo. Si algo te hace sentir incómoda o incómodo, hablá con la organización de LatinR."
+  },
+  {
+    "objectID": "index.html#por-qué-dichos",
+    "href": "index.html#por-qué-dichos",
+    "title": "De la idea al paquete: programá tu primer paquete de R",
+    "section": "¿Por qué dichos?",
+    "text": "¿Por qué dichos?\nPorque un paquete de ejemplo tiene que ser simple, funcional y presentar las características mínimas de lo que hace un paquete de R un paquete.\nLos dichos son una excusa perfecta: nos dan un conjunto de datos manejable sobre el que podemos conducir acciones, como filtrar y buscar con la yapa de aprender expresiones de diferentes paises.\nAlgo divertido que podemos hacer es sumar los dichos de tu país y el paquete se hace más rico con cada taller."
+  },
+  {
+    "objectID": "index.html#fuentes",
+    "href": "index.html#fuentes",
+    "title": "De la idea al paquete: programá tu primer paquete de R",
+    "section": "Fuentes",
+    "text": "Fuentes\n\nLos talleres Desarrollo de paquetes para principiantes, Desarrollo de paquetes avanzado y ¡Código hermoso, porque lo valemos! del Programa de Campeones y Campeonas de rOpenSci desarrollados y dictados por Maëlle Salmon. De ahí vienen la secuencia de herramientas, muchas de las preguntas frecuentes, la idea de los snippets de código y la analogía de la bicicleta.\nEl libro Introducción a la Programación II, de Paola Corrales y Yanina Bellini Saibene, en especial los capítulos Funciones, Empaquetando funciones, Documentando paquetes y funciones, Dependencias y tests y Contribuir y aceptar contribuciones.\nLa charla Desarrollando paquetes de R con la ayuda de rOpenSci, de Yanina Bellini Saibene, donde nació la idea de un paquete de dichos regionales y la primera version de las slides de este taller.\nLa lección 9 adapta el taller Modern R Workflow (ft. Positron and AI), de Hadley Wickham y Jenny Bryan (posit::conf 2026), y las pautas de rOpenSci sobre el uso de IA publicadas en Software Review in the Era of AI."
+  },
+  {
+    "objectID": "ejercicios.html",
+    "href": "ejercicios.html",
+    "title": "Cuaderno de ejercicios",
+    "section": "",
+    "text": "Para ver las soluciones hacé clic en Solución. Te recomendamos mirarla solo después de intentarlo. Si te trabás, poné tu nota adhesiva visible, asi te podemos ayudar."
+  },
+  {
+    "objectID": "ejercicios.html#qué-es-un-paquete",
+    "href": "ejercicios.html#qué-es-un-paquete",
+    "title": "Cuaderno de ejercicios",
+    "section": "1. ¿Qué es un paquete?",
+    "text": "1. ¿Qué es un paquete?\n\nDesafío 1.1: ¿Qué hay en un paquete? 5 minutos, en el documento colaborativo\n¿Cuál de estas afirmaciones sobre los paquetes de R es correcta?\n\nUn paquete solo puede tener funciones.\nPara crear un paquete hay que publicarlo en CRAN.\nUn paquete es una carpeta organizada de una manera específica, que puede tener código, documentación y datos.\nPara crear un paquete hay que saber programar en C.\n\nEscribí tu respuesta (la letra) en el documento colaborativo.\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nLa respuesta correcta es la c.\n\nSi elegiste la a: los paquetes también pueden tener datos, documentación, tests, plantillas, aplicaciones Shiny…\nSi elegiste la b: CRAN es solo uno de los lugares donde se pueden publicar paquetes. Un paquete puede vivir en tu computadora, en GitHub o en R-universe, y sigue siendo un paquete.\nSi elegiste la d: algunos paquetes usan C o C++ para ser más rápidos, pero la gran mayoría está escrita solo en R.\n\n\n\n\n\n\nDesafío 1.2: Tu código repetido 3 minutos\nPensá en algún código que hayas copiado y pegado en más de un proyecto: una función, una limpieza de datos, un gráfico con tus colores favoritos, unos datos que siempre usás.\nEscribilo en una línea en el documento colaborativo. ¡Ese puede ser tu primer paquete!"
+  },
+  {
+    "objectID": "ejercicios.html#crear-el-paquete",
+    "href": "ejercicios.html#crear-el-paquete",
+    "title": "Cuaderno de ejercicios",
+    "section": "2. Crear el paquete",
+    "text": "2. Crear el paquete\n\nDesafío 2.1: Crear tu paquete 10 minutos\n\nComprobá el nombre con pak::pkg_name_check(\"dichosos\").\nCreá el paquete con usethis::create_package(). Guardalo en una carpeta que encuentres fácil, por ejemplo en Documentos o en tu carpeta de proyectos, pero no adentro de otro proyecto de RStudio.\nEn la nueva sesión de RStudio, corré devtools::check().\nAgregá la licencia MIT y volvé a correr devtools::check() hasta ver 0 errores y 0 warnings.\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\npak::pkg_name_check(\"dichosos\")\nusethis::create_package(\"~/Documents/dichosos\")   # o la ruta que elijas\n\n# En la sesión nueva, la del paquete:\ndevtools::check()\nusethis::use_mit_license(\"Tu Nombre\")\ndevtools::check()\nSi te aparece una NOTE que dice unable to verify current time, no te preocupes: pasa cuando no hay conexión a internet o la red es lenta.\n\n\n\n\n\nDesafío 2.2: ¿Quién es quién? 5 minutos, en parejas\nUní cada archivo o carpeta con lo que hace.\n\n\n\n\n\n\n\n\nArchivo o carpeta\n\nQué hace\n\n\n\n\n1. DESCRIPTION\n\na. Lista las funciones que el paquete exporta. No se edita a mano.\n\n\n2. R/\n\nb. Lista archivos que R ignora cuando construye el paquete.\n\n\n3. NAMESPACE\n\nc. Tiene los metadatos: nombre, título, autoría, licencia, dependencias.\n\n\n4. .Rbuildignore\n\nd. Guarda los scripts con las funciones.\n\n\n5. dichosos.Rproj\n\ne. Es el archivo del proyecto de RStudio.\n\n\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n1-c, 2-d, 3-a, 4-b, 5-e.\n\n\n\n\n\nDesafío 2.3: Presentá tu paquete 5 minutos\nAbrí el archivo DESCRIPTION y completá:\n\nTitle: una línea, con mayúscula en cada palabra importante y sin punto final.\nDescription: un párrafo que explique qué hace el paquete.\nAuthors@R: tu nombre y tu correo.\n\nCorré devtools::check() otra vez. ¿Cambió algo?\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nPackage: dichosos\nTitle: Dichos y Expresiones Populares de America Latina\nVersion: 0.0.0.9000\nAuthors@R:\n    person(\"Yanina\", \"Bellini Saibene\", , \"tu.correo@ejemplo.com\",\n           role = c(\"aut\", \"cre\"))\nDescription: Un paquete de ejemplo para aprender a desarrollar paquetes\n    de R. Incluye dichos y expresiones populares de America Latina y\n    funciones para elegirlos al azar y buscarlos por palabra.\nLicense: MIT + file LICENSE\ncheck() debería seguir dando 0 errores y 0 warnings. Estos campos no se comprueban por su contenido, pero son lo primero que ve cualquier persona que mira tu paquete."
+  },
+  {
+    "objectID": "ejercicios.html#nuestra-primera-función",
+    "href": "ejercicios.html#nuestra-primera-función",
+    "title": "Cuaderno de ejercicios",
+    "section": "3. Nuestra primera función",
+    "text": "3. Nuestra primera función\n\nDesafío 3.1: Tu primera función en un paquete 8 minutos\n\nCreá el archivo de la función con usethis::use_r(\"dicho_al_azar\").\nEscribí la función dicho_al_azar() (podés copiarla de los snippets).\nAgregá al vector un dicho de tu país o de algún otro lado pero que te guste.\nGuardá, cargá el paquete con devtools::load_all() y llamá a la función varias veces.\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nusethis::use_r(\"dicho_al_azar\")\nEn R/dicho_al_azar.R:\ndicho_al_azar &lt;- function() {\n  dichos &lt;- c(\n    \"Estar al horno\",\n    \"Perdido como perro en cancha de bochas\",\n    \"Pasarlo chancho\",\n    \"Un dicho tuyo\"          # &lt;- ¡el tuyo!\n  )\n  sample(dichos, size = 1)\n}\nEn la consola:\ndevtools::load_all()\ndicho_al_azar()\ndicho_al_azar()\n\n\n\n\n\nDesafío 3.2: Poné los pasos en orden 3 minutos\nEstos son los pasos para agregar una función nueva a un paquete, pero están desordenados. Ordenalos.\n\ndevtools::load_all()\nEscribir la función en el archivo.\nusethis::use_r(\"nombre_funcion\")\nProbar la función en la consola.\nGuardar el archivo.\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n\nusethis::use_r(\"nombre_funcion\")\nEscribir la función en el archivo.\nGuardar el archivo.\ndevtools::load_all()\nProbar la función en la consola.\n\nY si algo no anda: volver al paso 2. ¡Es un ciclo!\n\n\n\n\n\nDesafío 3.3: ¿Qué va a pasar? 4 minutos\nAgregá otro dicho al vector y guardá el archivo, pero no corras load_all(). Antes de llamar a dicho_al_azar() muchas veces, pensá: ¿va a aparecer el dicho nuevo?\nProbalo. Después corré load_all() y volvé a probar.\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nSin load_all(), R sigue usando la versión de la función que cargó la última vez: el dicho nuevo no aparece nunca. Guardar el archivo no alcanza; hay que volver a cargar el paquete. Este es uno de los errores más comunes cuando empezamos a desarrollar paquetes: “¡cambié el código y no pasa nada!”."
+  },
+  {
+    "objectID": "ejercicios.html#documentar-funciones",
+    "href": "ejercicios.html#documentar-funciones",
+    "title": "Cuaderno de ejercicios",
+    "section": "4. Documentar funciones",
+    "text": "4. Documentar funciones\n\nDesafío 4.1: Documentá dicho_al_azar() 8 minutos\n\nPoné el cursor adentro de la función e insertá el esqueleto de roxygen2 (Code &gt; Insert Roxygen Skeleton).\nCompletá el título, la descripción, @return y @examples.\nCorré devtools::document() y mirá la ayuda con ?dicho_al_azar.\nAbrí el archivo NAMESPACE. ¿Qué cambió?\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n#' Elegir un dicho al azar\n#'\n#' Devuelve un dicho popular de América Latina elegido al azar.\n#'\n#' @return Un texto (vector de caracteres) con el dicho.\n#' @export\n#'\n#' @examples\n#' dicho_al_azar()\ndicho_al_azar &lt;- function() {\n  # ...\n}\ndevtools::document()\n?dicho_al_azar\nNAMESPACE ahora tiene la línea export(dicho_al_azar), gracias a la etiqueta @export.\n\n\n\n\n\nDesafío 4.2: Encontrá los errores 5 minutos, en parejas\nEsta documentación tiene tres errores. ¿Cuáles son?\n#' Elegir un dicho al azar\n#\n#' Devuelve un dicho popular elegido al azar.\n#'\n#' @params pais El país del que queremos el dicho.\n#' @return Un texto con el dicho.\n#'\n#' @examples\n#' dicho_al_azar()\ndicho_al_azar &lt;- function(pais = NULL) {\n  # ...\n}\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n\nLa segunda línea empieza con # en lugar de #'. Para roxygen2, ahí termina el bloque.\nLa etiqueta es @param, en singular, no @params.\nFalta @export. Sin esa etiqueta, la función no se exporta: no se puede usar con library(dichosos) después de instalar el paquete.\n\n\n\n\n\n\nDesafío 4.3 (si te sobra tiempo o para hacerlo en casa): La ayuda por dentro 2 minutos\nAbrí la carpeta man/ y el archivo dicho_al_azar.Rd. ¿Lo escribiste vos? ¿Lo deberías editar?\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nLo escribió roxygen2, a partir de tus comentarios. La primera línea dice % Generated by roxygen2: do not edit by hand. Si lo editás a mano, la próxima vez que corras document() se pierden los cambios. Siempre se edita el comentario #' en el archivo .R."
+  },
+  {
+    "objectID": "ejercicios.html#datos-en-el-paquete",
+    "href": "ejercicios.html#datos-en-el-paquete",
+    "title": "Cuaderno de ejercicios",
+    "section": "5. Datos en el paquete",
+    "text": "5. Datos en el paquete\n\nDesafío 5.1: Datos adentro del paquete 10 minutos\n\nCorré usethis::use_data_raw(\"dichos\").\nDescargá dichos.csv y guardalo en la carpeta data-raw/ de tu paquete.\nCompletá data-raw/dichos.R para leer el CSV y guardarlo con usethis::use_data(). Corré el script.\nCorré devtools::load_all() y mirá los datos: head(dichos), table(dichos$pais).\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nusethis::use_data_raw(\"dichos\")\ndownload.file(\n  \"https://yabellini.github.io/desarrollo_paquetes/datos/dichos.csv\",\n  \"data-raw/dichos.csv\"\n)\nEn data-raw/dichos.R:\ndichos &lt;- read.csv(\"data-raw/dichos.csv\", encoding = \"UTF-8\")\nusethis::use_data(dichos, overwrite = TRUE)\nsource(\"data-raw/dichos.R\")\ndevtools::load_all()\nhead(dichos)\ntable(dichos$pais)\n\n\n\n\n\nDesafío 5.2: Completá los espacios 7 minutos\nEsta nueva versión de dicho_al_azar() usa los datos y tiene un argumento pais. Completá los ____, guardá, cargá y probá con dicho_al_azar(pais = \"Chile\").\n#' Elegir un dicho al azar\n#'\n#' Devuelve un dicho elegido al azar del conjunto de datos [dichos].\n#'\n#' @param ____ Texto con el nombre de un país, por ejemplo `\"Argentina\"`.\n#'   Si es `NULL` (el valor por defecto) se elige entre todos los países.\n#'\n#' @return Un texto (vector de caracteres de largo 1) con el dicho.\n#' @export\n#'\n#' @examples\n#' dicho_al_azar()\n#' dicho_al_azar(pais = \"Argentina\")\ndicho_al_azar &lt;- function(pais = ____) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    opciones &lt;- dichos[dichos$____ == pais, ]\n  }\n\n  fila &lt;- sample(nrow(____), size = 1)\n  opciones$____[fila]\n}\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n#' @param pais Texto con el nombre de un país, ...\ndicho_al_azar &lt;- function(pais = NULL) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    opciones &lt;- dichos[dichos$pais == pais, ]\n  }\n\n  fila &lt;- sample(nrow(opciones), size = 1)\n  opciones$dicho[fila]\n}\nNo te olvides de devtools::document(): cambiamos la documentación.\n\n\n\n\n\nDesafío 5.3: ¿Y si el país no existe? 3 minutos\nProbá dicho_al_azar(pais = \"Narnia\"). ¿Qué devuelve? ¿Es útil para quien usa el paquete? Escribí en el documento colaborativo qué te gustaría que pase.\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nDevuelve character(0): un vector de texto vacío, sin ningún aviso. La función “falla en silencio”, y quien la usa no sabe qué hizo mal. Lo vamos a arreglar en el próximo episodio con un mensaje de error claro.\n\n\n\n\n\nDesafío 5.4 (para llevar a casa): Sumá un dicho de tu país 5 minutos\n\nAgregá una fila a data-raw/dichos.csv con un dicho de tu país.\nVolvé a correr data-raw/dichos.R.\nSi agregaste un país nuevo, actualizá el número de filas en la documentación de R/data.R.\nCorré devtools::load_all() y buscá tu dicho.\n\nCompartilo en el documento colaborativo: ¡juntamos todos los dichos del taller!"
+  },
+  {
+    "objectID": "ejercicios.html#dependencias-y-mensajes-claros",
+    "href": "ejercicios.html#dependencias-y-mensajes-claros",
+    "title": "Cuaderno de ejercicios",
+    "section": "6. Dependencias y mensajes claros",
+    "text": "6. Dependencias y mensajes claros\n\nDesafío 6.1: ¿Imports o Suggests? 3 minutos\nPara cada caso, ¿la dependencia va en Imports o en Suggests?\n\nTu función usa cli::cli_abort() para avisar errores.\nUsás testthat para los tests del paquete.\nUsás rmarkdown solo para construir el README.\nTu función principal filtra datos con dplyr::filter().\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n\nImports: sin cli, la función no puede funcionar.\nSuggests: los tests solo los corre quien desarrolla el paquete.\nSuggests (o ni siquiera eso: README.Rmd está en .Rbuildignore).\nImports.\n\nRegla práctica: si tu paquete no funciona sin esa dependencia, va en Imports.\n\n\n\n\n\nDesafío 6.2: Un error que ayude 10 minutos\n\nAgregá cli como dependencia con usethis::use_package(\"cli\").\nModificá dicho_al_azar() para que, si el país no está en los datos, dé un error con cli::cli_abort() que diga qué país pidió la persona y cuáles están disponibles.\nCargá y probá con dicho_al_azar(pais = \"Narnia\").\nCorré devtools::check(). Si aparece un WARNING por caracteres no ASCII, arreglalo.\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\ndicho_al_azar &lt;- function(pais = NULL) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    if (!pais %in% dichos$pais) {\n      cli::cli_abort(c(\n        \"No tengo dichos de {.val {pais}}.\",\n        \"i\" = \"Los pa\\u00edses disponibles son: {.val {unique(dichos$pais)}}.\"\n      ))\n    }\n    opciones &lt;- dichos[dichos$pais == pais, ]\n  }\n\n  fila &lt;- sample(nrow(opciones), size = 1)\n  opciones$dicho[fila]\n}\ndevtools::load_all()\ndicho_al_azar(pais = \"Narnia\")\n#&gt; Error in `dicho_al_azar()`:\n#&gt; ! No tengo dichos de \"Narnia\".\n#&gt; ℹ Los países disponibles son: \"Argentina\", \"Brasil\", \"Chile\", ...\nSi escribiste países con tilde, check() da un WARNING. La tilde se escribe \\u00ed.\n\n\n\n\n\nDesafío 6.3: ¿Qué está mal? 2 minutos\nUna persona escribió esto en R/dicho_del_dia.R. ¿Qué le dirías?\nlibrary(cli)\n\ndicho_del_dia &lt;- function(fecha = Sys.Date()) {\n  if (!inherits(fecha, \"Date\")) {\n    cli_abort(\"{.arg fecha} tiene que ser una fecha.\")\n  }\n  # ...\n}\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nNunca uses library() adentro del código de un paquete. En un paquete, el código de R/ se corre cuando se construye el paquete, no cuando se usa, y library() cambiaría la sesión de quien lo usa. Lo correcto: declarar la dependencia con usethis::use_package(\"cli\") y llamar a la función con cli::cli_abort()."
+  },
+  {
+    "objectID": "ejercicios.html#tests",
+    "href": "ejercicios.html#tests",
+    "title": "Cuaderno de ejercicios",
+    "section": "7. Tests",
+    "text": "7. Tests\n\nDesafío 7.1: Tus primeros tests 8 minutos\n\nCorré usethis::use_testthat(3) y usethis::use_test(\"dicho_al_azar\").\nEscribí un test que compruebe que dicho_al_azar() devuelve un solo texto.\nEscribí un test que compruebe que, para un país que no existe, la función da un error.\nCorré los tests con devtools::test().\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\ntest_that(\"dicho_al_azar() devuelve un solo texto\", {\n  resultado &lt;- dicho_al_azar()\n  expect_type(resultado, \"character\")\n  expect_length(resultado, 1)\n})\n\ntest_that(\"dicho_al_azar() avisa si no conoce el país\", {\n  expect_error(dicho_al_azar(pais = \"Narnia\"), \"Narnia\")\n})\ndevtools::test()\n#&gt; [ FAIL 0 | WARN 0 | SKIP 0 | PASS 3 ]\n\n\n\n\n\nDesafío 7.2: Rompé el paquete a propósito 3 minutos\nEn R/dicho_al_azar.R, cambiá size = 1 por size = 2. Antes de correr los tests, pensá: ¿qué test va a fallar?\nCorré devtools::test(), leé el mensaje y después volvé a dejar size = 1.\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nFalla expect_length(resultado, 1), porque ahora la función devuelve dos dichos:\n── Failure: dicho_al_azar() devuelve un solo texto ──\n`resultado` has length 2, not length 1.\nRomper el código a propósito es una forma de comprobar que los tests sirven.\n\n\n\n\n\nDesafío 7.3: Una función nueva con su test para quien termine antes\nEscribí la función buscar_dicho(palabra), que devuelve las filas de dichos donde la palabra aparece en el dicho o en el significado. Pista: grepl(palabra, dichos$dicho, ignore.case = TRUE).\nDocumentala, escribí un test con usethis::use_test(\"buscar_dicho\") y corré devtools::check().\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n#' Buscar dichos por palabra\n#'\n#' Busca una palabra en los dichos y en sus significados.\n#'\n#' @param palabra Texto a buscar. No distingue mayúsculas de minúsculas.\n#'\n#' @return Un data frame con las filas de [dichos] que contienen la palabra.\n#' @export\n#'\n#' @examples\n#' buscar_dicho(\"dinero\")\nbuscar_dicho &lt;- function(palabra) {\n  encontrados &lt;- grepl(palabra, dichos$dicho, ignore.case = TRUE) |\n    grepl(palabra, dichos$significado, ignore.case = TRUE)\n  dichos[encontrados, ]\n}\ntest_that(\"buscar_dicho() encuentra dichos\", {\n  resultado &lt;- buscar_dicho(\"dinero\")\n  expect_s3_class(resultado, \"data.frame\")\n  expect_gt(nrow(resultado), 0)\n})\n\ntest_that(\"buscar_dicho() no distingue mayúsculas\", {\n  expect_equal(buscar_dicho(\"PERRO\"), buscar_dicho(\"perro\"))\n})\nLa versión completa, con un mensaje cuando no encuentra nada, está en el paquete terminado."
+  },
+  {
+    "objectID": "ejercicios.html#compartir-el-paquete",
+    "href": "ejercicios.html#compartir-el-paquete",
+    "title": "Cuaderno de ejercicios",
+    "section": "8. Compartir el paquete",
+    "text": "8. Compartir el paquete\n\nDesafío 8.1: Un README y a instalar 10 minutos\n\nCreá el README con usethis::use_readme_rmd().\nEscribí una oración sobre qué hace el paquete y un ejemplo con dicho_al_azar().\nConstruilo con devtools::build_readme().\nInstalá el paquete con devtools::install().\nReiniciá R, o mejor, abrí otro proyecto, y escribí library(dichosos) y dicho_al_azar().\n\n¡Si te salió un dicho, ya tenés tu primer paquete instalado! 🎉\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n# dichosos\n\n¡Dichos y expresiones populares de América Latina, directo a tu consola de R!\n\n## Ejemplo\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(dichosos)\ndicho_al_azar(pais = \"Chile\")\n```\n:::\ndevtools::build_readme()\ndevtools::install()\nEn otra sesión:\nlibrary(dichosos)\ndicho_al_azar()\n\n\n\n\n\nDesafío 8.2 (opcional, si tenés GitHub configurado): Al mundo 5 minutos\n\nusethis::use_git() y aceptá hacer el primer commit.\nusethis::use_github().\nPegá el enlace a tu repositorio en el documento colaborativo.\nInstalá el paquete de otra persona del taller con pak::pak(\"usuario/dichosos\"). ¿Qué dichos agregó?\n\n\n\nDesafío 8.3: Para cerrar 3 minutos\nEn el documento colaborativo (o en tus notas adhesivas):\n\nPara mantener: una cosa que aprendiste hoy y te gustó.\nPara mejorar: una cosa que mejorarías del taller, o que todavía no te quedó clara.\n\nY una más: ¿qué código tuyo vas a convertir en paquete?"
+  },
+  {
+    "objectID": "ejercicios.html#la-ia-en-el-ciclo-de-desarrollo",
+    "href": "ejercicios.html#la-ia-en-el-ciclo-de-desarrollo",
+    "title": "Cuaderno de ejercicios",
+    "section": "9. La IA en el ciclo de desarrollo",
+    "text": "9. La IA en el ciclo de desarrollo\n\nDesafío 9.1: ¿Dónde sí y dónde no? 5 minutos, en parejas\nPara cada tarea de dichosos, decidí: ¿le darías el trabajo a una herramienta de IA, la usarías solo para un borrador que después revisás, o la harías vos?\n\nElegir el nombre del paquete.\nEscribir el código de buscar_dicho().\nEscribir los significados de los dichos de tu país.\nEscribir los tests de dicho_del_dia().\nArreglar el WARNING de caracteres no ASCII.\nEscribir el README.\nResponder un issue de otra persona que encontró un error en tu paquete.\n\nAnotá tus respuestas en el documento colaborativo. No hay una sola respuesta correcta: lo interesante es el por qué.\n\n\n\n\n\n\nTipUna respuesta posible\n\n\n\n\n\n\nVos. La IA no sabe si un nombre es una mala palabra en tu país (pkg_name_check() tampoco), y el nombre es una decisión de diseño.\nIA, y después vos. Pedile algo específico, probalo en la consola con load_all() y leé cada línea. Si no entendés el código, no lo agregues.\nVos. Los datos son tu responsabilidad. Un modelo de lenguaje puede inventar un dicho o un significado con total seguridad, y en @source dice de dónde salieron.\nIA, con supervisión. A los agentes les encanta escribir tests: tu trabajo es que sean pocos, claros y que de verdad fallen cuando algo se rompe.\nIA. Es un problema mecánico, con un mensaje de check() claro. Las herramientas de IA son muy buenas arreglando lo que encuentra check().\nBorrador. La IA puede armar la estructura, pero el README es comunicación entre personas: revisalo, escribilo con tu voz y contá que usaste IA.\nVos. Podés usar IA para entender el error o probar un arreglo, pero la respuesta es comunicación personal: la escribís vos. Si la usaste para traducir, está bien, y lo decís. Son pautas que pedimos en rOpenSci.\n\n\n\n\n\n\nDesafío 9.2: Revisá lo que escribió la IA 7 minutos\nLe pedimos a un asistente de IA: “Agregá a dichosos una función que devuelva los dichos de un tema”. Esto es lo que escribió. Con lo que aprendiste hoy, encontrá al menos cinco problemas.\nlibrary(dplyr)\n\n# Esta función recibe un tema y devuelve los dichos de ese tema.\n# Primero filtra los datos por tema y después devuelve el resultado.\ndichos_por_tema &lt;- function(tema) {\n  if (!tema %in% dichos$tema) {\n    stop(\"No hay dichos de ese tema. Probá con otro.\")\n  }\n  dichos %&gt;% filter(tema == tema)\n}\nY en tests/testthat/test-dichos_por_tema.R:\ntest_that(\"dichos_por_tema() funciona\", {\n  expect_true(TRUE)\n  resultado &lt;- dichos_por_tema(\"dinero\")\n  expect_s3_class(resultado, \"data.frame\")\n  expect_equal(nrow(resultado), 6)\n  expect_equal(ncol(resultado), 4)\n  expect_equal(names(resultado), c(\"dicho\", \"significado\", \"pais\", \"tema\"))\n  expect_true(all(resultado$tema == \"dinero\"))\n  expect_error(dichos_por_tema(\"dinosaurios\"))\n})\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nEn la función:\n\nlibrary(dplyr) en el código del paquete. Nunca. Hay que declarar la dependencia con usethis::use_package(\"dplyr\") y usar dplyr::filter(). O mejor: ¿hace falta dplyr? Con R base alcanza (dichos[dichos$tema == tema, ]) y el paquete tiene una dependencia menos.\nfilter(tema == tema) no filtra nada. Adentro de filter(), los dos tema son la columna, así que la condición siempre es verdadera y devuelve todos los dichos. Es el tipo de error que solo aparece si probás la función en la consola.\nNo tiene documentación de roxygen2 ni @export.\n“Probá” tiene tilde en el código: check() da un WARNING. Va Prob\\u00e1.\nEl error no ayuda: no dice qué tema se pidió ni cuáles existen. Mejor cli::cli_abort() con la lista de temas, como hicimos en dicho_al_azar().\nLos comentarios explican el qué, no el por qué. Si el código se entiende, sobran.\n\nEn el test:\n\nexpect_true(TRUE) no comprueba nada.\nexpect_equal(nrow(resultado), 6) se rompe cada vez que alguien suma un dicho de dinero. Es un test frágil.\nEs un solo test gigante. Mejor varios test_that() cortos, cada uno con una descripción de lo que comprueba.\nLo bueno: all(resultado$tema == \"dinero\") sí detecta el error del punto 2… pero solo si alguien corre los tests. Revisar lo que escribe la IA incluye correr los tests y probar en la consola.\n\n\n\n\n\n\nDesafío 9.3 (opcional, con GitHub Copilot Free u otro asistente): Pedilo bien para casa\nEscribí un pedido corto y preciso para que un asistente agregue dichos_por_tema() a tu paquete. Con tu cuenta de GitHub podés usar el chat de Copilot en https://github.com/copilot. Por ejemplo:\n\nAgregá a dichosos la función dichos_por_tema(tema) en R/dichos_por_tema.R. Usá R base, sin dependencias nuevas. Si el tema no existe, dá un error con cli::cli_abort() que liste los temas disponibles, como en dicho_al_azar(). Documentala con roxygen2 y exportala. Escribí tests cortos en tests/testthat/test-dichos_por_tema.R. Antes de escribir código, mostrame un plan.\n\nDespués: leé el plan, pedile el código, copialo a tu paquete, revisá los cambios con Git, probá la función con load_all() y corré devtools::check(). ¿Qué hizo distinto a lo que habrías hecho vos?"
+  },
+  {
+    "objectID": "preparacion.html",
+    "href": "preparacion.html",
+    "title": "Preparación",
+    "section": "",
+    "text": "La preparación se hace una sola vez en cada computadora."
+  },
+  {
+    "objectID": "preparacion.html#r-y-una-ide",
+    "href": "preparacion.html#r-y-una-ide",
+    "title": "Preparación",
+    "section": "1. R y una IDE",
+    "text": "1. R y una IDE\n\nR versión 4.3 o más nueva. Descargalo desde CRAN.\nRStudio (descarga) o Positron (descarga). En el taller vamos a usar RStudio, pero todo el código funciona igual en Positron."
+  },
+  {
+    "objectID": "preparacion.html#herramientas-para-compilar",
+    "href": "preparacion.html#herramientas-para-compilar",
+    "title": "Preparación",
+    "section": "2. Herramientas para compilar",
+    "text": "2. Herramientas para compilar\n\nWindowsmacOSLinux\n\n\nInstalá Rtools desde https://cran.r-project.org/bin/windows/Rtools/. Elegí la versión que corresponde a tu versión de R (por ejemplo, Rtools 4.5 para R 4.5). Esta es la causa número uno de problemas en los talleres de paquetes. ¡No te la saltees!\n\n\nAbrí la Terminal y escribí:\nxcode-select --install\nSi te pide registrarte, como desarrollador/a de Apple, hacelo, es gratuito para personas que solo necesitan instalar aplicaciones.\n\n\nInstalá las herramientas de desarrollo de R. En Ubuntu o Debian:\nsudo apt install r-base-dev"
+  },
+  {
+    "objectID": "preparacion.html#los-paquetes-que-vamos-a-usar",
+    "href": "preparacion.html#los-paquetes-que-vamos-a-usar",
+    "title": "Preparación",
+    "section": "3. Los paquetes que vamos a usar",
+    "text": "3. Los paquetes que vamos a usar\nSi no los tenes instalados, necesitamos que instales estos paquetes: devtools, usethis, roxygen2, testthat, cli, pak, rmarkdown. Podes hacerlo copiando y pegando el siguiente comando en la consola de R:\ninstall.packages(c(\"devtools\", \"usethis\", \"roxygen2\", \"testthat\", \"cli\", \"pak\", \"rmarkdown\"))\ndevtools instala varios paquetes más; puede tardar unos minutos."
+  },
+  {
+    "objectID": "preparacion.html#comprobá-que-todo-funciona",
+    "href": "preparacion.html#comprobá-que-todo-funciona",
+    "title": "Preparación",
+    "section": "4. Comprobá que todo funciona",
+    "text": "4. Comprobá que todo funciona\ndevtools::has_devel()\nSi ves el mensaje Your system is ready to build packages!, ¡listo! 🎉 R nos dice que nuestro sistema está listo para desarrollar paquetes."
+  },
+  {
+    "objectID": "preparacion.html#github-y-opcional-git",
+    "href": "preparacion.html#github-y-opcional-git",
+    "title": "Preparación",
+    "section": "5. GitHub y (opcional) Git",
+    "text": "5. GitHub y (opcional) Git\nEn el último episodio mostramos cómo subir el paquete a GitHub. Tambien discutiremos como un asistente de IA se puede incorporar en el ciclo de desarrollo de un paquete y usaremos la version gratuita de GitHub Copilot para eso.\nNo es obligatorio para el taller, pero si querés particar esa parte entonces:\n\nCreá una cuenta de GitHub.\nInstalá Git.\nConectá R con GitHub siguiendo Configuración de Git y GitHub del libro de Introducción a la Programación II."
+  },
+  {
+    "objectID": "snippets.html",
+    "href": "snippets.html",
+    "title": "Snippets",
+    "section": "",
+    "text": "Para que nadie se quede atrás, acá está el código de cada paso. Hacé clic en el ícono de copiar, arriba a la derecha de cada bloque."
+  },
+  {
+    "objectID": "snippets.html#episodio-3-la-primera-función",
+    "href": "snippets.html#episodio-3-la-primera-función",
+    "title": "Snippets",
+    "section": "Episodio 3: la primera función",
+    "text": "Episodio 3: la primera función\nR/dicho_al_azar.R\ndicho_al_azar &lt;- function() {\n  dichos &lt;- c(\n    \"Estoy al horno\",\n    \"Mas perdido que perro en cancha de bochas\",\n    \"Pasarlo chancho\"\n  )\n  sample(dichos, size = 1)\n}"
+  },
+  {
+    "objectID": "snippets.html#episodio-4-la-documentación",
+    "href": "snippets.html#episodio-4-la-documentación",
+    "title": "Snippets",
+    "section": "Episodio 4: la documentación",
+    "text": "Episodio 4: la documentación\n#' Elegir un dicho al azar\n#'\n#' Devuelve un dicho popular de América Latina elegido al azar.\n#'\n#' @return Un texto (vector de caracteres de largo 1) con el dicho.\n#' @export\n#'\n#' @examples\n#' dicho_al_azar()"
+  },
+  {
+    "objectID": "snippets.html#episodio-5-los-datos",
+    "href": "snippets.html#episodio-5-los-datos",
+    "title": "Snippets",
+    "section": "Episodio 5: los datos",
+    "text": "Episodio 5: los datos\nDescargar el CSV:\ndownload.file(\n  \"https://yabellini.github.io/desarrollo_paquetes/datos/dichos.csv\",\n  \"data-raw/dichos.csv\"\n)\ndata-raw/dichos.R\n## Código para preparar el conjunto de datos `dichos`\n\ndichos &lt;- read.csv(\"data-raw/dichos.csv\", encoding = \"UTF-8\")\n\n# Ordenamos por país para que sea más fácil de leer\ndichos &lt;- dichos[order(dichos$pais, dichos$dicho), ]\nrownames(dichos) &lt;- NULL\n\nusethis::use_data(dichos, overwrite = TRUE)\nR/data.R\n#' Dichos y expresiones populares de América Latina\n#'\n#' Una colección de dichos, refranes y expresiones que se usan en distintos\n#' países de América Latina, con su significado.\n#'\n#' @format Un data frame con 48 filas y 4 columnas:\n#' \\describe{\n#'   \\item{dicho}{El dicho o la expresión, como texto.}\n#'   \\item{significado}{Qué quiere decir, explicado en pocas palabras.}\n#'   \\item{pais}{País donde se usa. \"Varios países\" si se usa en muchos lugares.}\n#'   \\item{tema}{Tema del dicho: \"dinero\", \"comida\", \"animales\", etc.}\n#' }\n#' @source Recopilado para el taller de desarrollo de paquetes de LatinR 2026.\n\"dichos\"\nR/dicho_al_azar.R, versión con datos:\n#' Elegir un dicho al azar\n#'\n#' Devuelve un dicho elegido al azar del conjunto de datos [dichos].\n#' Podés elegir de qué país querés el dicho.\n#'\n#' @param pais Texto con el nombre de un país, por ejemplo `\"Argentina\"`.\n#'   Si es `NULL` (el valor por defecto) se elige entre todos los países.\n#'\n#' @return Un texto (vector de caracteres de largo 1) con el dicho.\n#' @export\n#'\n#' @examples\n#' dicho_al_azar()\n#' dicho_al_azar(pais = \"Argentina\")\ndicho_al_azar &lt;- function(pais = NULL) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    opciones &lt;- dichos[dichos$pais == pais, ]\n  }\n\n  fila &lt;- sample(nrow(opciones), size = 1)\n  opciones$dicho[fila]\n}"
+  },
+  {
+    "objectID": "snippets.html#episodio-6-el-error-con-cli",
+    "href": "snippets.html#episodio-6-el-error-con-cli",
+    "title": "Snippets",
+    "section": "Episodio 6: el error con cli",
+    "text": "Episodio 6: el error con cli\ndicho_al_azar &lt;- function(pais = NULL) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    if (!pais %in% dichos$pais) {\n      cli::cli_abort(c(\n        \"No tengo dichos de {.val {pais}}.\",\n        \"i\" = \"Los pa\\u00edses disponibles son: {.val {unique(dichos$pais)}}.\"\n      ))\n    }\n    opciones &lt;- dichos[dichos$pais == pais, ]\n  }\n\n  fila &lt;- sample(nrow(opciones), size = 1)\n  opciones$dicho[fila]\n}"
+  },
+  {
+    "objectID": "snippets.html#episodio-7-los-tests",
+    "href": "snippets.html#episodio-7-los-tests",
+    "title": "Snippets",
+    "section": "Episodio 7: los tests",
+    "text": "Episodio 7: los tests\ntests/testthat/test-dicho_al_azar.R\ntest_that(\"dicho_al_azar() devuelve un solo texto\", {\n  resultado &lt;- dicho_al_azar()\n  expect_type(resultado, \"character\")\n  expect_length(resultado, 1)\n})\n\ntest_that(\"dicho_al_azar() respeta el país\", {\n  resultado &lt;- dicho_al_azar(pais = \"Chile\")\n  expect_true(resultado %in% dichos$dicho[dichos$pais == \"Chile\"])\n})\n\ntest_that(\"dicho_al_azar() avisa si no conoce el país\", {\n  expect_error(dicho_al_azar(pais = \"Narnia\"), \"Narnia\")\n  expect_snapshot(dicho_al_azar(pais = \"Narnia\"), error = TRUE)\n})"
+  },
+  {
+    "objectID": "snippets.html#extra-dicho_del_dia",
+    "href": "snippets.html#extra-dicho_del_dia",
+    "title": "Snippets",
+    "section": "Extra: dicho_del_dia()",
+    "text": "Extra: dicho_del_dia()\nUna función que siempre da el mismo dicho para la misma fecha. Más sencillo de testear, porque no es al azar.\nR/dicho_del_dia.R\n#' El dicho del día\n#'\n#' Devuelve siempre el mismo dicho para una misma fecha. Ideal para\n#' empezar la mañana (o una clase).\n#'\n#' @param fecha Una fecha (objeto de clase `Date`). Por defecto, hoy.\n#'\n#' @return Un texto con el dicho y su significado.\n#' @export\n#'\n#' @examples\n#' dicho_del_dia()\n#' dicho_del_dia(as.Date(\"2026-12-03\"))\ndicho_del_dia &lt;- function(fecha = Sys.Date()) {\n  if (!inherits(fecha, \"Date\")) {\n    cli::cli_abort(c(\n      \"{.arg fecha} tiene que ser una fecha.\",\n      \"x\" = \"Recib\\u00ed un objeto de clase {.cls {class(fecha)}}.\",\n      \"i\" = \"Prob\\u00e1 con {.code as.Date(\\\"2026-12-03\\\")}.\"\n    ))\n  }\n\n  fila &lt;- as.integer(fecha) %% nrow(dichos) + 1\n  paste0(dichos$dicho[fila], \": \", dichos$significado[fila])\n}\ntests/testthat/test-dicho_del_dia.R\ntest_that(\"dicho_del_dia() da el mismo dicho para la misma fecha\", {\n  fecha &lt;- as.Date(\"2026-12-03\")\n  expect_equal(dicho_del_dia(fecha), dicho_del_dia(fecha))\n})\n\ntest_that(\"dicho_del_dia() cambia de un día al otro\", {\n  expect_false(\n    dicho_del_dia(as.Date(\"2026-12-03\")) == dicho_del_dia(as.Date(\"2026-12-04\"))\n  )\n})\n\ntest_that(\"dicho_del_dia() pide una fecha\", {\n  expect_error(dicho_del_dia(\"hoy\"), class = \"rlang_error\")\n})"
+  },
+  {
+    "objectID": "snippets.html#extra-buscar_dicho",
+    "href": "snippets.html#extra-buscar_dicho",
+    "title": "Snippets",
+    "section": "Extra: buscar_dicho()",
+    "text": "Extra: buscar_dicho()\nR/buscar_dicho.R\n#' Buscar dichos por palabra\n#'\n#' Busca una palabra en los dichos y en sus significados.\n#'\n#' @param palabra Texto a buscar. No distingue mayúsculas de minúsculas.\n#'\n#' @return Un data frame con las filas de [dichos] que contienen la palabra.\n#'   Si no encuentra nada, devuelve un data frame sin filas y avisa con un\n#'   mensaje.\n#' @export\n#'\n#' @examples\n#' buscar_dicho(\"dinero\")\n#' buscar_dicho(\"perro\")\nbuscar_dicho &lt;- function(palabra) {\n  if (!is.character(palabra) || length(palabra) != 1) {\n    cli::cli_abort(\"{.arg palabra} tiene que ser un solo texto.\")\n  }\n\n  encontrados &lt;- grepl(palabra, dichos$dicho, ignore.case = TRUE) |\n    grepl(palabra, dichos$significado, ignore.case = TRUE)\n\n  if (!any(encontrados)) {\n    cli::cli_inform(c(\"!\" = \"No encontr\\u00e9 dichos con {.val {palabra}}.\"))\n  }\n\n  dichos[encontrados, ]\n}"
+  },
+  {
+    "objectID": "snippets.html#episodio-9-un-pedido-para-un-asistente-de-ia",
+    "href": "snippets.html#episodio-9-un-pedido-para-un-asistente-de-ia",
+    "title": "Snippets",
+    "section": "Episodio 9: un pedido para un asistente de IA",
+    "text": "Episodio 9: un pedido para un asistente de IA\nPara probar con el chat de GitHub Copilot en https://github.com/copilot (gratis con tu cuenta de GitHub) o con otro asistente. Si usás Copilot en el navegador, elegí primero el repositorio de tu paquete para que pueda leerlo.\nAgregá a dichosos la función `dichos_por_tema(tema)` en `R/dichos_por_tema.R`.\nUsá R base, sin dependencias nuevas.\nSi el tema no existe, dá un error con `cli::cli_abort()` que liste los temas disponibles, como en `dicho_al_azar()`.\nDocumentala con roxygen2 y exportala.\nEscribí tests cortos en `tests/testthat/test-dichos_por_tema.R`.\nAntes de escribir código, mostrame un plan.\nDespués: leé el plan, pedile el código, copialo a tu paquete, revisá los cambios con Git, probá la función con load_all() y corré devtools::check(). Y si compartís el resultado, contá que usaste IA."
+  },
+  {
+    "objectID": "recursos.html",
+    "href": "recursos.html",
+    "title": "Recursos",
+    "section": "",
+    "text": "Programa de Campeones y Campeonas de rOpenSci, en especial los talleres Desarrollo de paquetes para principiantes, Desarrollo de paquetes avanzado y ¡Código hermoso, porque lo valemos! de Maëlle Salmon, que se usaron para generar este taller.\nIntroducción a la Programación II, de Paola Corrales y Yanina Bellini Saibene. Los capítulos Funciones, Empaquetando funciones, Documentando paquetes y funciones, Dependencias y tests y Contribuir y aceptar contribuciones son la base de este taller.\nGuía de desarrollo de paquetes de rOpenSci: buenas prácticas, en castellano.\nRevisión de software por pares de rOpenSci."
+  },
+  {
+    "objectID": "recursos.html#en-castellano",
+    "href": "recursos.html#en-castellano",
+    "title": "Recursos",
+    "section": "",
+    "text": "Programa de Campeones y Campeonas de rOpenSci, en especial los talleres Desarrollo de paquetes para principiantes, Desarrollo de paquetes avanzado y ¡Código hermoso, porque lo valemos! de Maëlle Salmon, que se usaron para generar este taller.\nIntroducción a la Programación II, de Paola Corrales y Yanina Bellini Saibene. Los capítulos Funciones, Empaquetando funciones, Documentando paquetes y funciones, Dependencias y tests y Contribuir y aceptar contribuciones son la base de este taller.\nGuía de desarrollo de paquetes de rOpenSci: buenas prácticas, en castellano.\nRevisión de software por pares de rOpenSci."
+  },
+  {
+    "objectID": "recursos.html#en-inglés",
+    "href": "recursos.html#en-inglés",
+    "title": "Recursos",
+    "section": "En inglés",
+    "text": "En inglés\n\nR Packages (2e), de Hadley Wickham y Jennifer Bryan. En especial el capítulo The whole game.\nLos sitios de usethis, devtools, roxygen2, testthat, cli y pkgdown.\nBlog de rOpenSci, con muchos artículos sobre desarrollo de paquetes.\nR-universe, para buscar paquetes y publicar los tuyos."
+  },
+  {
+    "objectID": "recursos.html#sobre-cómo-enseñamos",
+    "href": "recursos.html#sobre-cómo-enseñamos",
+    "title": "Recursos",
+    "section": "Sobre cómo enseñamos",
+    "text": "Sobre cómo enseñamos\n\nThe Carpentries y su manual para instructores.\nEnseñar tecnología en comunidad, de Greg Wilson, traducido al castellano por la comunidad con edicion de Yanina Bellini Saibene y Natalia Morandeira."
+  },
+  {
+    "objectID": "episodios/04-documentar.html",
+    "href": "episodios/04-documentar.html",
+    "title": "4. Documentar funciones",
+    "section": "",
+    "text": "⏱ Enseñanza: 7 minutos · Ejercicios: 10 minutos\n\n\nPreguntas\n\n¿Cómo hago para que mi función tenga una página de ayuda?\n¿Qué quiere decir que una función se “exporta”?\n\n\n\nObjetivos\n\nEscribir comentarios de roxygen2 para una función.\nGenerar la documentación con devtools::document().\nExplicar qué hace la etiqueta @export.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "4. Documentar funciones"
+    ]
+  },
+  {
+    "objectID": "episodios/04-documentar.html#por-qué-documentar",
+    "href": "episodios/04-documentar.html#por-qué-documentar",
+    "title": "4. Documentar funciones",
+    "section": "¿Por qué documentar?",
+    "text": "¿Por qué documentar?\nEl código lo lee la computadora. La documentación la leen las personas: vos dentro de ocho meses, tu equipo, alguien que encontró tu paquete.\nEn R, la documentación de una función es lo que aparece cuando escribimos ? funcion o presionamos F1 arriba del nombre de la función. Esas páginas se guardan en archivos .Rd en la carpeta man/, con un formato específico. Por esa razón, no los vamos a escribir a mano: roxygen2 los genera a partir de comentarios especiales, que escribimos justo arriba de la función.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "4. Documentar funciones"
+    ]
+  },
+  {
+    "objectID": "episodios/04-documentar.html#el-esqueleto-de-roxygen2",
+    "href": "episodios/04-documentar.html#el-esqueleto-de-roxygen2",
+    "title": "4. Documentar funciones",
+    "section": "El esqueleto de roxygen2",
+    "text": "El esqueleto de roxygen2\n\n💻 En vivo\nCon el cursor adentro de la función, seleccionamos el menú: Code &gt; Insert Roxygen Skeleton (o Ctrl + Alt + Shift + R).\nEn Positron: hacé clic en la bombilla 💡 que aparece cerca del nombre de la función y elegí Generate a roxygen template.\n\n#' Title\n#'\n#' @return\n#' @export\n#'\n#' @examples\ndicho_al_azar &lt;- function() {\nCada línea empieza con #' (numeral y apóstrofo). Las etiquetas empiezan con @.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "4. Documentar funciones"
+    ]
+  },
+  {
+    "objectID": "episodios/04-documentar.html#completar-la-documentación",
+    "href": "episodios/04-documentar.html#completar-la-documentación",
+    "title": "4. Documentar funciones",
+    "section": "Completar la documentación",
+    "text": "Completar la documentación\n\n💻 En vivo, en R/dicho_al_azar.R\n#' Elegir un dicho al azar\n#'\n#' Devuelve un dicho popular de América Latina elegido al azar.\n#'\n#' @return Un texto (vector de caracteres) con el dicho.\n#' @export\n#'\n#' @examples\n#' dicho_al_azar()\ndicho_al_azar &lt;- function() {\n  dichos &lt;- c(\n    \"Estoy al horno\",\n    \"Como perro en cancha de bochas\",\n    \"Pasarlo chancho\"\n  )\n  sample(dichos, size = 1)\n}\n\n\nLa primera línea es el título. Corto, sin punto final.\nEl párrafo siguiente es la descripción. Qué hace la función.\n@param documenta cada argumento. Esta función todavía no tiene, pero se lo vamos a agregar en el episodio de datos.\n@return dice qué devuelve la función: qué tipo de objeto, de qué largo, qué columnas.\n@examples tiene código que muestra cómo se usa. Tiene que funcionar porque check() lo corre.\n@export hace que la función esté disponible para quien instale el paquete.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "4. Documentar funciones"
+    ]
+  },
+  {
+    "objectID": "episodios/04-documentar.html#generar-la-documentación",
+    "href": "episodios/04-documentar.html#generar-la-documentación",
+    "title": "4. Documentar funciones",
+    "section": "Generar la documentación",
+    "text": "Generar la documentación\n\n💻 En vivo\ndevtools::document()\n#&gt; ℹ Updating dichosos documentation\n#&gt; ℹ Loading dichosos\n#&gt; Writing NAMESPACE\n#&gt; Writing dicho_al_azar.Rd\n\n?dicho_al_azar\nAtajo de teclado: Ctrl + Shift + D (en Mac, Cmd + Shift + D).\n\ndocument() hizo dos cosas:\n\nEscribió man/dicho_al_azar.Rd, la página de ayuda.\nAgregó export(dicho_al_azar) en NAMESPACE.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "4. Documentar funciones"
+    ]
+  },
+  {
+    "objectID": "episodios/04-documentar.html#funciones-exportadas-e-internas",
+    "href": "episodios/04-documentar.html#funciones-exportadas-e-internas",
+    "title": "4. Documentar funciones",
+    "section": "Funciones exportadas e internas",
+    "text": "Funciones exportadas e internas\nNo todas las funciones de un paquete tienen que estar disponibles para las personas que lo usan. A veces escribimos funciones auxiliares, que solo usan otras funciones del paquete.\n\nCon @export: la función es pública. Se puede usar después de library(dichosos).\nSin @export: la función es interna. Solo la usan otras funciones del paquete (o vos, con dichosos:::funcion()).\n\n\n\n\n\n\n\nNotaload_all() es generosa\n\n\n\nCon load_all() podés usar todas las funciones, exportadas o no. Por eso a veces no nos damos cuenta de que olvidamos un @export hasta que instalamos el paquete.\n\n\n\n\n\n\n\n\nTipMarkdown en la documentación\n\n\n\nusethis activa Markdown en roxygen2 (fijate la línea Roxygen: list(markdown = TRUE) en DESCRIPTION). Podés usar **negrita**, `código` y enlaces a otras funciones como [dicho_del_dia()].\n\n\n\nDesafío 4.1: Documentá dicho_al_azar() 8 minutos\n\nPoné el cursor adentro de la función e insertá el esqueleto de roxygen2 (Code &gt; Insert Roxygen Skeleton).\nCompletá el título, la descripción, @return y @examples.\nCorré devtools::document() y mirá la ayuda con ?dicho_al_azar.\nAbrí el archivo NAMESPACE. ¿Qué cambió?\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n#' Elegir un dicho al azar\n#'\n#' Devuelve un dicho popular de América Latina elegido al azar.\n#'\n#' @return Un texto (vector de caracteres) con el dicho.\n#' @export\n#'\n#' @examples\n#' dicho_al_azar()\ndicho_al_azar &lt;- function() {\n  # ...\n}\ndevtools::document()\n?dicho_al_azar\nNAMESPACE ahora tiene la línea export(dicho_al_azar), gracias a la etiqueta @export.\n\n\n\n\n\nDesafío 4.2: Encontrá los errores 5 minutos, en parejas\nEsta documentación tiene tres errores. ¿Cuáles son?\n#' Elegir un dicho al azar\n#\n#' Devuelve un dicho popular elegido al azar.\n#'\n#' @params pais El país del que queremos el dicho.\n#' @return Un texto con el dicho.\n#'\n#' @examples\n#' dicho_al_azar()\ndicho_al_azar &lt;- function(pais = NULL) {\n  # ...\n}\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n\nLa segunda línea empieza con # en lugar de #'. Para roxygen2, ahí termina el bloque.\nLa etiqueta es @param, en singular, no @params.\nFalta @export. Sin esa etiqueta, la función no se exporta: no se puede usar con library(dichosos) después de instalar el paquete.\n\n\n\n\n\n\nDesafío 4.3 (si te sobra tiempo o para hacerlo en casa): La ayuda por dentro 2 minutos\nAbrí la carpeta man/ y el archivo dicho_al_azar.Rd. ¿Lo escribiste vos? ¿Lo deberías editar?\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nLo escribió roxygen2, a partir de tus comentarios. La primera línea dice % Generated by roxygen2: do not edit by hand. Si lo editás a mano, la próxima vez que corras document() se pierden los cambios. Siempre se edita el comentario #' en el archivo .R.\n\n\n\n\n\nPuntos clave\n\nLa documentación se escribe con comentarios #' arriba de cada función.\ndevtools::document() genera las páginas de ayuda en man/ y actualiza NAMESPACE.\n@export hace que una función sea pública.\nNunca edites a mano NAMESPACE ni los archivos de man/.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "4. Documentar funciones"
+    ]
+  },
+  {
+    "objectID": "episodios/07-tests.html",
+    "href": "episodios/07-tests.html",
+    "title": "7. Tests",
+    "section": "",
+    "text": "⏱ Enseñanza: 8 minutos · Ejercicios: 12 minutos\n\n\nPreguntas\n\n¿Cómo sé que mi función sigue funcionando después de cambiarla?\n¿Cómo se prueba una función que da resultados al azar?\n\n\n\nObjetivos\n\nPreparar el paquete para usar testthat.\nEscribir tests con test_that() y la familia expect_*().\nCorrer los tests con devtools::test().\nProbar que una función da el error correcto.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "7. Tests"
+    ]
+  },
+  {
+    "objectID": "episodios/07-tests.html#de-probar-en-la-consola-a-tests-automáticos",
+    "href": "episodios/07-tests.html#de-probar-en-la-consola-a-tests-automáticos",
+    "title": "7. Tests",
+    "section": "De probar en la consola a tests automáticos",
+    "text": "De probar en la consola a tests automáticos\nHasta ahora probamos las funciones escribiendo en la consola y mirando el resultado. Funciona, pero cada vez que cambiamos algo hay que volver a probar todo y es muy posible que nos olvidemos de algo.\nUn test es esa misma prueba de la consola, guardada en un archivo, que se corre automáticamente y nos avisa si el resultado es o no es el esperado.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "7. Tests"
+    ]
+  },
+  {
+    "objectID": "episodios/07-tests.html#preparar-testthat",
+    "href": "episodios/07-tests.html#preparar-testthat",
+    "title": "7. Tests",
+    "section": "Preparar testthat",
+    "text": "Preparar testthat\n\n💻 En vivo\nusethis::use_testthat(3)\n#&gt; ✔ Adding testthat to Suggests field in DESCRIPTION.\n#&gt; ✔ Adding \"3\" to Config/testthat/edition.\n#&gt; ✔ Creating tests/testthat/.\n#&gt; ✔ Writing tests/testthat.R.\n\nSe hace una sola vez por paquete. El 3 es la edición de testthat, la más moderna.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "7. Tests"
+    ]
+  },
+  {
+    "objectID": "episodios/07-tests.html#un-archivo-de-tests-por-archivo-de-código",
+    "href": "episodios/07-tests.html#un-archivo-de-tests-por-archivo-de-código",
+    "title": "7. Tests",
+    "section": "Un archivo de tests por archivo de código",
+    "text": "Un archivo de tests por archivo de código\nLa convención: las funciones de R/dicho_al_azar.R se testean en tests/testthat/test-dicho_al_azar.R. usethis lo crea por nosotros:\n\n💻 En vivo\nusethis::use_test(\"dicho_al_azar\")",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "7. Tests"
+    ]
+  },
+  {
+    "objectID": "episodios/07-tests.html#un-test",
+    "href": "episodios/07-tests.html#un-test",
+    "title": "7. Tests",
+    "section": "Un test",
+    "text": "Un test\nUn test tiene una descripción de lo que esperamos y una o más expectativas:\n\n💻 En vivo, en tests/testthat/test-dicho_al_azar.R\ntest_that(\"dicho_al_azar() devuelve un solo texto\", {\n  resultado &lt;- dicho_al_azar()\n  expect_type(resultado, \"character\")\n  expect_length(resultado, 1)\n})\n\n¿Cómo se testea algo que es al azar? No sabemos qué dicho va a salir, pero sí sabemos cómo tiene que ser: un texto, de largo 1, que esté en los datos.\ntest_that(\"dicho_al_azar() respeta el país\", {\n  resultado &lt;- dicho_al_azar(pais = \"Chile\")\n  expect_true(resultado %in% dichos$dicho[dichos$pais == \"Chile\"])\n})",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "7. Tests"
+    ]
+  },
+  {
+    "objectID": "episodios/07-tests.html#algunas-expectativas-útiles",
+    "href": "episodios/07-tests.html#algunas-expectativas-útiles",
+    "title": "7. Tests",
+    "section": "Algunas expectativas útiles",
+    "text": "Algunas expectativas útiles\n\n\n\n\n\n\n\nExpectativa\nComprueba que…\n\n\n\n\nexpect_equal(x, y)\nx es igual a y\n\n\nexpect_type(x, \"character\")\nx es de ese tipo\n\n\nexpect_length(x, 1)\nx tiene ese largo\n\n\nexpect_true(x), expect_false(x)\nx es TRUE (verdadero) o FALSE (falso)\n\n\nexpect_gt(x, y)\nx es mayor que y\n\n\nexpect_s3_class(x, \"data.frame\")\nx es de esa clase\n\n\nexpect_error(codigo)\nel código da un error\n\n\nexpect_message(codigo)\nel código da un mensaje\n\n\nexpect_snapshot(codigo)\nla salida es igual a la última vez",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "7. Tests"
+    ]
+  },
+  {
+    "objectID": "episodios/07-tests.html#testear-errores",
+    "href": "episodios/07-tests.html#testear-errores",
+    "title": "7. Tests",
+    "section": "Testear errores",
+    "text": "Testear errores\nQue una función dé un error cuando tiene que darlo también es parte de que funcione bien. Nos interesa que falle por la razón correcta y que el mensaje sirva:\ntest_that(\"dicho_al_azar() avisa si no conoce el país\", {\n  expect_error(dicho_al_azar(pais = \"Narnia\"), \"Narnia\")\n})\nEl segundo argumento es un texto que tiene que aparecer en el mensaje de error.\n\n\n\n\n\n\nTipSnapshots: una foto del mensaje (para leer en casa)\n\n\n\nPara ver el mensaje completo, usá un snapshot test:\ntest_that(\"el error es claro\", {\n  expect_snapshot(dicho_al_azar(pais = \"Narnia\"), error = TRUE)\n})\nLa primera vez, testthat guarda la salida en tests/testthat/_snaps/. Las veces siguientes, compara con esa “foto” y te avisa si cambió. Es ideal para revisar que los mensajes de error se lean bien.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "7. Tests"
+    ]
+  },
+  {
+    "objectID": "episodios/07-tests.html#correr-los-tests",
+    "href": "episodios/07-tests.html#correr-los-tests",
+    "title": "7. Tests",
+    "section": "Correr los tests",
+    "text": "Correr los tests\n\n💻 En vivo\ndevtools::test()\n#&gt; ✔ | F W  S  OK | Context\n#&gt; ✔ |          4 | dicho_al_azar\n#&gt;\n#&gt; ══ Results ═══════════════════════════════\n#&gt; [ FAIL 0 | WARN 0 | SKIP 0 | PASS 4 ]\nAtajo de teclado: Ctrl + Shift + T (en Mac, Cmd + Shift + T).\n\ndevtools::check() también corre todos los tests.\n\n\n\n\n\n\nNotaLas dos ruedas siempre girando 🚲\n\n\n\nAhora el ciclo tiene una rueda más: editar, cargar, probar en la consola… y correr los tests. Cada vez que encontrás un error (un bug), escribí un test que lo detecte antes de arreglarlo. Así no vuelve.\n\n\n\nDesafío 7.1: Tus primeros tests 8 minutos\n\nCorré usethis::use_testthat(3) y usethis::use_test(\"dicho_al_azar\").\nEscribí un test que compruebe que dicho_al_azar() devuelve un solo texto.\nEscribí un test que compruebe que, para un país que no existe, la función da un error.\nCorré los tests con devtools::test().\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\ntest_that(\"dicho_al_azar() devuelve un solo texto\", {\n  resultado &lt;- dicho_al_azar()\n  expect_type(resultado, \"character\")\n  expect_length(resultado, 1)\n})\n\ntest_that(\"dicho_al_azar() avisa si no conoce el país\", {\n  expect_error(dicho_al_azar(pais = \"Narnia\"), \"Narnia\")\n})\ndevtools::test()\n#&gt; [ FAIL 0 | WARN 0 | SKIP 0 | PASS 3 ]\n\n\n\n\n\nDesafío 7.2: Rompé el paquete a propósito 3 minutos\nEn R/dicho_al_azar.R, cambiá size = 1 por size = 2. Antes de correr los tests, pensá: ¿qué test va a fallar?\nCorré devtools::test(), leé el mensaje y después volvé a dejar size = 1.\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nFalla expect_length(resultado, 1), porque ahora la función devuelve dos dichos:\n── Failure: dicho_al_azar() devuelve un solo texto ──\n`resultado` has length 2, not length 1.\nRomper el código a propósito es una forma de comprobar que los tests sirven.\n\n\n\n\n\nDesafío 7.3: Una función nueva con su test para quien termine antes\nEscribí la función buscar_dicho(palabra), que devuelve las filas de dichos donde la palabra aparece en el dicho o en el significado. Pista: grepl(palabra, dichos$dicho, ignore.case = TRUE).\nDocumentala, escribí un test con usethis::use_test(\"buscar_dicho\") y corré devtools::check().\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n#' Buscar dichos por palabra\n#'\n#' Busca una palabra en los dichos y en sus significados.\n#'\n#' @param palabra Texto a buscar. No distingue mayúsculas de minúsculas.\n#'\n#' @return Un data frame con las filas de [dichos] que contienen la palabra.\n#' @export\n#'\n#' @examples\n#' buscar_dicho(\"dinero\")\nbuscar_dicho &lt;- function(palabra) {\n  encontrados &lt;- grepl(palabra, dichos$dicho, ignore.case = TRUE) |\n    grepl(palabra, dichos$significado, ignore.case = TRUE)\n  dichos[encontrados, ]\n}\ntest_that(\"buscar_dicho() encuentra dichos\", {\n  resultado &lt;- buscar_dicho(\"dinero\")\n  expect_s3_class(resultado, \"data.frame\")\n  expect_gt(nrow(resultado), 0)\n})\n\ntest_that(\"buscar_dicho() no distingue mayúsculas\", {\n  expect_equal(buscar_dicho(\"PERRO\"), buscar_dicho(\"perro\"))\n})\nLa versión completa, con un mensaje cuando no encuentra nada, está en el paquete terminado.\n\n\n\n\n\nPuntos clave\n\nusethis::use_testthat(3) prepara el paquete; usethis::use_test() crea un archivo de tests.\nUn test es una prueba que haciamos en la consola y ahora guardamos en un archivo: test_that() con una o más expect_*().\nPara funciones al azar, testeá las propiedades del resultado, no el valor exacto.\nTestear los errores también es testear.\ndevtools::test() corre todos los tests.",
+    "crumbs": [
+      "Bloque 3 · Que sea confiable",
+      "7. Tests"
+    ]
+  },
+  {
+    "objectID": "episodios/08-compartir.html",
+    "href": "episodios/08-compartir.html",
+    "title": "8. Compartir el paquete",
+    "section": "",
+    "text": "⏱ Enseñanza: 5 minutos · Ejercicios: 7 minutos\n\n\nPreguntas\n\n¿Cómo presento mi paquete?\n¿Cómo lo instalo y lo uso desde otro proyecto?\n¿Cómo lo comparto con otras personas?\n¿Qué sigue después de este taller?\n\n\n\nObjetivos\n\nCrear un README con usethis::use_readme_rmd().\nInstalar el paquete con devtools::install() y usarlo desde otra sesión.\nConocer cómo publicar el paquete en GitHub.\nConocer recursos para seguir aprendiendo.",
+    "crumbs": [
+      "Bloque 4 · La IA en el ciclo de desarrollo",
+      "8. Compartir el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/08-compartir.html#el-readme-la-puerta-de-entrada",
+    "href": "episodios/08-compartir.html#el-readme-la-puerta-de-entrada",
+    "title": "8. Compartir el paquete",
+    "section": "El README: la puerta de entrada",
+    "text": "El README: la puerta de entrada\nEl README es lo primero que ve alguien que encuentra tu paquete. Tiene que contar:\n\nqué hace el paquete, sin jerga;\ncómo se instala;\nun ejemplo de uso;\ncómo contribuir o pedir ayuda.\n\n\n💻 En vivo\nusethis::use_readme_rmd()\n\nEs un archivo R Markdown, así que el ejemplo se ejecuta y muestra el resultado real. Escribimos y después lo construimos:\ndevtools::build_readme()\nEsto genera README.md, que es el que muestra GitHub. Editá siempre el .Rmd; el .md se genera solo.",
+    "crumbs": [
+      "Bloque 4 · La IA en el ciclo de desarrollo",
+      "8. Compartir el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/08-compartir.html#instalar-el-paquete",
+    "href": "episodios/08-compartir.html#instalar-el-paquete",
+    "title": "8. Compartir el paquete",
+    "section": "Instalar el paquete",
+    "text": "Instalar el paquete\nHasta ahora usamos load_all(), que solo funciona adentro del proyecto del paquete. Para usarlo desde cualquier proyecto, hay que instalarlo:\n\n💻 En vivo\ndevtools::install()\nEn RStudio, también con el botón Install de la pestaña Build (Ctrl + Shift + B).\n\nY ahora, en otra sesión de R, como cualquier otro paquete:\nlibrary(dichosos)\ndicho_al_azar(pais = \"Perú\")\n?buscar_dicho",
+    "crumbs": [
+      "Bloque 4 · La IA en el ciclo de desarrollo",
+      "8. Compartir el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/08-compartir.html#compartir-en-github",
+    "href": "episodios/08-compartir.html#compartir-en-github",
+    "title": "8. Compartir el paquete",
+    "section": "Compartir en GitHub",
+    "text": "Compartir en GitHub\nEn el taller lo mostramos sin hacerlo; el desafío 8.2 es para que lo pruebes en casa.\nSi el paquete está en GitHub, cualquier persona lo puede instalar con una línea. usethis también ayuda con esto:\nusethis::use_git()      # crea el repositorio local y hace el primer commit\nusethis::use_github()   # crea el repositorio en GitHub y sube todo\nY para instalarlo:\npak::pak(\"tu-usuario/dichosos\")\nAdemás, R-universe puede construir tu paquete y ofrecerlo ya compilado, para que nadie tenga que instalarlo desde el código fuente.",
+    "crumbs": [
+      "Bloque 4 · La IA en el ciclo de desarrollo",
+      "8. Compartir el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/08-compartir.html#el-recorrido-completo",
+    "href": "episodios/08-compartir.html#el-recorrido-completo",
+    "title": "8. Compartir el paquete",
+    "section": "El recorrido completo",
+    "text": "El recorrido completo\n\n  pak::pkg_name_check()\n  usethis::create_package()\n  usethis::use_mit_license()\n  usethis::use_r() y devtools::load_all()\n  Esqueleto de roxygen2 y devtools::document()\n  usethis::use_data_raw() y usethis::use_data()\n  usethis::use_package()\n  usethis::use_testthat(), usethis::use_test() y devtools::test()\n  usethis::use_readme_rmd() y devtools::install()\n  Y siempre: devtools::check()",
+    "crumbs": [
+      "Bloque 4 · La IA en el ciclo de desarrollo",
+      "8. Compartir el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/08-compartir.html#qué-sigue",
+    "href": "episodios/08-compartir.html#qué-sigue",
+    "title": "8. Compartir el paquete",
+    "section": "¿Qué sigue?",
+    "text": "¿Qué sigue?\nLo que vimos hoy es la base. Algunos próximos pasos:\n\nUn sitio web para tu paquete con pkgdown: usethis::use_pkgdown() y pkgdown::build_site().\nViñetas, documentos largos que cuentan cómo usar el paquete: usethis::use_vignette().\nIntegración continua: que GitHub corra check() en Windows, macOS y Linux cada vez que subís cambios, con usethis::use_github_action(\"check-standard\").\nAbrir tu paquete a contribuciones: usethis::use_code_of_conduct() y usethis::use_tidy_contributing().\n\nY para seguir aprendiendo, en castellano:\n\nLos capítulos 11 a 14 del libro Introducción a la Programación II, de Paola Corrales y Yanina Bellini Saibene.\nLa guía de desarrollo de paquetes de rOpenSci, traducida al castellano.\nEl Programa de Campeones y Campeonas de rOpenSci, con formación, mentoría y una comunidad para desarrollar tu paquete.\nLa revisión de software por pares de rOpenSci, que también acepta paquetes en castellano.\n\nEn inglés, el libro de referencia es R Packages, de Hadley Wickham y Jennifer Bryan.\n\nDesafío 8.1: Un README y a instalar 10 minutos\n\nCreá el README con usethis::use_readme_rmd().\nEscribí una oración sobre qué hace el paquete y un ejemplo con dicho_al_azar().\nConstruilo con devtools::build_readme().\nInstalá el paquete con devtools::install().\nReiniciá R, o mejor, abrí otro proyecto, y escribí library(dichosos) y dicho_al_azar().\n\n¡Si te salió un dicho, ya tenés tu primer paquete instalado! 🎉\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n# dichosos\n\n¡Dichos y expresiones populares de América Latina, directo a tu consola de R!\n\n## Ejemplo\n\n\n::: {.cell}\n\n```{.r .cell-code}\nlibrary(dichosos)\ndicho_al_azar(pais = \"Chile\")\n```\n:::\ndevtools::build_readme()\ndevtools::install()\nEn otra sesión:\nlibrary(dichosos)\ndicho_al_azar()\n\n\n\n\n\nDesafío 8.2 (opcional, si tenés GitHub configurado): Al mundo 5 minutos\n\nusethis::use_git() y aceptá hacer el primer commit.\nusethis::use_github().\nPegá el enlace a tu repositorio en el documento colaborativo.\nInstalá el paquete de otra persona del taller con pak::pak(\"usuario/dichosos\"). ¿Qué dichos agregó?\n\n\n\nDesafío 8.3: Para cerrar 3 minutos\nEn el documento colaborativo (o en tus notas adhesivas):\n\nPara mantener: una cosa que aprendiste hoy y te gustó.\nPara mejorar: una cosa que mejorarías del taller, o que todavía no te quedó clara.\n\nY una más: ¿qué código tuyo vas a convertir en paquete?\n\n\nPuntos clave\n\nEl README presenta el paquete: qué hace, cómo se instala y un ejemplo.\ndevtools::install() instala el paquete para usarlo desde cualquier proyecto.\nCon el paquete en GitHub, cualquier persona lo instala con pak::pak(\"usuario/paquete\").\nYa sabés crear un paquete. Ahora, ¿qué código tuyo vas a empaquetar?",
+    "crumbs": [
+      "Bloque 4 · La IA en el ciclo de desarrollo",
+      "8. Compartir el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/09-ia-en-el-ciclo.html",
+    "href": "episodios/09-ia-en-el-ciclo.html",
+    "title": "9. La IA en el ciclo de desarrollo",
+    "section": "",
+    "text": "⏱ Enseñanza: 8 minutos · Ejercicios: 12 minutos\n\n\nPreguntas\n\n¿Cambia el ciclo de desarrollo de paquetes cuando usamos IA?\n¿En qué partes del ciclo conviene usar herramientas de IA y en cuáles no?\n¿Qué formas hay de usar un modelo de IA?\n¿Qué riesgos tiene dejar que un agente trabaje en mi computadora?\n\n\n\nObjetivos\n\nDistinguir tres formas de usar un modelo: chat, cliente y agente.\nDecidir, para cada paso del ciclo, si conviene delegarlo, pedir un borrador o hacerlo a mano.\nRevisar código y tests generados por IA con los criterios que aprendimos en el taller.\nNombrar los riesgos principales y cómo protegerse."
+  },
+  {
+    "objectID": "episodios/09-ia-en-el-ciclo.html#por-qué-vemos-este-tema-al-final",
+    "href": "episodios/09-ia-en-el-ciclo.html#por-qué-vemos-este-tema-al-final",
+    "title": "9. La IA en el ciclo de desarrollo",
+    "section": "¿Por qué vemos este tema al final?",
+    "text": "¿Por qué vemos este tema al final?\nPorque primero había que entender el ciclo. Hoy hicimos todo “a mano” a propósito: create_package(), use_r(), load_all(), roxygen2, use_data(), testthat, check(). Ahora que sabés qué hace cada paso, podés decidir cuáles darle a una herramienta de IA y, sobre todo, entender para poder revisar lo que te devuelve.\nEn un taller, el proceso es el objetivo. En tu trabajo de todos los días, a veces no."
+  },
+  {
+    "objectID": "episodios/09-ia-en-el-ciclo.html#el-ciclo-clásico-no-cambia",
+    "href": "episodios/09-ia-en-el-ciclo.html#el-ciclo-clásico-no-cambia",
+    "title": "9. La IA en el ciclo de desarrollo",
+    "section": "El ciclo clásico no cambia",
+    "text": "El ciclo clásico no cambia\nDe acuerdo a Hadley Wickham y Jenny Bryan el flujo de trabajo es el mismo de siempre:\n\nEscribir una función en R/.\nload_all() y probarla en la consola.\nCrear el archivo de tests con use_test() y escribir tests.\ntest() hasta que pasen.\ndocument() para actualizar la documentación.\ncheck() al final.\nReiniciar R.\n\nLo que cambia es quién escribe cada parte, y qué te toca hacer a vos."
+  },
+  {
+    "objectID": "episodios/09-ia-en-el-ciclo.html#qué-cambia-con-la-ia",
+    "href": "episodios/09-ia-en-el-ciclo.html#qué-cambia-con-la-ia",
+    "title": "9. La IA en el ciclo de desarrollo",
+    "section": "Qué cambia con la IA",
+    "text": "Qué cambia con la IA\n\n\n\n\n\n\n\n\nParte del ciclo\nQué hace bien la IA\nQué te toca a vos\n\n\n\n\nCódigo\nLo escribe a partir de tu descripción.\nProbarlo en la consola con load_all(), para ver cómo se siente usarlo. Entender cada línea.\n\n\nTests\nA los agentes les encanta escribir tests.\nQue sean los necesarios (menos es más), claros y rápidos. Romper el código a propósito para ver que fallan.\n\n\nDocumentación\nUn primer borrador.\nLa documentación es comunicación entre personas: revisala y escribila con tu voz.\n\n\ncheck()\nArreglar los problemas que encuentra.\nCorrerlo siempre. Sigue siendo igual de importante.\n\n\nDatos\nLeer, limpiar y transformar archivos.\nLos datos son tu responsabilidad. Un modelo puede inventar un dicho o un significado con total seguridad.\n\n\n\n\n\n\n\n\n\nAdvertenciaLo que pedimos en rOpenSci\n\n\n\nEn rOpenSci pedimos que todo lo generado con IA sea revisado con cuidado por la persona autora antes de que otra persona lo lea, y que siempre se diga cómo se usó la IA. Lo contamos en el blog: Revisión de Software en la era de la IA (Software Review in the Era of AI) (en inglés).\n\nNunca le hagas leer a otra persona algo que vos no revisaste. Un README, la respuesta a un issue o la descripción de un pull request son mensajes para personas.\nLa comunicación personal la escribís vos, nunca la IA. Si una persona te escribe, te responde una persona.\nUsarla para traducir está bien, sobre todo cuando tenes que comunicarte en un idioma que no es tu lengua nativa.\nSiempre, siempre, que uses IA, decilo. La transparencia da una buena señal."
+  },
+  {
+    "objectID": "episodios/09-ia-en-el-ciclo.html#tres-formas-de-usar-un-modelo",
+    "href": "episodios/09-ia-en-el-ciclo.html#tres-formas-de-usar-un-modelo",
+    "title": "9. La IA en el ciclo de desarrollo",
+    "section": "Tres formas de usar un modelo",
+    "text": "Tres formas de usar un modelo\nEl modelo es el que genera las respuestas (Claude, GPT, Gemini, Kimi…). Lo podemos usar de diferentes manera, aqui te presentamos tres formas, de menos a más autonomía:\n\n\n\nForma\nCómo funciona\nEjemplos\nQué ve y qué hace\n\n\n\n\nChat\nUna página web o una aplicación donde conversás con el modelo.\nGitHub Copilot en github.com, claude.ai, ChatGPT\nSolo ve lo que le pegás o adjuntás. Vos copiás el resultado a tu código.\n\n\nCliente\nUn programa que conecta el modelo con tus herramientas: tu editor o tu código de R.\nCopilot en Positron, RStudio o VS Code; el paquete ellmer desde R\nVe el archivo que tenés abierto, sugiere código mientras escribís, responde preguntas sobre tu proyecto. Vos decidís qué aceptar.\n\n\nAgente\nUn modelo que hace cosas en tu computadora: lee y escribe archivos, corre código de R, ejecuta comandos.\nPosit Assistant, Claude Code, Codex, el modo agente de Copilot\nTrabaja solo, en un ciclo, hasta terminar la tarea. Vos revisás lo que hizo.\n\n\n\nUn angente es un modelo, dentro de un software que le da herramientas y guardarails y que se ejecuta en un ciclo donde usa esas herramientas y restricciones para lograr un objetivo.\n\nEl modelo decide qué herramienta usar.\nEl software que lo contiene ejecuta la herramienta y le devuelve el resultado. Este software también aplica las restricciones que le impusimos (por ejemplo que no pueda borrar archivos)\nSe repite hasta que el modelo dice que terminó.\n\nLas herramientas típicas son: buscar en los archivos, leer, escribir, editar, correr código de R, correr comandos de la terminal, preguntarte algo y leer páginas web. Cuanta más autonomía, más importante es revisar."
+  },
+  {
+    "objectID": "episodios/09-ia-en-el-ciclo.html#riesgos-y-cómo-cuidarte",
+    "href": "episodios/09-ia-en-el-ciclo.html#riesgos-y-cómo-cuidarte",
+    "title": "9. La IA en el ciclo de desarrollo",
+    "section": "Riesgos y cómo cuidarte",
+    "text": "Riesgos y cómo cuidarte\nEl peligro principal son las acciones que no se pueden deshacer:\n\neditar archivos sin Git;\nborrar archivos o tablas sin copia de seguridad;\nmandar un correo o publicar algo;\nrevelar un secreto (una contraseña, una clave de API, datos sensibles).\n\nCómo cuidarte:\n\nUsá Git siempre. Si el agente rompe algo, volvés atrás. Es la mejor razón para aprender Git.\nHacé copias de seguridad de lo que no está en Git.\nMirá lo que hace. Leé los cambios antes de aceptarlos.\nNo le pegues secretos ni datos privados a un chat: contraseñas, claves de API, datos personales.\n\n\n\n\n\n\n\nTipConversaciones cortas\n\n\n\nCada mensaje nuevo le manda al modelo toda la conversación anterior. Las conversaciones largas cuestan más (en dinero y en energía) y arrastran confusiones. Empezá conversaciones nuevas seguido: es tan importante como reiniciar tu sesión de R."
+  },
+  {
+    "objectID": "episodios/09-ia-en-el-ciclo.html#cómo-pedir-ayuda-corto-y-preciso",
+    "href": "episodios/09-ia-en-el-ciclo.html#cómo-pedir-ayuda-corto-y-preciso",
+    "title": "9. La IA en el ciclo de desarrollo",
+    "section": "Cómo pedir ayuda: corto y preciso",
+    "text": "Cómo pedir ayuda: corto y preciso\nAlgunos consejos del taller de Posit para hacer buenas preguntas:\n\nSer un poco más específica mejora mucho el resultado. Usá las palabras del tema: load_all(), @export, snapshot test.\nAchicá el alcance: preguntá sobre este paquete, esta función, este error.\nPedí pruebas: “mostrame en qué parte de la documentación dice eso”.\nPreguntas cortas, respuestas cortas, y de a una. Así vas construyendo tu propia comprensión.\n\nY no todo es chat: la búsqueda de código de GitHub sigue siendo buenísima. Por ejemplo, user:cran path:data-raw te muestra cómo otros paquetes de CRAN preparan sus datos."
+  },
+  {
+    "objectID": "episodios/09-ia-en-el-ciclo.html#cuánto-delegar-más-riesgo-más-controles-tuyos",
+    "href": "episodios/09-ia-en-el-ciclo.html#cuánto-delegar-más-riesgo-más-controles-tuyos",
+    "title": "9. La IA en el ciclo de desarrollo",
+    "section": "Cuánto delegar: más riesgo, más controles tuyos",
+    "text": "Cuánto delegar: más riesgo, más controles tuyos\nHadley y Jenny proponen ajustar el proceso según cuánto cuesta un error: si se puede deshacer, cuántas personas lo notarían y cuánto te lleva revisarlo. Cuanto más caro sería equivocarse, más puntos de control ponés vos antes y después de que trabaje la IA.\n\n\n\n\n\n\n\n\nSi un error…\nCómo trabajar\nEjemplo en dichosos\n\n\n\n\nse arregla en un minuto\nPedilo y revisá el resultado.\nArreglar el WARNING de tildes.\n\n\nlleva un rato arreglar\nPedí un plan primero, corregilo, y después que lo haga.\nAgregar dichos_por_tema().\n\n\nafecta a otras personas\nRevisá el plan y el resultado: leé cada cambio, probá con load_all(), corré los tests y check().\nCambiar cómo funciona dicho_al_azar(), que ya usan otras personas.\n\n\nes difícil de deshacer\nLas decisiones de diseño las tomás vos; la IA ayuda a implementar.\nPreparar el paquete para CRAN o para la revisión de rOpenSci.\n\n\n\nCuando le pidas un plan, pedí que lo escriba en un archivo Markdown que puedas leer y editar."
+  },
+  {
+    "objectID": "episodios/09-ia-en-el-ciclo.html#contarle-al-agente-cómo-es-tu-paquete",
+    "href": "episodios/09-ia-en-el-ciclo.html#contarle-al-agente-cómo-es-tu-paquete",
+    "title": "9. La IA en el ciclo de desarrollo",
+    "section": "Contarle al agente cómo es tu paquete",
+    "text": "Contarle al agente cómo es tu paquete\nSi le repetís lo mismo a un agente tres veces (“usá cli para los errores”, “nada de tildes en el código”), conviene escribirlo en un archivo AGENTS.md en la raíz del proyecto. Los agentes lo leen al empezar cada conversación. Existe la función usethis::use_tidy_agents(), que crea uno con las convenciones del tidyverse.\nMantenelo corto: se manda en cada pedido, y lo estás pagando.\n\n\n\n\n\n\nNota¿Y si quiero probar? Con tu cuenta de GitHub, gratis\n\n\n\nSi tenés una cuenta personal de GitHub, ya tenés GitHub Copilot Free, sin pagar nada:\n\nComo chat, en el navegador: entrá a https://github.com/copilot. Le podés preguntar sobre tu código, y si tu paquete está en GitHub, sobre tu repositorio.\nComo cliente, en tu editor: Copilot funciona en Positron, RStudio y VS Code.\nTiene un límite mensual de uso. Estudiantes, docentes y personas que mantienen proyectos de código abierto pueden pedir acceso gratuito a planes más completos.\n\nOtras opciones, que en general necesitan una suscripción o una clave de API: Posit Assistant en Positron y RStudio, Claude Code, Codex, Mistral.\nPara aprender, ninguna es imprescindible: todo lo que vimos hoy funciona sin IA.\n\n\n\nDesafío 9.1: ¿Dónde sí y dónde no? 5 minutos, en parejas\nPara cada tarea de dichosos, decidí: ¿le darías el trabajo a una herramienta de IA, la usarías solo para un borrador que después revisás, o la harías vos?\n\nElegir el nombre del paquete.\nEscribir el código de buscar_dicho().\nEscribir los significados de los dichos de tu país.\nEscribir los tests de dicho_del_dia().\nArreglar el WARNING de caracteres no ASCII.\nEscribir el README.\nResponder un issue de otra persona que encontró un error en tu paquete.\n\nAnotá tus respuestas en el documento colaborativo. No hay una sola respuesta correcta: lo interesante es el por qué.\n\n\n\n\n\n\nTipUna respuesta posible\n\n\n\n\n\n\nVos. La IA no sabe si un nombre es una mala palabra en tu país (pkg_name_check() tampoco), y el nombre es una decisión de diseño.\nIA, y después vos. Pedile algo específico, probalo en la consola con load_all() y leé cada línea. Si no entendés el código, no lo agregues.\nVos. Los datos son tu responsabilidad. Un modelo de lenguaje puede inventar un dicho o un significado con total seguridad, y en @source dice de dónde salieron.\nIA, con supervisión. A los agentes les encanta escribir tests: tu trabajo es que sean pocos, claros y que de verdad fallen cuando algo se rompe.\nIA. Es un problema mecánico, con un mensaje de check() claro. Las herramientas de IA son muy buenas arreglando lo que encuentra check().\nBorrador. La IA puede armar la estructura, pero el README es comunicación entre personas: revisalo, escribilo con tu voz y contá que usaste IA.\nVos. Podés usar IA para entender el error o probar un arreglo, pero la respuesta es comunicación personal: la escribís vos. Si la usaste para traducir, está bien, y lo decís. Son pautas que pedimos en rOpenSci.\n\n\n\n\n\n\nDesafío 9.2: Revisá lo que escribió la IA 7 minutos\nLe pedimos a un asistente de IA: “Agregá a dichosos una función que devuelva los dichos de un tema”. Esto es lo que escribió. Con lo que aprendiste hoy, encontrá al menos cinco problemas.\nlibrary(dplyr)\n\n# Esta función recibe un tema y devuelve los dichos de ese tema.\n# Primero filtra los datos por tema y después devuelve el resultado.\ndichos_por_tema &lt;- function(tema) {\n  if (!tema %in% dichos$tema) {\n    stop(\"No hay dichos de ese tema. Probá con otro.\")\n  }\n  dichos %&gt;% filter(tema == tema)\n}\nY en tests/testthat/test-dichos_por_tema.R:\ntest_that(\"dichos_por_tema() funciona\", {\n  expect_true(TRUE)\n  resultado &lt;- dichos_por_tema(\"dinero\")\n  expect_s3_class(resultado, \"data.frame\")\n  expect_equal(nrow(resultado), 6)\n  expect_equal(ncol(resultado), 4)\n  expect_equal(names(resultado), c(\"dicho\", \"significado\", \"pais\", \"tema\"))\n  expect_true(all(resultado$tema == \"dinero\"))\n  expect_error(dichos_por_tema(\"dinosaurios\"))\n})\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nEn la función:\n\nlibrary(dplyr) en el código del paquete. Nunca. Hay que declarar la dependencia con usethis::use_package(\"dplyr\") y usar dplyr::filter(). O mejor: ¿hace falta dplyr? Con R base alcanza (dichos[dichos$tema == tema, ]) y el paquete tiene una dependencia menos.\nfilter(tema == tema) no filtra nada. Adentro de filter(), los dos tema son la columna, así que la condición siempre es verdadera y devuelve todos los dichos. Es el tipo de error que solo aparece si probás la función en la consola.\nNo tiene documentación de roxygen2 ni @export.\n“Probá” tiene tilde en el código: check() da un WARNING. Va Prob\\u00e1.\nEl error no ayuda: no dice qué tema se pidió ni cuáles existen. Mejor cli::cli_abort() con la lista de temas, como hicimos en dicho_al_azar().\nLos comentarios explican el qué, no el por qué. Si el código se entiende, sobran.\n\nEn el test:\n\nexpect_true(TRUE) no comprueba nada.\nexpect_equal(nrow(resultado), 6) se rompe cada vez que alguien suma un dicho de dinero. Es un test frágil.\nEs un solo test gigante. Mejor varios test_that() cortos, cada uno con una descripción de lo que comprueba.\nLo bueno: all(resultado$tema == \"dinero\") sí detecta el error del punto 2… pero solo si alguien corre los tests. Revisar lo que escribe la IA incluye correr los tests y probar en la consola.\n\n\n\n\n\n\nDesafío 9.3 (opcional, con GitHub Copilot Free u otro asistente): Pedilo bien para casa\nEscribí un pedido corto y preciso para que un asistente agregue dichos_por_tema() a tu paquete. Con tu cuenta de GitHub podés usar el chat de Copilot en https://github.com/copilot. Por ejemplo:\n\nAgregá a dichosos la función dichos_por_tema(tema) en R/dichos_por_tema.R. Usá R base, sin dependencias nuevas. Si el tema no existe, dá un error con cli::cli_abort() que liste los temas disponibles, como en dicho_al_azar(). Documentala con roxygen2 y exportala. Escribí tests cortos en tests/testthat/test-dichos_por_tema.R. Antes de escribir código, mostrame un plan.\n\nDespués: leé el plan, pedile el código, copialo a tu paquete, revisá los cambios con Git, probá la función con load_all() y corré devtools::check(). ¿Qué hizo distinto a lo que habrías hecho vos?\n\n\nPuntos clave\n\nEl ciclo de desarrollo es el mismo con o sin IA: load_all(), test(), document(), check().\nSaber hacerlo “a mano” es lo que te permite revisar lo que hace la IA.\nDelegá lo mecánico (arreglar lo que encuentra check()), revisá el código y los tests, y quedate con las decisiones, los datos y la comunicación con personas.\nUsá Git siempre: es tu botón de deshacer.\nPedidos cortos y precisos, y conversaciones cortas.\nComo pedimos en rOpenSci: revisá todo antes de que lo lea otra persona, escribí vos tu comunicación personal y siempre decí cuando usaste IA."
+  },
+  {
+    "objectID": "episodios/05-datos.html",
+    "href": "episodios/05-datos.html",
+    "title": "5. Datos en el paquete",
+    "section": "",
+    "text": "⏱ Enseñanza: 10 minutos · Ejercicios: 15 minutos\n\n\nPreguntas\n\n¿Cómo agrego datos a un paquete?\n¿Cómo dejo registro de cómo preparé esos datos?\n¿Cómo se documentan los datos?\n\n\n\nObjetivos\n\nGuardar los datos crudos y el código que los prepara en data-raw/.\nAgregar datos al paquete con usethis::use_data().\nDocumentar un conjunto de datos con roxygen2.\nUsar los datos del paquete adentro de una función.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "5. Datos en el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/05-datos.html#por-qué-datos-en-un-paquete",
+    "href": "episodios/05-datos.html#por-qué-datos-en-un-paquete",
+    "title": "5. Datos en el paquete",
+    "section": "¿Por qué datos en un paquete?",
+    "text": "¿Por qué datos en un paquete?\nUn paquete es una excelente forma de compartir datos chicos o medianos:\n\ndatos que usás en muchos proyectos (una tabla de códigos de provincias, de estaciones meteorológicas, de especies);\ndatos para enseñar (¿te acordás de palmerpenguins o de datos?);\ndatos que necesitan las funciones del paquete, como nuestros dichos;\ndatos para los test y ejemplos del paquete.\n\nNuestro vector de tres dichos no es suficiente. Vamos a usar una tabla de verdad, con el dicho, su significado, el país y un tema.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "5. Datos en el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/05-datos.html#datos-crudos-y-código-data-raw",
+    "href": "episodios/05-datos.html#datos-crudos-y-código-data-raw",
+    "title": "5. Datos en el paquete",
+    "section": "Datos crudos y código: data-raw/",
+    "text": "Datos crudos y código: data-raw/\nUna buena práctica es guardar los datos crudos y el código que los prepara. De esta manera, cualquier persona (incluida vos en el futuro) puede ver de dónde salieron los datos y volver a generarlos. También muy util cuando debemos actualizar los datos con nuevos registros.\n\n💻 En vivo\nusethis::use_data_raw(\"dichos\")\n#&gt; ✔ Creating data-raw/\n#&gt; ✔ Adding \"^data-raw$\" to .Rbuildignore\n#&gt; ✔ Writing data-raw/dichos.R\n\nusethis creó la carpeta data-raw/, el script dichos.R y agregó la carpeta a .Rbuildignore: es parte de nuestro proyecto, pero no del paquete que se instala.\nBajamos el CSV a esa carpeta:\ndownload.file(\n  \"https://yabellini.github.io/desarrollo_paquetes/datos/dichos.csv\",\n  \"data-raw/dichos.csv\"\n)\n(También podés descargarlo desde este enlace y moverlo a mano.)",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "5. Datos en el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/05-datos.html#guardar-los-datos-con-use_data",
+    "href": "episodios/05-datos.html#guardar-los-datos-con-use_data",
+    "title": "5. Datos en el paquete",
+    "section": "Guardar los datos con use_data()",
+    "text": "Guardar los datos con use_data()\n\n💻 En vivo, en data-raw/dichos.R\n## Código para preparar el conjunto de datos `dichos`\n\nlibrary(tidyverse)\n\ndichos &lt;- read_csv(\"data-raw/dichos.csv\", encoding = \"UTF-8\")\n\n# Ordenamos por país para que sea más fácil de leer\ndichos &lt;- dichos |&gt;\n  arrange(pais, dicho)\n\nusethis::use_data(dichos, overwrite = TRUE)\n\nCorremos el script completo:\nsource(\"data-raw/dichos.R\")\n#&gt; ✔ Setting LazyData to \"true\" in DESCRIPTION\n#&gt; ✔ Saving \"dichos\" to \"data/dichos.rda\"\n#&gt; ☐ Document your data (see &lt;https://r-pkgs.org/data.html&gt;).\nuse_data() guardó el objeto en data/dichos.rda y agregó LazyData: true en DESCRIPTION. Lazy quiere decir “perezoso”: los datos se cargan recién cuando alguien los usa.\ndevtools::load_all()\nhead(dichos)",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "5. Datos en el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/05-datos.html#documentar-los-datos",
+    "href": "episodios/05-datos.html#documentar-los-datos",
+    "title": "5. Datos en el paquete",
+    "section": "Documentar los datos",
+    "text": "Documentar los datos\nLos datos también necesitan documentación. Pero no tienen código, así que ¿dónde va el bloque de roxygen2? En un archivo de R/, arriba del nombre del conjunto de datos entre comillas. Por convención lo llamamos R/data.R:\n\n💻 En vivo\nusethis::use_r(\"data\")\n#' Dichos y expresiones populares de América Latina\n#'\n#' Una colección de dichos, refranes y expresiones que se usan en distintos\n#' países de América Latina, con su significado.\n#'\n#' @format Un data frame con 48 filas y 4 columnas:\n#' \\describe{\n#'   \\item{dicho}{El dicho o la expresión, como texto.}\n#'   \\item{significado}{Qué quiere decir, explicado en pocas palabras.}\n#'   \\item{pais}{País donde se usa. \"Varios países\" si se usa en muchos lugares.}\n#'   \\item{tema}{Tema del dicho: \"dinero\", \"comida\", \"animales\", etc.}\n#' }\n#' @source Recopilado para el taller de desarrollo de paquetes de LatinR 2026.\n\"dichos\"\ndevtools::document()\n?dichos\n\n\n@format describe la estructura: qué tipo de objeto, cuántas filas y columnas, y qué tiene cada columna.\n@source dice de dónde vienen los datos. ¡Es importante para dar crédito!\nNo hace falta @export: los datos de data/ siempre están disponibles.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "5. Datos en el paquete"
+    ]
+  },
+  {
+    "objectID": "episodios/05-datos.html#usar-los-datos-en-una-función",
+    "href": "episodios/05-datos.html#usar-los-datos-en-una-función",
+    "title": "5. Datos en el paquete",
+    "section": "Usar los datos en una función",
+    "text": "Usar los datos en una función\nAhora dicho_al_azar() puede usar la tabla, y de paso le agregamos un argumento para elegir el país:\n\n💻 En vivo, en R/dicho_al_azar.R\n#' Elegir un dicho al azar\n#'\n#' Devuelve un dicho elegido al azar del conjunto de datos [dichos].\n#' Podés elegir de qué país querés el dicho.\n#'\n#' @param pais Texto con el nombre de un país, por ejemplo `\"Argentina\"`.\n#'   Si es `NULL` (el valor por defecto) se elige entre todos los países.\n#'\n#' @return Un texto (vector de caracteres) con el dicho.\n#' @export\n#'\n#' @examples\n#' dicho_al_azar()\n#' dicho_al_azar(pais = \"Argentina\")\ndicho_al_azar &lt;- function(pais = NULL) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    opciones &lt;- dichos[dichos$pais == pais, ]\n  }\n\n  fila &lt;- sample(nrow(opciones), size = 1)\n  opciones$dicho[fila]\n}\ndevtools::document()\ndicho_al_azar(pais = \"Chile\")\n#&gt; [1] \"Pasarlo chancho\"\n\nLas funciones del paquete pueden usar dichos directamente, porque los datos son parte del paquete.\n\nDesafío 5.1: Datos adentro del paquete 10 minutos\n\nCorré usethis::use_data_raw(\"dichos\").\nDescargá dichos.csv y guardalo en la carpeta data-raw/ de tu paquete.\nCompletá data-raw/dichos.R para leer el CSV y guardarlo con usethis::use_data(). Corré el script.\nCorré devtools::load_all() y mirá los datos: head(dichos), table(dichos$pais).\n\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nusethis::use_data_raw(\"dichos\")\ndownload.file(\n  \"https://yabellini.github.io/desarrollo_paquetes/datos/dichos.csv\",\n  \"data-raw/dichos.csv\"\n)\nEn data-raw/dichos.R:\ndichos &lt;- read.csv(\"data-raw/dichos.csv\", encoding = \"UTF-8\")\nusethis::use_data(dichos, overwrite = TRUE)\nsource(\"data-raw/dichos.R\")\ndevtools::load_all()\nhead(dichos)\ntable(dichos$pais)\n\n\n\n\n\nDesafío 5.2: Completá los espacios 7 minutos\nEsta nueva versión de dicho_al_azar() usa los datos y tiene un argumento pais. Completá los ____, guardá, cargá y probá con dicho_al_azar(pais = \"Chile\").\n#' Elegir un dicho al azar\n#'\n#' Devuelve un dicho elegido al azar del conjunto de datos [dichos].\n#'\n#' @param ____ Texto con el nombre de un país, por ejemplo `\"Argentina\"`.\n#'   Si es `NULL` (el valor por defecto) se elige entre todos los países.\n#'\n#' @return Un texto (vector de caracteres de largo 1) con el dicho.\n#' @export\n#'\n#' @examples\n#' dicho_al_azar()\n#' dicho_al_azar(pais = \"Argentina\")\ndicho_al_azar &lt;- function(pais = ____) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    opciones &lt;- dichos[dichos$____ == pais, ]\n  }\n\n  fila &lt;- sample(nrow(____), size = 1)\n  opciones$____[fila]\n}\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\n#' @param pais Texto con el nombre de un país, ...\ndicho_al_azar &lt;- function(pais = NULL) {\n  opciones &lt;- dichos\n\n  if (!is.null(pais)) {\n    opciones &lt;- dichos[dichos$pais == pais, ]\n  }\n\n  fila &lt;- sample(nrow(opciones), size = 1)\n  opciones$dicho[fila]\n}\nNo te olvides de devtools::document(): cambiamos la documentación.\n\n\n\n\n\nDesafío 5.3: ¿Y si el país no existe? 3 minutos\nProbá dicho_al_azar(pais = \"Narnia\"). ¿Qué devuelve? ¿Es útil para quien usa el paquete? Escribí en el documento colaborativo qué te gustaría que pase.\n\n\n\n\n\n\nTipSolución\n\n\n\n\n\nDevuelve character(0): un vector de texto vacío, sin ningún aviso. La función “falla en silencio”, y quien la usa no sabe qué hizo mal. Lo vamos a arreglar en el próximo episodio con un mensaje de error claro.\n\n\n\n\n\nDesafío 5.4 (para llevar a casa): Sumá un dicho de tu país 5 minutos\n\nAgregá una fila a data-raw/dichos.csv con un dicho de tu país.\nVolvé a correr data-raw/dichos.R.\nSi agregaste un país nuevo, actualizá el número de filas en la documentación de R/data.R.\nCorré devtools::load_all() y buscá tu dicho.\n\nCompartilo en el documento colaborativo: ¡juntamos todos los dichos del taller!\n\n\nPuntos clave\n\nusethis::use_data_raw() crea un lugar para los datos crudos y el código que los prepara.\nusethis::use_data() guarda los datos en data/ para que sean parte del paquete.\nLos datos se documentan en R/data.R, con un bloque de roxygen2 arriba del nombre entre comillas.\nLas funciones del paquete pueden usar sus propios datos.",
+    "crumbs": [
+      "Bloque 2 · Que se entienda",
+      "5. Datos en el paquete"
+    ]
+  }
+]

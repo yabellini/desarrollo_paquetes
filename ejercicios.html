@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Cuaderno de ejercicios – Tu primer paquete de R: de la idea al paquete</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-d640c705e8c17715bca3574aa719063f.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-346c8a4756a85ad127e9c9fc3a0ae6c5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet">
+
+
+<meta property="og:title" content="Cuaderno de ejercicios – Tu primer paquete de R: de la idea al paquete">
+<meta property="og:description" content="Todos los ejercicios y desafíos del taller en una sola página">
+<meta property="og:site_name" content="Tu primer paquete de R: de la idea al paquete">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Tu primer paquete de R: de la idea al paquete</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./preparacion.html"> 
+<span class="menu-text">Preparación</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lecciones" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Lecciones</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-lecciones">    
+        <li>
+    <a class="dropdown-item" href="./episodios/01-que-es-un-paquete.html">
+ <span class="dropdown-text">1. ¿Qué es un paquete?</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./episodios/02-crear-el-paquete.html">
+ <span class="dropdown-text">2. Crear el paquete</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./episodios/03-primera-funcion.html">
+ <span class="dropdown-text">3. Nuestra primera función</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./episodios/04-documentar.html">
+ <span class="dropdown-text">4. Documentar funciones</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./episodios/05-datos.html">
+ <span class="dropdown-text">5. Datos en el paquete</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./episodios/06-dependencias.html">
+ <span class="dropdown-text">6. Dependencias y mensajes claros</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./episodios/07-tests.html">
+ <span class="dropdown-text">7. Tests</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./episodios/08-compartir.html">
+ <span class="dropdown-text">8. Compartir el paquete</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./episodios/09-ia-en-el-ciclo.html">
+ <span class="dropdown-text">9. La IA en el ciclo de desarrollo</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" href="./ejercicios.html" aria-current="page"> 
+<span class="menu-text">Ejercicios</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./slides/index.html" target="_blank"> 
+<span class="menu-text">Diapositivas</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-recursos" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Recursos</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-recursos">    
+        <li>
+    <a class="dropdown-item" href="./referencia.html">
+ <span class="dropdown-text">Referencia</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./snippets.html">
+ <span class="dropdown-text">Snippets</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./recursos.html">
+ <span class="dropdown-text">Recursos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./creditos.html">
+ <span class="dropdown-text">Créditos y licencia</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#qué-es-un-paquete" id="toc-qué-es-un-paquete" class="nav-link active" data-scroll-target="#qué-es-un-paquete">1. ¿Qué es un paquete?</a></li>
+  <li><a href="#crear-el-paquete" id="toc-crear-el-paquete" class="nav-link" data-scroll-target="#crear-el-paquete">2. Crear el paquete</a></li>
+  <li><a href="#nuestra-primera-función" id="toc-nuestra-primera-función" class="nav-link" data-scroll-target="#nuestra-primera-función">3. Nuestra primera función</a></li>
+  <li><a href="#documentar-funciones" id="toc-documentar-funciones" class="nav-link" data-scroll-target="#documentar-funciones">4. Documentar funciones</a></li>
+  <li><a href="#datos-en-el-paquete" id="toc-datos-en-el-paquete" class="nav-link" data-scroll-target="#datos-en-el-paquete">5. Datos en el paquete</a></li>
+  <li><a href="#dependencias-y-mensajes-claros" id="toc-dependencias-y-mensajes-claros" class="nav-link" data-scroll-target="#dependencias-y-mensajes-claros">6. Dependencias y mensajes claros</a></li>
+  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">7. Tests</a></li>
+  <li><a href="#compartir-el-paquete" id="toc-compartir-el-paquete" class="nav-link" data-scroll-target="#compartir-el-paquete">8. Compartir el paquete</a></li>
+  <li><a href="#la-ia-en-el-ciclo-de-desarrollo" id="toc-la-ia-en-el-ciclo-de-desarrollo" class="nav-link" data-scroll-target="#la-ia-en-el-ciclo-de-desarrollo">9. La IA en el ciclo de desarrollo</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Cuaderno de ejercicios</h1>
+<p class="subtitle lead">Todos los ejercicios y desafíos del taller en una sola página</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Para ver las soluciones hacé clic en <strong>Solución</strong>. Te recomendamos mirarla solo después de intentarlo. Si te trabás, poné tu nota adhesiva visible, asi te podemos ayudar.</p>
+<section id="qué-es-un-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="qué-es-un-paquete">1. ¿Qué es un paquete?</h2>
+<div class="desafio">
+<p>Desafío 1.1: ¿Qué hay en un paquete? <span class="duracion">5 minutos, en el documento colaborativo</span></p>
+<p>¿Cuál de estas afirmaciones sobre los paquetes de R es <strong>correcta</strong>?</p>
+<ol type="a">
+<li>Un paquete solo puede tener funciones.</li>
+<li>Para crear un paquete hay que publicarlo en CRAN.</li>
+<li>Un paquete es una carpeta organizada de una manera específica, que puede tener código, documentación y datos.</li>
+<li>Para crear un paquete hay que saber programar en C.</li>
+</ol>
+<p>Escribí tu respuesta (la letra) en el documento colaborativo.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>La respuesta correcta es la <strong>c</strong>.</p>
+<ul>
+<li>Si elegiste la <strong>a</strong>: los paquetes también pueden tener datos, documentación, tests, plantillas, aplicaciones Shiny…</li>
+<li>Si elegiste la <strong>b</strong>: CRAN es solo uno de los lugares donde se pueden publicar paquetes. Un paquete puede vivir en tu computadora, en GitHub o en <a href="https://r-universe.dev/search">R-universe</a>, y sigue siendo un paquete.</li>
+<li>Si elegiste la <strong>d</strong>: algunos paquetes usan C o C++ para ser más rápidos, pero la gran mayoría está escrita solo en R.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 1.2: Tu código repetido <span class="duracion">3 minutos</span></p>
+<p>Pensá en algún código que hayas copiado y pegado en más de un proyecto: una función, una limpieza de datos, un gráfico con tus colores favoritos, unos datos que siempre usás.</p>
+<p>Escribilo en una línea en el documento colaborativo. ¡Ese puede ser tu primer paquete!</p>
+</div>
+</section>
+<section id="crear-el-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="crear-el-paquete">2. Crear el paquete</h2>
+<div class="desafio">
+<p>Desafío 2.1: Crear tu paquete <span class="duracion">10 minutos</span></p>
+<ol type="1">
+<li>Comprobá el nombre con <code>pak::pkg_name_check("dichosos")</code>.</li>
+<li>Creá el paquete con <code>usethis::create_package()</code>. Guardalo en una carpeta que encuentres fácil, por ejemplo en <code>Documentos</code> o en tu carpeta de proyectos, <strong>pero no adentro de otro proyecto de RStudio</strong>.</li>
+<li>En la nueva sesión de RStudio, corré <code>devtools::check()</code>.</li>
+<li>Agregá la licencia MIT y volvé a correr <code>devtools::check()</code> hasta ver <strong>0 errores y 0 warnings</strong>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pkg_name_check</span>(<span class="st">"dichosos"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">create_package</span>(<span class="st">"~/Documents/dichosos"</span>)   <span class="co"># o la ruta que elijas</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># En la sesión nueva, la del paquete:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_mit_license</span>(<span class="st">"Tu Nombre"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">check</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Si te aparece una NOTE que dice <code>unable to verify current time</code>, no te preocupes: pasa cuando no hay conexión a internet o la red es lenta.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 2.2: ¿Quién es quién? <span class="duracion">5 minutos, en parejas</span></p>
+<p>Uní cada archivo o carpeta con lo que hace.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Archivo o carpeta</th>
+<th style="text-align: left;"></th>
+<th style="text-align: left;">Qué hace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1. <code>DESCRIPTION</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">a. Lista las funciones que el paquete exporta. No se edita a mano.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2. <code>R/</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">b. Lista archivos que R ignora cuando construye el paquete.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3. <code>NAMESPACE</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">c.&nbsp;Tiene los metadatos: nombre, título, autoría, licencia, dependencias.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4. <code>.Rbuildignore</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">d.&nbsp;Guarda los scripts con las funciones.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5. <code>dichosos.Rproj</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">e. Es el archivo del proyecto de RStudio.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>1-c, 2-d, 3-a, 4-b, 5-e.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 2.3: Presentá tu paquete <span class="duracion">5 minutos</span></p>
+<p>Abrí el archivo <code>DESCRIPTION</code> y completá:</p>
+<ul>
+<li><code>Title</code>: una línea, con mayúscula en cada palabra importante y sin punto final.</li>
+<li><code>Description</code>: un párrafo que explique qué hace el paquete.</li>
+<li><code>Authors@R</code>: tu nombre y tu correo.</li>
+</ul>
+<p>Corré <code>devtools::check()</code> otra vez. ¿Cambió algo?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>Package: dichosos
+Title: Dichos y Expresiones Populares de America Latina
+Version: 0.0.0.9000
+Authors@R:
+    person("Yanina", "Bellini Saibene", , "tu.correo@ejemplo.com",
+           role = c("aut", "cre"))
+Description: Un paquete de ejemplo para aprender a desarrollar paquetes
+    de R. Incluye dichos y expresiones populares de America Latina y
+    funciones para elegirlos al azar y buscarlos por palabra.
+License: MIT + file LICENSE</code></pre>
+<p><code>check()</code> debería seguir dando 0 errores y 0 warnings. Estos campos no se comprueban por su contenido, pero son lo primero que ve cualquier persona que mira tu paquete.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="nuestra-primera-función" class="level2">
+<h2 class="anchored" data-anchor-id="nuestra-primera-función">3. Nuestra primera función</h2>
+<div class="desafio">
+<p>Desafío 3.1: Tu primera función en un paquete <span class="duracion">8 minutos</span></p>
+<ol type="1">
+<li>Creá el archivo de la función con <code>usethis::use_r("dicho_al_azar")</code>.</li>
+<li>Escribí la función <code>dicho_al_azar()</code> (podés copiarla de los <a href="../snippets.qmd">snippets</a>).</li>
+<li>Agregá al vector un dicho <strong>de tu país</strong> o de algún otro lado pero que te guste.</li>
+<li>Guardá, cargá el paquete con <code>devtools::load_all()</code> y llamá a la función varias veces.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_r</span>(<span class="st">"dicho_al_azar"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>En <code>R/dicho_al_azar.R</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dicho_al_azar <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  dichos <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Estar al horno"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Perdido como perro en cancha de bochas"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Pasarlo chancho"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Un dicho tuyo"</span>          <span class="co"># &lt;- ¡el tuyo!</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">sample</span>(dichos, <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>En la consola:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dicho_al_azar</span>()</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dicho_al_azar</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 3.2: Poné los pasos en orden <span class="duracion">3 minutos</span></p>
+<p>Estos son los pasos para agregar una función nueva a un paquete, pero están desordenados. Ordenalos.</p>
+<ul>
+<li><code>devtools::load_all()</code></li>
+<li>Escribir la función en el archivo.</li>
+<li><code>usethis::use_r("nombre_funcion")</code></li>
+<li>Probar la función en la consola.</li>
+<li>Guardar el archivo.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><code>usethis::use_r("nombre_funcion")</code></li>
+<li>Escribir la función en el archivo.</li>
+<li>Guardar el archivo.</li>
+<li><code>devtools::load_all()</code></li>
+<li>Probar la función en la consola.</li>
+</ol>
+<p>Y si algo no anda: volver al paso 2. ¡Es un ciclo!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 3.3: ¿Qué va a pasar? <span class="duracion">4 minutos</span></p>
+<p>Agregá otro dicho al vector y <strong>guardá el archivo</strong>, pero <strong>no</strong> corras <code>load_all()</code>. Antes de llamar a <code>dicho_al_azar()</code> muchas veces, pensá: ¿va a aparecer el dicho nuevo?</p>
+<p>Probalo. Después corré <code>load_all()</code> y volvé a probar.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Sin <code>load_all()</code>, R sigue usando la versión de la función que cargó la última vez: el dicho nuevo <strong>no aparece nunca</strong>. Guardar el archivo no alcanza; hay que volver a cargar el paquete. Este es uno de los errores más comunes cuando empezamos a desarrollar paquetes: “¡cambié el código y no pasa nada!”.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="documentar-funciones" class="level2">
+<h2 class="anchored" data-anchor-id="documentar-funciones">4. Documentar funciones</h2>
+<div class="desafio">
+<p>Desafío 4.1: Documentá <code>dicho_al_azar()</code> <span class="duracion">8 minutos</span></p>
+<ol type="1">
+<li>Poné el cursor adentro de la función e insertá el esqueleto de roxygen2 (<em>Code &gt; Insert Roxygen Skeleton</em>).</li>
+<li>Completá el título, la descripción, <code>@return</code> y <code>@examples</code>.</li>
+<li>Corré <code>devtools::document()</code> y mirá la ayuda con <code>?dicho_al_azar</code>.</li>
+<li>Abrí el archivo <code>NAMESPACE</code>. ¿Qué cambió?</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Elegir un dicho al azar</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Devuelve un dicho popular de América Latina elegido al azar.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Un texto (vector de caracteres) con el dicho.</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' dicho_al_azar()</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>dicho_al_azar <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">document</span>()</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>?dicho_al_azar</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>NAMESPACE</code> ahora tiene la línea <code>export(dicho_al_azar)</code>, gracias a la etiqueta <code>@export</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 4.2: Encontrá los errores <span class="duracion">5 minutos, en parejas</span></p>
+<p>Esta documentación tiene <strong>tres</strong> errores. ¿Cuáles son?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Elegir un dicho al azar</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Devuelve un dicho popular elegido al azar.</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @params pais El país del que queremos el dicho.</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Un texto con el dicho.</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' dicho_al_azar()</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>dicho_al_azar <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">pais =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>La segunda línea empieza con <code>#</code> en lugar de <code>#'</code>. Para roxygen2, ahí termina el bloque.</li>
+<li>La etiqueta es <code>@param</code>, en singular, no <code>@params</code>.</li>
+<li>Falta <code>@export</code>. Sin esa etiqueta, la función no se exporta: no se puede usar con <code>library(dichosos)</code> después de instalar el paquete.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 4.3 (si te sobra tiempo o para hacerlo en casa): La ayuda por dentro <span class="duracion">2 minutos</span></p>
+<p>Abrí la carpeta <code>man/</code> y el archivo <code>dicho_al_azar.Rd</code>. ¿Lo escribiste vos? ¿Lo deberías editar?</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Lo escribió roxygen2, a partir de tus comentarios. La primera línea dice <code>% Generated by roxygen2: do not edit by hand</code>. Si lo editás a mano, la próxima vez que corras <code>document()</code> se pierden los cambios. Siempre se edita el comentario <code>#'</code> en el archivo <code>.R</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="datos-en-el-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="datos-en-el-paquete">5. Datos en el paquete</h2>
+<div class="desafio">
+<p>Desafío 5.1: Datos adentro del paquete <span class="duracion">10 minutos</span></p>
+<ol type="1">
+<li>Corré <code>usethis::use_data_raw("dichos")</code>.</li>
+<li>Descargá <a href="../datos/dichos.csv">dichos.csv</a> y guardalo en la carpeta <code>data-raw/</code> de tu paquete.</li>
+<li>Completá <code>data-raw/dichos.R</code> para leer el CSV y guardarlo con <code>usethis::use_data()</code>. Corré el script.</li>
+<li>Corré <code>devtools::load_all()</code> y mirá los datos: <code>head(dichos)</code>, <code>table(dichos$pais)</code>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_data_raw</span>(<span class="st">"dichos"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">"https://yabellini.github.io/desarrollo_paquetes/datos/dichos.csv"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">"data-raw/dichos.csv"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>En <code>data-raw/dichos.R</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dichos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data-raw/dichos.csv"</span>, <span class="at">encoding =</span> <span class="st">"UTF-8"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>usethis<span class="sc">::</span><span class="fu">use_data</span>(dichos, <span class="at">overwrite =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"data-raw/dichos.R"</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(dichos)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(dichos<span class="sc">$</span>pais)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 5.2: Completá los espacios <span class="duracion">7 minutos</span></p>
+<p>Esta nueva versión de <code>dicho_al_azar()</code> usa los datos y tiene un argumento <code>pais</code>. Completá los <code>____</code>, guardá, cargá y probá con <code>dicho_al_azar(pais = "Chile")</code>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Elegir un dicho al azar</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Devuelve un dicho elegido al azar del conjunto de datos [dichos].</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param ____ Texto con el nombre de un país, por ejemplo `"Argentina"`.</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'   Si es `NULL` (el valor por defecto) se elige entre todos los países.</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Un texto (vector de caracteres de largo 1) con el dicho.</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#' dicho_al_azar()</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#' dicho_al_azar(pais = "Argentina")</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>dicho_al_azar <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">pais =</span> ____) {</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  opciones <span class="ot">&lt;-</span> dichos</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(pais)) {</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    opciones <span class="ot">&lt;-</span> dichos[dichos<span class="sc">$</span>____ <span class="sc">==</span> pais, ]</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  fila <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(____), <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  opciones<span class="sc">$</span>____[fila]</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-12" class="callout-12-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param pais Texto con el nombre de un país, ...</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>dicho_al_azar <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">pais =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  opciones <span class="ot">&lt;-</span> dichos</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(pais)) {</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    opciones <span class="ot">&lt;-</span> dichos[dichos<span class="sc">$</span>pais <span class="sc">==</span> pais, ]</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  fila <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(opciones), <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  opciones<span class="sc">$</span>dicho[fila]</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>No te olvides de <code>devtools::document()</code>: cambiamos la documentación.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 5.3: ¿Y si el país no existe? <span class="duracion">3 minutos</span></p>
+<p>Probá <code>dicho_al_azar(pais = "Narnia")</code>. ¿Qué devuelve? ¿Es útil para quien usa el paquete? Escribí en el documento colaborativo qué te gustaría que pase.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-13-contents" aria-controls="callout-13" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-13" class="callout-13-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Devuelve <code>character(0)</code>: un vector de texto vacío, sin ningún aviso. La función “falla en silencio”, y quien la usa no sabe qué hizo mal. Lo vamos a arreglar en el próximo episodio con un mensaje de error claro.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 5.4 (para llevar a casa): Sumá un dicho de tu país <span class="duracion">5 minutos</span></p>
+<ol type="1">
+<li>Agregá una fila a <code>data-raw/dichos.csv</code> con un dicho de tu país.</li>
+<li>Volvé a correr <code>data-raw/dichos.R</code>.</li>
+<li>Si agregaste un país nuevo, actualizá el número de filas en la documentación de <code>R/data.R</code>.</li>
+<li>Corré <code>devtools::load_all()</code> y buscá tu dicho.</li>
+</ol>
+<p>Compartilo en el documento colaborativo: ¡juntamos todos los dichos del taller!</p>
+</div>
+</section>
+<section id="dependencias-y-mensajes-claros" class="level2">
+<h2 class="anchored" data-anchor-id="dependencias-y-mensajes-claros">6. Dependencias y mensajes claros</h2>
+<div class="desafio">
+<p>Desafío 6.1: ¿Imports o Suggests? <span class="duracion">3 minutos</span></p>
+<p>Para cada caso, ¿la dependencia va en <code>Imports</code> o en <code>Suggests</code>?</p>
+<ol type="1">
+<li>Tu función usa <code>cli::cli_abort()</code> para avisar errores.</li>
+<li>Usás <code>testthat</code> para los tests del paquete.</li>
+<li>Usás rmarkdown solo para construir el README.</li>
+<li>Tu función principal filtra datos con <code>dplyr::filter()</code>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Imports</strong>: sin <code>cli</code>, la función no puede funcionar.</li>
+<li><strong>Suggests</strong>: los tests solo los corre quien desarrolla el paquete.</li>
+<li><strong>Suggests</strong> (o ni siquiera eso: <code>README.Rmd</code> está en <code>.Rbuildignore</code>).</li>
+<li><strong>Imports</strong>.</li>
+</ol>
+<p>Regla práctica: si tu paquete no funciona sin esa dependencia, va en <code>Imports</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 6.2: Un error que ayude <span class="duracion">10 minutos</span></p>
+<ol type="1">
+<li>Agregá cli como dependencia con <code>usethis::use_package("cli")</code>.</li>
+<li>Modificá <code>dicho_al_azar()</code> para que, si el país no está en los datos, dé un error con <code>cli::cli_abort()</code> que diga qué país pidió la persona y cuáles están disponibles.</li>
+<li>Cargá y probá con <code>dicho_al_azar(pais = "Narnia")</code>.</li>
+<li>Corré <code>devtools::check()</code>. Si aparece un WARNING por caracteres no ASCII, arreglalo.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>dicho_al_azar <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">pais =</span> <span class="cn">NULL</span>) {</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  opciones <span class="ot">&lt;-</span> dichos</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(pais)) {</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>pais <span class="sc">%in%</span> dichos<span class="sc">$</span>pais) {</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>      cli<span class="sc">::</span><span class="fu">cli_abort</span>(<span class="fu">c</span>(</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"No tengo dichos de {.val {pais}}."</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"i"</span> <span class="ot">=</span> <span class="st">"Los pa\u00edses disponibles son: {.val {unique(dichos$pais)}}."</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>      ))</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    opciones <span class="ot">&lt;-</span> dichos[dichos<span class="sc">$</span>pais <span class="sc">==</span> pais, ]</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  fila <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="fu">nrow</span>(opciones), <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>  opciones<span class="sc">$</span>dicho[fila]</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">load_all</span>()</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dicho_al_azar</span>(<span class="at">pais =</span> <span class="st">"Narnia"</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error in `dicho_al_azar()`:</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ! No tengo dichos de "Narnia".</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ℹ Los países disponibles son: "Argentina", "Brasil", "Chile", ...</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Si escribiste <code>países</code> con tilde, <code>check()</code> da un WARNING. La tilde se escribe <code>\u00ed</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 6.3: ¿Qué está mal? <span class="duracion">2 minutos</span></p>
+<p>Una persona escribió esto en <code>R/dicho_del_dia.R</code>. ¿Qué le dirías?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cli)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>dicho_del_dia <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">fecha =</span> <span class="fu">Sys.Date</span>()) {</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">inherits</span>(fecha, <span class="st">"Date"</span>)) {</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">cli_abort</span>(<span class="st">"{.arg fecha} tiene que ser una fecha."</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Nunca uses <code>library()</code> adentro del código de un paquete. En un paquete, el código de <code>R/</code> se corre cuando se <strong>construye</strong> el paquete, no cuando se usa, y <code>library()</code> cambiaría la sesión de quien lo usa. Lo correcto: declarar la dependencia con <code>usethis::use_package("cli")</code> y llamar a la función con <code>cli::cli_abort()</code>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="tests" class="level2">
+<h2 class="anchored" data-anchor-id="tests">7. Tests</h2>
+<div class="desafio">
+<p>Desafío 7.1: Tus primeros tests <span class="duracion">8 minutos</span></p>
+<ol type="1">
+<li>Corré <code>usethis::use_testthat(3)</code> y <code>usethis::use_test("dicho_al_azar")</code>.</li>
+<li>Escribí un test que compruebe que <code>dicho_al_azar()</code> devuelve <strong>un solo texto</strong>.</li>
+<li>Escribí un test que compruebe que, para un país que no existe, la función da un error.</li>
+<li>Corré los tests con <code>devtools::test()</code>.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"dicho_al_azar() devuelve un solo texto"</span>, {</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  resultado <span class="ot">&lt;-</span> <span class="fu">dicho_al_azar</span>()</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_type</span>(resultado, <span class="st">"character"</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_length</span>(resultado, <span class="dv">1</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"dicho_al_azar() avisa si no conoce el país"</span>, {</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_error</span>(<span class="fu">dicho_al_azar</span>(<span class="at">pais =</span> <span class="st">"Narnia"</span>), <span class="st">"Narnia"</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">test</span>()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [ FAIL 0 | WARN 0 | SKIP 0 | PASS 3 ]</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 7.2: Rompé el paquete a propósito <span class="duracion">3 minutos</span></p>
+<p>En <code>R/dicho_al_azar.R</code>, cambiá <code>size = 1</code> por <code>size = 2</code>. Antes de correr los tests, pensá: ¿qué test va a fallar?</p>
+<p>Corré <code>devtools::test()</code>, leé el mensaje y después volvé a dejar <code>size = 1</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-18" class="callout-18-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Falla <code>expect_length(resultado, 1)</code>, porque ahora la función devuelve dos dichos:</p>
+<pre><code>── Failure: dicho_al_azar() devuelve un solo texto ──
+`resultado` has length 2, not length 1.</code></pre>
+<p>Romper el código a propósito es una forma de comprobar que los tests sirven.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 7.3: Una función nueva con su test <span class="duracion">para quien termine antes</span></p>
+<p>Escribí la función <code>buscar_dicho(palabra)</code>, que devuelve las filas de <code>dichos</code> donde la palabra aparece en el dicho o en el significado. Pista: <code>grepl(palabra, dichos$dicho, ignore.case = TRUE)</code>.</p>
+<p>Documentala, escribí un test con <code>usethis::use_test("buscar_dicho")</code> y corré <code>devtools::check()</code>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co">#' Buscar dichos por palabra</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#' Busca una palabra en los dichos y en sus significados.</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#' @param palabra Texto a buscar. No distingue mayúsculas de minúsculas.</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#' @return Un data frame con las filas de [dichos] que contienen la palabra.</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co">#' @export</span></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co">#'</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co">#' @examples</span></span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">#' buscar_dicho("dinero")</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>buscar_dicho <span class="ot">&lt;-</span> <span class="cf">function</span>(palabra) {</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  encontrados <span class="ot">&lt;-</span> <span class="fu">grepl</span>(palabra, dichos<span class="sc">$</span>dicho, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>) <span class="sc">|</span></span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">grepl</span>(palabra, dichos<span class="sc">$</span>significado, <span class="at">ignore.case =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  dichos[encontrados, ]</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"buscar_dicho() encuentra dichos"</span>, {</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  resultado <span class="ot">&lt;-</span> <span class="fu">buscar_dicho</span>(<span class="st">"dinero"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_s3_class</span>(resultado, <span class="st">"data.frame"</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_gt</span>(<span class="fu">nrow</span>(resultado), <span class="dv">0</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"buscar_dicho() no distingue mayúsculas"</span>, {</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">buscar_dicho</span>(<span class="st">"PERRO"</span>), <span class="fu">buscar_dicho</span>(<span class="st">"perro"</span>))</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>La versión completa, con un mensaje cuando no encuentra nada, está en el <a href="../datos/dichosos.zip">paquete terminado</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="compartir-el-paquete" class="level2">
+<h2 class="anchored" data-anchor-id="compartir-el-paquete">8. Compartir el paquete</h2>
+<div class="desafio">
+<p>Desafío 8.1: Un README y a instalar <span class="duracion">10 minutos</span></p>
+<ol type="1">
+<li>Creá el README con <code>usethis::use_readme_rmd()</code>.</li>
+<li>Escribí una oración sobre qué hace el paquete y un ejemplo con <code>dicho_al_azar()</code>.</li>
+<li>Construilo con <code>devtools::build_readme()</code>.</li>
+<li>Instalá el paquete con <code>devtools::install()</code>.</li>
+<li><strong>Reiniciá R</strong>, o mejor, abrí otro proyecto, y escribí <code>library(dichosos)</code> y <code>dicho_al_azar()</code>.</li>
+</ol>
+<p>¡Si te salió un dicho, ya tenés tu primer paquete instalado! 🎉</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># dichosos</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>¡Dichos y expresiones populares de América Latina, directo a tu consola de R!</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Ejemplo</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>::: {.cell}</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{.r .cell-code}</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dichosos)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="fu">dicho_al_azar</span>(<span class="at">pais =</span> <span class="st">"Chile"</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">build_readme</span>()</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>En otra sesión:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dichosos)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dicho_al_azar</span>()</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 8.2 (opcional, si tenés GitHub configurado): Al mundo <span class="duracion">5 minutos</span></p>
+<ol type="1">
+<li><code>usethis::use_git()</code> y aceptá hacer el primer <em>commit</em>.</li>
+<li><code>usethis::use_github()</code>.</li>
+<li>Pegá el enlace a tu repositorio en el documento colaborativo.</li>
+<li>Instalá el paquete de otra persona del taller con <code>pak::pak("usuario/dichosos")</code>. ¿Qué dichos agregó?</li>
+</ol>
+</div>
+<div class="desafio">
+<p>Desafío 8.3: Para cerrar <span class="duracion">3 minutos</span></p>
+<p>En el documento colaborativo (o en tus notas adhesivas):</p>
+<ul>
+<li><strong>Para mantener</strong>: una cosa que aprendiste hoy y te gustó.</li>
+<li><strong>Para mejorar</strong>: una cosa que mejorarías del taller, o que todavía no te quedó clara.</li>
+</ul>
+<p>Y una más: ¿qué código tuyo vas a convertir en paquete?</p>
+</div>
+</section>
+<section id="la-ia-en-el-ciclo-de-desarrollo" class="level2">
+<h2 class="anchored" data-anchor-id="la-ia-en-el-ciclo-de-desarrollo">9. La IA en el ciclo de desarrollo</h2>
+<div class="desafio">
+<p>Desafío 9.1: ¿Dónde sí y dónde no? <span class="duracion">5 minutos, en parejas</span></p>
+<p>Para cada tarea de dichosos, decidí: ¿le darías el trabajo a una herramienta de IA, la usarías solo para un borrador que después revisás, o la harías vos?</p>
+<ol type="1">
+<li>Elegir el nombre del paquete.</li>
+<li>Escribir el código de <code>buscar_dicho()</code>.</li>
+<li>Escribir los significados de los dichos de tu país.</li>
+<li>Escribir los tests de <code>dicho_del_dia()</code>.</li>
+<li>Arreglar el WARNING de caracteres no ASCII.</li>
+<li>Escribir el README.</li>
+<li>Responder un <em>issue</em> de otra persona que encontró un error en tu paquete.</li>
+</ol>
+<p>Anotá tus respuestas en el documento colaborativo. No hay una sola respuesta correcta: lo interesante es el <em>por qué</em>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Una respuesta posible">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Una respuesta posible
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><strong>Vos.</strong> La IA no sabe si un nombre es una mala palabra en tu país (<code>pkg_name_check()</code> tampoco), y el nombre es una decisión de diseño.</li>
+<li><strong>IA, y después vos.</strong> Pedile algo específico, probalo en la consola con <code>load_all()</code> y leé cada línea. Si no entendés el código, no lo agregues.</li>
+<li><strong>Vos.</strong> Los datos son tu responsabilidad. Un modelo de lenguaje puede inventar un dicho o un significado con total seguridad, y en <code>@source</code> dice de dónde salieron.</li>
+<li><strong>IA, con supervisión.</strong> A los agentes les encanta escribir tests: tu trabajo es que sean pocos, claros y que de verdad fallen cuando algo se rompe.</li>
+<li><strong>IA.</strong> Es un problema mecánico, con un mensaje de <code>check()</code> claro. Las herramientas de IA son muy buenas arreglando lo que encuentra <code>check()</code>.</li>
+<li><strong>Borrador.</strong> La IA puede armar la estructura, pero el README es comunicación entre personas: revisalo, escribilo con tu voz y contá que usaste IA.</li>
+<li><strong>Vos.</strong> Podés usar IA para entender el error o probar un arreglo, pero la respuesta es comunicación personal: la escribís vos. Si la usaste para traducir, está bien, y lo decís. Son pautas que pedimos en <a href="https://ropensci.org/blog/2026/02/26/ropensci-ai-policy/">rOpenSci</a>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 9.2: Revisá lo que escribió la IA <span class="duracion">7 minutos</span></p>
+<p>Le pedimos a un asistente de IA: <em>“Agregá a dichosos una función que devuelva los dichos de un tema”</em>. Esto es lo que escribió. Con lo que aprendiste hoy, encontrá <strong>al menos cinco</strong> problemas.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Esta función recibe un tema y devuelve los dichos de ese tema.</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Primero filtra los datos por tema y después devuelve el resultado.</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>dichos_por_tema <span class="ot">&lt;-</span> <span class="cf">function</span>(tema) {</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>tema <span class="sc">%in%</span> dichos<span class="sc">$</span>tema) {</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"No hay dichos de ese tema. Probá con otro."</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  dichos <span class="sc">%&gt;%</span> <span class="fu">filter</span>(tema <span class="sc">==</span> tema)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Y en <code>tests/testthat/test-dichos_por_tema.R</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test_that</span>(<span class="st">"dichos_por_tema() funciona"</span>, {</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_true</span>(<span class="cn">TRUE</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  resultado <span class="ot">&lt;-</span> <span class="fu">dichos_por_tema</span>(<span class="st">"dinero"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_s3_class</span>(resultado, <span class="st">"data.frame"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">nrow</span>(resultado), <span class="dv">6</span>)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">ncol</span>(resultado), <span class="dv">4</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_equal</span>(<span class="fu">names</span>(resultado), <span class="fu">c</span>(<span class="st">"dicho"</span>, <span class="st">"significado"</span>, <span class="st">"pais"</span>, <span class="st">"tema"</span>))</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_true</span>(<span class="fu">all</span>(resultado<span class="sc">$</span>tema <span class="sc">==</span> <span class="st">"dinero"</span>))</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">expect_error</span>(<span class="fu">dichos_por_tema</span>(<span class="st">"dinosaurios"</span>))</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Solución">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Solución
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-22" class="callout-22-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>En la función:</p>
+<ol type="1">
+<li><strong><code>library(dplyr)</code> en el código del paquete.</strong> Nunca. Hay que declarar la dependencia con <code>usethis::use_package("dplyr")</code> y usar <code>dplyr::filter()</code>. O mejor: ¿hace falta dplyr? Con R base alcanza (<code>dichos[dichos$tema == tema, ]</code>) y el paquete tiene una dependencia menos.</li>
+<li><strong><code>filter(tema == tema)</code> no filtra nada.</strong> Adentro de <code>filter()</code>, los dos <code>tema</code> son la columna, así que la condición siempre es verdadera y devuelve <strong>todos</strong> los dichos. Es el tipo de error que solo aparece si probás la función en la consola.</li>
+<li><strong>No tiene documentación</strong> de roxygen2 ni <code>@export</code>.</li>
+<li><strong>“Probá” tiene tilde en el código</strong>: <code>check()</code> da un WARNING. Va <code>Prob\u00e1</code>.</li>
+<li><strong>El error no ayuda</strong>: no dice qué tema se pidió ni cuáles existen. Mejor <code>cli::cli_abort()</code> con la lista de temas, como hicimos en <code>dicho_al_azar()</code>.</li>
+<li><strong>Los comentarios explican el <em>qué</em>, no el <em>por qué</em>.</strong> Si el código se entiende, sobran.</li>
+</ol>
+<p>En el test:</p>
+<ol start="7" type="1">
+<li><strong><code>expect_true(TRUE)</code> no comprueba nada.</strong></li>
+<li><strong><code>expect_equal(nrow(resultado), 6)</code> se rompe</strong> cada vez que alguien suma un dicho de dinero. Es un test frágil.</li>
+<li><strong>Es un solo test gigante.</strong> Mejor varios <code>test_that()</code> cortos, cada uno con una descripción de lo que comprueba.</li>
+<li><strong>Lo bueno:</strong> <code>all(resultado$tema == "dinero")</code> sí detecta el error del punto 2… pero solo si alguien corre los tests. Revisar lo que escribe la IA incluye <strong>correr los tests y probar en la consola</strong>.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="desafio">
+<p>Desafío 9.3 (opcional, con GitHub Copilot Free u otro asistente): Pedilo bien <span class="duracion">para casa</span></p>
+<p>Escribí un pedido <strong>corto y preciso</strong> para que un asistente agregue <code>dichos_por_tema()</code> a tu paquete. Con tu cuenta de GitHub podés usar el chat de Copilot en <a href="https://github.com/copilot" class="uri">https://github.com/copilot</a>. Por ejemplo:</p>
+<blockquote class="blockquote">
+<p>Agregá a dichosos la función <code>dichos_por_tema(tema)</code> en <code>R/dichos_por_tema.R</code>. Usá R base, sin dependencias nuevas. Si el tema no existe, dá un error con <code>cli::cli_abort()</code> que liste los temas disponibles, como en <code>dicho_al_azar()</code>. Documentala con roxygen2 y exportala. Escribí tests cortos en <code>tests/testthat/test-dichos_por_tema.R</code>. Antes de escribir código, mostrame un plan.</p>
+</blockquote>
+<p>Después: leé el plan, pedile el código, copialo a tu paquete, revisá los cambios con Git, probá la función con <code>load_all()</code> y corré <code>devtools::check()</code>. ¿Qué hizo distinto a lo que habrías hecho vos?</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/yabellini\.github\.io\/desarrollo_paquetes\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Materiales con licencia <a href="https://creativecommons.org/licenses/by/4.0/deed.es">CC BY 4.0</a>. Código con licencia MIT.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Hecho con <a href="https://quarto.org">Quarto</a> para LatinR 2026</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
