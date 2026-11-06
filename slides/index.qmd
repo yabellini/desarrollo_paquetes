@@ -42,7 +42,7 @@ Web del taller: https://yabellini.github.io/desarrollo_paquetes/
 - 💻 **Programación en vivo**: yo escribo, vos escribís a la par.
 - 🧩 **Desafíos** cortos después de cada parte.
 - 📌 **Nota adhesiva** en tu computadora = necesito ayuda.
-- 📝 **Documento colaborativo** para preguntas, errores y respuestas.
+- 📝 [**Documento colaborativo**](https://docs.google.com/document/d/17Q8UVZBCAfXwR0a3RXE4Zr23sVtTwdj1gjNwjTtsbOU/) para preguntas, errores y respuestas.
 - 🙌 **Equivocarse está bien.** Vamos a ver varios errores a propósito.
 
 ## Código de conducta
