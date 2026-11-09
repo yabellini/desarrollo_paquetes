@@ -162,19 +162,7 @@ c. Un paquete es una carpeta organizada que puede tener código, documentación 
 d. Para crear un paquete hay que saber programar en C.
 :::
 
-Levanten la mano los que responden... [⏱ 3:00]{.reloj data-min="3" role="button" tabindex="0"}
-
-## 🧩 Desafío 1.2
-
-::: desafio
-Pensá en un código que copiaste y pegaste en más de un proyecto.
-
-Escribilo en una línea en el documento colaborativo.
-
-**¡Ese puede ser tu primer paquete!**
-:::
-
-[⏱ 2:00]{.reloj data-min="2" role="button" tabindex="0"}
+Levanten la mano los que responden... [⏱ 2:00]{.reloj data-min="2" role="button" tabindex="0"}
 
 # 2. Crear el paquete {.seccion background-color="#4177ca"}
 
@@ -240,7 +228,7 @@ Atajo: `Ctrl/Cmd + Shift + E`
 4. Completá `Title`, `Description` y `Authors@R` en `DESCRIPTION`.
 :::
 
-[⏱ 15:00]{.reloj data-min="15" role="button" tabindex="0"} Nota adhesiva en tu compu cuando termines.
+[⏱ 12:00]{.reloj data-min="12" role="button" tabindex="0"} Nota adhesiva en tu compu cuando termines.
 
 # 3. Nuestra primera función {.seccion background-color="#4177ca"}
 
@@ -303,9 +291,9 @@ Guardar **no alcanza**: después de cada cambio, hay que volver a cargar.
 
 [⏱ 15:00]{.reloj data-min="15" role="button" tabindex="0"}
 
-# 🧉 Pausa {.seccion background-color="#17a2b8"}
+# 🧉 ☕️ Pausa {.seccion background-color="#17a2b8"}
 
-10 minutos. [⏱ 10:00]{.reloj data-min="10" role="button" tabindex="0"}
+30 minutos. [⏱ 30:00]{.reloj data-min="30" role="button" tabindex="0"}
 
 # 4. Documentar funciones {.seccion background-color="#4177ca"}
 
@@ -459,10 +447,6 @@ dicho_al_azar(pais = "Narnia")
 :::
 
 [⏱ 15:00]{.reloj data-min="15" role="button" tabindex="0"}
-
-# 🤸 Pausa {.seccion background-color="#17a2b8"}
-
-10 minutos para estirarse. [⏱ 10:00]{.reloj data-min="10" role="button" tabindex="0"}
 
 # 6. Dependencias y mensajes claros {.seccion background-color="#4177ca"}
 
