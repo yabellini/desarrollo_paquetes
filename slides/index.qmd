@@ -348,23 +348,11 @@ Atajo: `Ctrl/Cmd + Shift + D`
 
 ::: desafio
 1. Documentá `dicho_al_azar()`, corré `document()` y mirá `?dicho_al_azar`.
-2. Encontrá los **tres** errores:
 
-```r
-#' Elegir un dicho al azar
-#
-#' Devuelve un dicho popular elegido al azar.
-#'
-#' @params pais El país del que queremos el dicho.
-#' @return Un texto con el dicho.
-#'
-#' @examples
-#' dicho_al_azar()
-dicho_al_azar <- function(pais = NULL) {
 ```
 :::
 
-[⏱ 10:00]{.reloj data-min="10" role="button" tabindex="0"}
+[⏱ 5:00]{.reloj data-min="5" role="button" tabindex="0"}
 
 # 5. Datos en el paquete {.seccion background-color="#4177ca"}
 
