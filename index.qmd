@@ -61,20 +61,19 @@ Al terminar el taller vas a poder:
 
 | Hora | Lección |
 |:-----|:---------|
-| 0:00 | Bienvenida, código de conducta y presentaciones |
-| 0:10 | [1. ¿Qué es un paquete?](episodios/01-que-es-un-paquete.qmd) |
-| 0:25 | [2. Crear el paquete](episodios/02-crear-el-paquete.qmd) |
-| 0:50 | [3. Nuestra primera función](episodios/03-primera-funcion.qmd) 
-| 1:15 | 🧉 Pausa (10 minutos) |
-| 1:25 | [4. Documentar funciones](episodios/04-documentar.qmd) |
-| 1:42 | [5. Datos en el paquete](episodios/05-datos.qmd) |
-| 2:07 | 🤸 Pausa (10 minutos) |
-| 2:17 | [6. Dependencias y mensajes claros](episodios/06-dependencias.qmd) |
-| 2:32 | [7. Tests](episodios/07-tests.qmd) |
-| 2:52 | [8. Compartir el paquete](episodios/08-compartir.qmd) |
-| 3:04 | [9. La IA en el ciclo de desarrollo](episodios/09-ia-en-el-ciclo.qmd) |
-| 3:24 | Cierre, próximos pasos y opiniones |
-| 3:30 | Fin |
+| 14:00 | Bienvenida, código de conducta y presentaciones |
+| 14:10 | [1. ¿Qué es un paquete?](episodios/01-que-es-un-paquete.qmd) |
+| 14:25 | [2. Crear el paquete](episodios/02-crear-el-paquete.qmd) |
+| 14:50 | [3. Nuestra primera función](episodios/03-primera-funcion.qmd) |
+| 15:15 | [4. Documentar funciones](episodios/04-documentar.qmd) |
+| 15:30 | ☕ Pausa para el café (30 minutos) |
+| 16:00 | [5. Datos en el paquete](episodios/05-datos.qmd) |
+| 16:25 | [6. Dependencias y mensajes claros](episodios/06-dependencias.qmd) |
+| 16:40 | [7. Tests](episodios/07-tests.qmd) |
+| 17:00 | [8. Compartir el paquete](episodios/08-compartir.qmd) |
+| 17:10 | [9. La IA en el ciclo de desarrollo](episodios/09-ia-en-el-ciclo.qmd) |
+| 17:25 | Cierre y opiniones |
+| 17:30 | Fin |
 
 ## Código de conducta
 

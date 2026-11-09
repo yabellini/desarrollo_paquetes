@@ -4,7 +4,7 @@ title: "1. ¿Qué es un paquete?"
 
 ::: resumen
 ::: tiempo
-⏱ Enseñanza: 10 minutos · Ejercicios: 5 minutos
+⏱ Enseñanza: 10 minutos · Ejercicios: 4 minutos
 :::
 ::: {}
 Preguntas
@@ -93,13 +93,17 @@ Cuando no sepas cómo hacer algo, escribí `usethis::use_` y apretá la tecla Ta
 ## El paquete del taller: `dichosos`
 
 Vamos a construir **dichosos**, un paquete con dichos y expresiones populares de América Latina.
-Al final va a tener:
+La idea del paquete es que tenga 3 funciones y un conjunto de datos:
 
 - un conjunto de datos, `dichos`, con el dicho, su significado, el país y un tema;
 - una función `dicho_al_azar()`, que elige un dicho (de un país, si queremos);
 - una función `dicho_del_dia()`, que da siempre el mismo dicho para la misma fecha;
 - una función `buscar_dicho()`, que busca dichos por palabra;
 - documentación, tests y un README.
+
+**Durante el taller construiremos la función `dicho_al_azar()` y el conjunto de datos `dichos`**
+
+Las otras funciones están disponibles en los snippets de código.
 
 {{< include ../_ejercicios/ep01.qmd >}}
 

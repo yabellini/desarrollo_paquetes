@@ -71,7 +71,7 @@ Y ahora, en otra sesión de R, como cualquier otro paquete:
 ```r
 library(dichosos)
 dicho_al_azar(pais = "Perú")
-?buscar_dicho
+?dicho_al_azar
 ```
 
 ## Compartir en GitHub
