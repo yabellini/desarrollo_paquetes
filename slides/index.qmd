@@ -344,7 +344,7 @@ Atajo: `Ctrl/Cmd + Shift + D`
 `load_all()` es generosa: te deja usar todas. Por eso a veces nos olvidamos del `@export`.
 :::
 
-## 🧩 Desafíos 4.1 y 4.2
+## 🧩 Desafíos 4.1 
 
 ::: desafio
 1. Documentá `dicho_al_azar()`, corré `document()` y mirá `?dicho_al_azar`.
