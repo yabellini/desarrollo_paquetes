@@ -68,11 +68,9 @@ Presentate a las personas que tenes al lado 👋
 
 | | |
 |:--|:--|
-| **Bloque 1** | ¿Qué es un paquete? · Crear el paquete · Primera función |
-| 🧉 | Pausa |
-| **Bloque 2** | Documentar · Datos |
-| 🤸 | Pausa |
-| **Bloque 3** | Dependencias y mensajes · Tests · Compartir · La IA en el ciclo de desarrollo|
+| **Bloque 1** | ¿Qué es un paquete? · Crear el paquete · Primera función · Documentar · Datos|
+| ☕ Pausa para el café (30 minutos)
+| **Bloque 2** | Dependencias y mensajes · Tests · Compartir · La IA en el ciclo de desarrollo|
 
 # 1. ¿Qué es un paquete? {.seccion background-color="#4177ca"}
 
