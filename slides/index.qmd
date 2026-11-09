@@ -562,7 +562,7 @@ Si nunca viste fallar un test, no sabés si sirve.
 
 ::: desafio
 1. Dos tests para `dicho_al_azar()`.
-2. Rompé el código. ¿Qué test falla?
+2. Si terminaste: Rompé el código. ¿Qué test falla?
 3. Si terminaste: escribí `buscar_dicho()` con su test.
 :::
 
