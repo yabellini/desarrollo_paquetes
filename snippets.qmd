@@ -51,11 +51,13 @@ download.file(
 ```r
 ## Código para preparar el conjunto de datos `dichos`
 
-dichos <- read.csv("data-raw/dichos.csv", encoding = "UTF-8")
+library(tidyverse)
+
+dichos <- read_csv("data-raw/dichos.csv")
 
 # Ordenamos por país para que sea más fácil de leer
-dichos <- dichos[order(dichos$pais, dichos$dicho), ]
-rownames(dichos) <- NULL
+dichos <- dichos |>
+  arrange(pais, dicho)
 
 usethis::use_data(dichos, overwrite = TRUE)
 ```

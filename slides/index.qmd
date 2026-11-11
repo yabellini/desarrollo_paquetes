@@ -368,7 +368,13 @@ download.file("https://yabellini.github.io/desarrollo_paquetes/datos/dichos.csv"
 En `data-raw/dichos.R`:
 
 ```r
-dichos <- read.csv("data-raw/dichos.csv", encoding = "UTF-8")
+library(tidyverse)
+
+dichos <- read_csv("data-raw/dichos.csv")
+
+dichos <- dichos |>
+  arrange(pais, dicho)
+
 usethis::use_data(dichos, overwrite = TRUE)
 ```
 :::

@@ -72,7 +72,7 @@ download.file(
 
 library(tidyverse)
 
-dichos <- read_csv("data-raw/dichos.csv", encoding = "UTF-8")
+dichos <- read_csv("data-raw/dichos.csv")
 
 # Ordenamos por país para que sea más fácil de leer
 dichos <- dichos |>

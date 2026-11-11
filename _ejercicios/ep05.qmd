@@ -18,7 +18,8 @@ download.file(
 En `data-raw/dichos.R`:
 
 ```r
-dichos <- read.csv("data-raw/dichos.csv", encoding = "UTF-8")
+library(readr)
+dichos <- read_csv("data-raw/dichos.csv")
 usethis::use_data(dichos, overwrite = TRUE)
 ```
 
