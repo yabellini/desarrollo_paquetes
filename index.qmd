@@ -57,6 +57,8 @@ Al terminar el taller vas a poder:
 - [**Un documento colaborativo**](https://docs.google.com/document/d/17Q8UVZBCAfXwR0a3RXE4Zr23sVtTwdj1gjNwjTtsbOU/) con notas, los enlaces, las preguntas y las respuestas, que queda para después del taller.
 - **Equivocarse está bien.** Los errores son la mejor parte del aprendizaje y vamos a ver varios a propósito.
 
+Si no pudiste instalar el software necesario podes usar [este proyecto de Posit Cloud](https://posit.cloud/content/13345826) que tiene la estructura inicial para desarrollar nuestro paquete.
+
 ## Horario
 
 | Hora | Lección |
